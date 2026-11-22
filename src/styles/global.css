@@ -42,7 +42,7 @@
 :root {
   /* 本文は OS 標準の日本語ゴシック体を使う（Web フォントを読み込まないので速い） */
   --font-body:
-    -apple-system, BlinkMacSystemFont, "Hiragino Sans",
+    "Zen Kaku Gothic New", -apple-system, BlinkMacSystemFont, "Hiragino Sans",
     "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Noto Sans CJK JP",
     "Yu Gothic UI", Meiryo, sans-serif;
 }
@@ -64,4 +64,36 @@ pre {
 .astro-code {
   background-color: #050b14;
   border-color: #1c3a5e;
+}
+
+/* ダークモードの配色をブログのテーマカラーに合わせる */
+[data-theme="dark"] {
+  --background: #0f2744;
+  --foreground: #e6edf5;
+  --accent: #7ccbf2;
+  --accent-foreground: #050b14;
+  --muted: #1c3a5e;
+  --muted-foreground: #a9bdd1;
+  --border: #1c3a5e;
+}
+
+/* ヘッダーを画面上部に固定する */
+header:has(#nav-menu) {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background-color: var(--background);
+  /* 背景色を画面の左右の端まで広げる */
+  box-shadow: 0 0 0 100vmax var(--background);
+  clip-path: inset(0 -100vmax);
+}
+
+/* 目次から見出しに飛んだとき、固定したヘッダーに隠れないようにする */
+html {
+  scroll-padding-top: 6rem;
+}
+
+/* 本文中の短いコード（ドメイン名など）は途中でも改行できるようにして、前の行の右側が大きく空かないようにする */
+.app-prose :not(pre) > code {
+  word-break: break-all;
 }
