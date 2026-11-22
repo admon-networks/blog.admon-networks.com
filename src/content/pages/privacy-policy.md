@@ -4,18 +4,21 @@ title: "プライバシーポリシー"
 
 ## 基本方針
 
-当ブログ（tech-lablog.com、以下「当サイト」）は、訪問者の個人情報の取り扱いに関して以下のプライバシーポリシー（以下「本ポリシー」）を定めます。本ポリシーに同意のうえ、当サイトをご利用ください。
+当ブログ（blog.admon-networks.com、以下「当サイト」）は、訪問者の個人情報の取り扱いに関して以下のプライバシーポリシー（以下「本ポリシー」）を定めます。本ポリシーに同意のうえ、当サイトをご利用ください。
 
 ## アクセス解析ツールについて
 
-当サイトでは、Google LLCが提供するアクセス解析ツール「Google Analytics」を使用しています。Google Analyticsは、Cookieを使用してアクセス情報を収集します。収集される情報は匿名であり、個人を特定するものではありません。
+当サイトでは、Cloudflare, Inc.が提供するアクセス解析ツール「Cloudflare Web Analytics」を使用しています。Cloudflare Web AnalyticsはCookieを使用せず、個人を特定する情報は収集しません。
 
-- 収集情報：閲覧ページ、滞在時間、流入経路、端末・ブラウザ情報 など
-- データはGoogleのプライバシーポリシーに基づき管理されます
-- ブラウザの設定からCookieを無効化することで、収集を拒否できます
+- 収集情報：閲覧ページ、参照元、国・地域、端末・ブラウザの種類 など
+- データはCloudflareのプライバシーポリシーに基づき管理されます
 
 > [!NOTE]
-> 詳細は [Googleのプライバシーポリシー](https://policies.google.com/privacy) をご確認ください。
+> 詳細は [Cloudflareのプライバシーポリシー](https://www.cloudflare.com/privacypolicy/) をご確認ください。
+
+## Webフォントについて
+
+当サイトでは、文字の表示にGoogle LLCが提供する「Google Fonts」を使用しています。フォントを読み込む際に、閲覧者のIPアドレスなどがGoogleのサーバーに送信されます。詳細は [Googleのプライバシーポリシー](https://policies.google.com/privacy) をご確認ください。
 
 ## 広告について（Google AdSense）
 
