@@ -28,7 +28,6 @@
     "remark-collapse": "^0.1.2",
     "remark-toc": "^9.0.0",
     "satori": "^0.63.2",
-    "sharp": "^0.35.5",
     "slugify": "^1.6.9",
     "tailwindcss": "^4.3.5"
   },
@@ -41,10 +40,14 @@
     "@typescript-eslint/parser": "^8.73.0",
     "eslint": "^10.15.0",
     "eslint-plugin-astro": "^3.2.1",
+    "fast-xml-parser": "^5.12.1",
     "pagefind": "^1.6.0",
     "prettier": "3.10.1",
     "prettier-plugin-astro": "0.14.1",
     "prettier-plugin-tailwindcss": "^0.8.1",
+    "sharp": "^0.35.5",
+    "turndown": "^7.2.5",
+    "turndown-plugin-gfm": "^1.0.2",
     "typescript": "^6.0.3"
   }
 }
