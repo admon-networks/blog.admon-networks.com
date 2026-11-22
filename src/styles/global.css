@@ -37,3 +37,31 @@
 :target {
   scroll-margin-block: 1rem;
 }
+
+/* ===== admon カスタマイズ ===== */
+:root {
+  /* 本文は OS 標準の日本語ゴシック体を使う（Web フォントを読み込まないので速い） */
+  --font-body:
+    -apple-system, BlinkMacSystemFont, "Hiragino Sans",
+    "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Noto Sans CJK JP",
+    "Yu Gothic UI", Meiryo, sans-serif;
+}
+
+/* コードは等幅フォント（Google Sans Code）のまま */
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--font-google-sans-code);
+}
+
+/* 日本語の斜体は読みにくいので、h3 の斜体をやめる */
+.app-prose h3 {
+  font-style: normal;
+}
+
+/* コードブロックはサイトのテーマに関係なく、常に暗い配色にする */
+.astro-code {
+  background-color: #050b14;
+  border-color: #1c3a5e;
+}
