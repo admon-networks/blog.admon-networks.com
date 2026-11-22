@@ -16,7 +16,7 @@ CLIによるコマンド操作でシャットダウンするには以下のコ�
 
 ```text
 admin@PA-0000> request shutdown system    <--左記のコマンドを実行
-Warning: executing this command will leave the system in a shutdown state. Power must be removed and reapplied for the system to restart.  Do you want to continue? (y or n)  <-- [y]を入力 
+Warning: executing this command will leave the system in a shutdown state. Power must be removed and reapplied for the system to restart.  Do you want to continue? (y or n)  <-- [y]を入力
 
 Broadcast message from root (ttyS0) (Thu May  1 23:40:10 2025):Stopping PAN Software: [  OK  ]
 Shutting down NFS mountd: [  OK  ]
@@ -34,13 +34,13 @@ Starting killall:  Stopping crond: [  OK  ]
 Shutting down ntpd: [  OK  ]
 Stopping syslog-ng: [  OK  ]
 [  OK  ]
-Sending all processes the TERM signal... 
-Sending all processes the KILL signal... 
-Saving random seed:  
-Syncing hardware clock to system time 
-Turning off swap:  
-Unmounting pipe file systems:  
-Unmounting file systems:  
+Sending all processes the TERM signal...
+Sending all processes the KILL signal...
+Saving random seed:
+Syncing hardware clock to system time
+Turning off swap:
+Unmounting pipe file systems:
+Unmounting file systems:
 Halting system...
 sd 0:0:0:0: [sda] Synchronizing SCSI cache
 sd 0:0:0:0: [sda] Stopping disk

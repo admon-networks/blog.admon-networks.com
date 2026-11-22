@@ -2,7 +2,15 @@
 title: "【DHCP】OfferとACKがキャプチャできない原因｜Meraki MR36"
 description: "DHCPのキャプチャでOfferとACKが見えない原因を解説。Discoverのbroadcast flagが0だとサーバはユニキャストで返すため、同一VLANの別ポートでは観測できません。Meraki MR36で遭遇した事例と切り分け手順をまとめました。"
 pubDatetime: 2026-09-08T21:30:00.000Z
-tags: ["Cisco", "Meraki", "トラブルシュート", "ネットワーク", "ネットワーク/ Network", "無線"]
+tags:
+  [
+    "Cisco",
+    "Meraki",
+    "トラブルシュート",
+    "ネットワーク",
+    "ネットワーク/ Network",
+    "無線",
+  ]
 ogImage: "../../assets/wp/2026/09/dhcp-offer-not-captured-eyecatch.png"
 ---
 
@@ -20,9 +28,9 @@ Meraki MR36の構築時にたまたま遭遇したので、記録として残し
 
 ## この記事で扱う範囲
 
--   OfferとACKがキャプチャに出てこない仕組み
--   Wiresharkでの `flags` の見方
--   応答がないのか、見えていないだけなのかの判断
+- OfferとACKがキャプチャに出てこない仕組み
+- Wiresharkでの `flags` の見方
+- 応答がないのか、見えていないだけなのかの判断
 
 ## 状況：bad-gatewayのSSIDが出ていた
 
@@ -70,12 +78,12 @@ Dynamic Host Configuration Protocol (Discover)
 
 今回は立っていなかったので、サーバはOfferとACKをMR36のMACアドレス宛にユニキャストで返送していました。ユニキャストのフレームはスイッチがMACアドレステーブルを引いてAP接続ポートにだけ転送するので、こちらのPCには届きません。
 
-| パケット | 宛先 | 同一VLANの別ポートから見えるか |
-| --- | --- | --- |
-| Discover | ブロードキャスト | ○ |
-| Offer | クライアントMAC宛ユニキャスト | × |
-| Request | ブロードキャスト | ○ |
-| ACK | クライアントMAC宛ユニキャスト | × |
+| パケット | 宛先                          | 同一VLANの別ポートから見えるか |
+| -------- | ----------------------------- | ------------------------------ |
+| Discover | ブロードキャスト              | ○                              |
+| Offer    | クライアントMAC宛ユニキャスト | ×                              |
+| Request  | ブロードキャスト              | ○                              |
+| ACK      | クライアントMAC宛ユニキャスト | ×                              |
 
 DiscoverとRequestだけが見えるのは、この2つがブロードキャストだからです。
 
@@ -132,6 +140,6 @@ DHCPは正常に動いていました。bad-gatewayは受け取ったデフォ�
 
 ## 参考
 
--   [RFC 2131 - Dynamic Host Configuration Protocol](https://datatracker.ietf.org/doc/html/rfc2131)（broadcast flagの定義は2.2章および4.1章）
--   [RFC 2132 - DHCP Options and BOOTP Vendor Extensions](https://datatracker.ietf.org/doc/html/rfc2132)（Option 50 / Option 54の定義）
--   [アクセスポイントのデフォルト SSID を使用してローカルステータスページへアクセスできないときのトラブルシューティング - Cisco Meraki Documentation](https://documentation.meraki.com/Wireless/Translated_Documents/Using_the_Cisco_Meraki_Device_Local_Status_Page_jp)
+- [RFC 2131 - Dynamic Host Configuration Protocol](https://datatracker.ietf.org/doc/html/rfc2131)（broadcast flagの定義は2.2章および4.1章）
+- [RFC 2132 - DHCP Options and BOOTP Vendor Extensions](https://datatracker.ietf.org/doc/html/rfc2132)（Option 50 / Option 54の定義）
+- [アクセスポイントのデフォルト SSID を使用してローカルステータスページへアクセスできないときのトラブルシューティング - Cisco Meraki Documentation](https://documentation.meraki.com/Wireless/Translated_Documents/Using_the_Cisco_Meraki_Device_Local_Status_Page_jp)

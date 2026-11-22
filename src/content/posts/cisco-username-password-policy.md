@@ -3,7 +3,15 @@ title: "【CCNP学習】usernameコマンドで作成するユーザにパスワ
 description: "概要 CCNP ENCORの試験対策で機器にログインするユーザを作成し、パスワードポリシーを適用する方法を学んだので、 備忘も兼ねてまとめてます。 コマンドと解説 手順は下記の通り。 ①aaa newmodel コマンド…"
 pubDatetime: 2025-09-23T07:38:36.000Z
 modDatetime: 2025-10-02T15:18:00.000Z
-tags: ["CCNP", "CCNP ENCOR", "Cisco", "セキュリティ", "ネットワーク", "ネットワーク/ Network"]
+tags:
+  [
+    "CCNP",
+    "CCNP ENCOR",
+    "Cisco",
+    "セキュリティ",
+    "ネットワーク",
+    "ネットワーク/ Network",
+  ]
 ogImage: "../../assets/wp/2025/09/image-4.png"
 ---
 
@@ -23,15 +31,15 @@ CCNP ENCORの試験対策で機器にログインするユーザを作成し、�
 (config)#username [ユーザ名] [privilege [レベル]] common-criteria-policy [ポリシー名] password [パスワード文字列]
 ```
 
-手順は下記の通り。  
-  
+手順は下記の通り。
+
 ①aaa new-model コマンドで **AAAを有効化**  
 ②aaa common-criteria policy \[ポリシー名\] コマンドで **\[ポリシー名\]のパスワードポリシーを作成**  
 ③max-length \[パスワードの最大文字数\] コマンドで **設定できるパスワードの最大文字数を定義**  
 ④min-length \[パスワードの最大文字数\] コマンドで **設定できるパスワードの最小文字数を定義**  
 ⑤lifetime {year | month | day | hours | minutes | seconds) {パスワード有効期間｝ コマンドで **パスワードの有効期間を定義**  
 ⑥username \[ユーザ名\] \[privilege \[レベル\]\] common-criteria-policy \[ポリシー名\] password \[パスワード文字列\] コマンドで  
-**ユーザを作成し、作成したポリシーを適用のうえ、パスワードの設定**  
+**ユーザを作成し、作成したポリシーを適用のうえ、パスワードの設定**
 
 ## 補足や気づいたこと
 
@@ -70,7 +78,7 @@ Number of character changes 4
 Valid forever. User tied to this policy will not expire.
 ```
 
-ポリシーで定義されている最大文字数や最小文字数、有効期限が切れていないかなどを確認できる。  
+ポリシーで定義されている最大文字数や最小文字数、有効期限が切れていないかなどを確認できる。
 
 ## 参考
 

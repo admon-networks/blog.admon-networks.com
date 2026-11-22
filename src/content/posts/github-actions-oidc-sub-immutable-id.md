@@ -20,20 +20,20 @@ IAM ロールも OIDC プロバイダーも作ってあるし、信頼ポリシ�
 
 ## 結論：subの形式が変わっている
 
-| 形式 | `sub` の値（main ブランチの場合） |
-| --- | --- |
-| 従来の形式 | `repo:example-org/example-repo:ref:refs/heads/main` |
+| 形式       | `sub` の値（main ブランチの場合）                                      |
+| ---------- | ---------------------------------------------------------------------- |
+| 従来の形式 | `repo:example-org/example-repo:ref:refs/heads/main`                    |
 | 新しい形式 | `repo:example-org@12345678/example-repo@987654321:ref:refs/heads/main` |
 
 `@` の後ろの数字が、オーナー（ユーザーまたは組織）とリポジトリの ID です。信頼ポリシーの `sub` 条件を、新しい形式の値に変えれば認証が通ります。
 
 ## 発生した環境と症状
 
-| 項目 | 内容 |
-| --- | --- |
-| リポジトリ | 2026年10月に新しく作成したプライベートリポジトリ |
-| 認証 | `aws-actions/configure-aws-credentials@v5` |
-| IAM の管理 | Terraform（AWS プロバイダー v6） |
+| 項目                           | 内容                                                |
+| ------------------------------ | --------------------------------------------------- |
+| リポジトリ                     | 2026年10月に新しく作成したプライベートリポジトリ    |
+| 認証                           | `aws-actions/configure-aws-credentials@v5`          |
+| IAM の管理                     | Terraform（AWS プロバイダー v6）                    |
 | 信頼ポリシーの `sub`（失敗時） | `repo:example-org/example-repo:ref:refs/heads/main` |
 
 Configure AWS credentials のステップで、冒頭のエラーになって失敗します。アクションが失敗後に何度か再試行するため、エラーが出るまでに1分以上かかりました。
@@ -59,13 +59,13 @@ aws iam get-role --role-name example-site-deploy \
 
 ```json
 {
-    "Arn": "arn:aws:iam::123456789012:role/example-site-deploy",
-    "Condition": {
-        "StringEquals": {
-            "token.actions.githubusercontent.com:sub": "repo:example-org/example-repo:ref:refs/heads/main",
-            "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
-        }
+  "Arn": "arn:aws:iam::123456789012:role/example-site-deploy",
+  "Condition": {
+    "StringEquals": {
+      "token.actions.githubusercontent.com:sub": "repo:example-org/example-repo:ref:refs/heads/main",
+      "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
     }
+  }
 }
 ```
 
@@ -78,17 +78,17 @@ aws iam get-role --role-name example-site-deploy \
 設定が正しそうなら、次に疑うのは「GitHub が実際に発行しているトークンの中身」です。ワークフローに、一時的に次のステップを追加します。Configure AWS credentials が失敗するとジョブはそこで止まるので、必ずその**前**に置きます。
 
 ```yaml
-      - name: Show OIDC claims (debug)
-        run: |
-          TOKEN=$(curl -sS -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
-            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com" | jq -r .value)
-          python3 - "$TOKEN" << 'EOF'
-          import base64, json, sys
-          payload = sys.argv[1].split(".")[1]
-          payload += "=" * (-len(payload) % 4)
-          claims = json.loads(base64.urlsafe_b64decode(payload))
-          print(json.dumps({k: claims.get(k) for k in ("sub", "aud", "repository", "ref")}, indent=2))
-          EOF
+- name: Show OIDC claims (debug)
+  run: |
+    TOKEN=$(curl -sS -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+      "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com" | jq -r .value)
+    python3 - "$TOKEN" << 'EOF'
+    import base64, json, sys
+    payload = sys.argv[1].split(".")[1]
+    payload += "=" * (-len(payload) % 4)
+    claims = json.loads(base64.urlsafe_b64decode(payload))
+    print(json.dumps({k: claims.get(k) for k in ("sub", "aud", "repository", "ref")}, indent=2))
+    EOF
 ```
 
 1つ目のコマンドの `curl` で、GitHub にトークンを1枚発行してもらっています。`ACTIONS_ID_TOKEN_REQUEST_URL` と `ACTIONS_ID_TOKEN_REQUEST_TOKEN` は、`permissions` に `id-token: write` を付けたジョブにだけ自動で渡される環境変数です。`jq -r .value` で、返ってきた JSON からトークンの部分だけを取り出します。
@@ -112,9 +112,9 @@ aws iam get-role --role-name example-site-deploy \
 
 GitHub は2026年4月に、OIDC トークンの `sub` に、オーナーとリポジトリの変わらない数値ID（immutable ID）を含める変更を発表しています（[GitHub Changelog](https://github.blog/changelog/2026-04-23-immutable-subject-claims-for-github-actions-oidc-tokens/)）。適用の条件は次のとおりです。
 
--   2026年7月15日以降に作成されたリポジトリは、自動で新しい形式になる
--   同日以降にリネームや移管をしたリポジトリも、新しい形式に移る
--   それ以前からあるリポジトリは、リポジトリや組織の OIDC 設定から任意で切り替えられる
+- 2026年7月15日以降に作成されたリポジトリは、自動で新しい形式になる
+- 同日以降にリネームや移管をしたリポジトリも、新しい形式に移る
+- それ以前からあるリポジトリは、リポジトリや組織の OIDC 設定から任意で切り替えられる
 
 背景にあるのは、名前の再利用による乗っ取りのリスクです。従来の形式は名前だけで照合しているため、リポジトリや組織が削除・改名されたあとに、その名前を別の人が取得すると、同じ `sub` のトークンを発行できてしまいます。数値IDは一度割り当てられたら再利用されないので、ID まで含めて照合すれば、元のリポジトリ以外からは通らなくなります。
 
@@ -192,9 +192,9 @@ apply したら、失敗したワークフローを Actions の画面の「Re-ru
 
 ## まとめ
 
--   `Not authorized to perform sts:AssumeRoleWithWebIdentity` は、信頼ポリシーの条件と実際のトークンが合っていないときに出る
--   2026年7月15日以降に作ったリポジトリ（と、同日以降にリネーム・移管したリポジトリ）は、`sub` が `repo:オーナー@オーナーID/リポジトリ@リポジトリID:...` の形式になる
--   実際の `sub` は、ワークフローの中でトークンをデコードすれば確認できる
--   信頼ポリシーは、ID まで含めた値で完全一致させる。ワイルドカードで緩めない
+- `Not authorized to perform sts:AssumeRoleWithWebIdentity` は、信頼ポリシーの条件と実際のトークンが合っていないときに出る
+- 2026年7月15日以降に作ったリポジトリ（と、同日以降にリネーム・移管したリポジトリ）は、`sub` が `repo:オーナー@オーナーID/リポジトリ@リポジトリID:...` の形式になる
+- 実際の `sub` は、ワークフローの中でトークンをデコードすれば確認できる
+- 信頼ポリシーは、ID まで含めた値で完全一致させる。ワイルドカードで緩めない
 
 OIDC プロバイダーと信頼ポリシーの関係を、証明書認証の IPsec に例えて解説した記事もあります。仕組みから押さえておきたい人は「[OIDCとは？GitHub ActionsとAWS連携の仕組み](/github-actions-oidc-aws/)」もどうぞ。

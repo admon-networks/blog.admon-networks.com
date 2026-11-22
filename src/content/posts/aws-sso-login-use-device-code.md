@@ -16,10 +16,10 @@ ogImage: "../../assets/wp/2026/09/aws-sso-login-use-device-code-eyecatch.png"
 
 ## 環境
 
--   手元の端末：Chromebook（Linux開発環境）
--   IaCサーバー：Debian 13（ブラウザなし）
--   AWS CLI：v2.37.0
--   認証：IAM Identity Center（AWS SSO）
+- 手元の端末：Chromebook（Linux開発環境）
+- IaCサーバー：Debian 13（ブラウザなし）
+- AWS CLI：v2.37.0
+- 認証：IAM Identity Center（AWS SSO）
 
 ## 症状
 
@@ -43,11 +43,11 @@ https://oidc.ap-northeast-1.amazonaws.com/authorize?response_type=code&client_id
 
 ![表示されたURLをクリックし、SSOログインページが表示される](../../assets/wp/2026/09/Screenshot-2026-09-25-00.04.57.png)
 
-*表示されたURLをクリックし、SSOログインページが表示される*
+_表示されたURLをクリックし、SSOログインページが表示される_
 
 ![ユーザ名とパスワードを入力し、承認を押したあとにこの画面が表示されてしまう](../../assets/wp/2026/09/Screenshot-2026-09-25-00.07.09.png)
 
-*ユーザ名とパスワードを入力し、承認を押したあとにこの画面が表示されてしまう*
+_ユーザ名とパスワードを入力し、承認を押したあとにこの画面が表示されてしまう_
 
 ## 結論
 
@@ -63,8 +63,8 @@ aws sso login --profile プロファイル名 --use-device-code
 
 `aws sso login` には次の2つの認証方式があります。
 
--   認可コードフロー（PKCE）：AWS CLI 2.22.0以降のデフォルト　（[PKCEとは](https://qiita.com/ist-n-m/items/992c67b803ff460818ec)）
--   デバイス認可フロー（device code）：2.22.0より前のデフォルト。現在は `--use-device-code` で利用する
+- 認可コードフロー（PKCE）：AWS CLI 2.22.0以降のデフォルト　（[PKCEとは](https://qiita.com/ist-n-m/items/992c67b803ff460818ec)）
+- デバイス認可フロー（device code）：2.22.0より前のデフォルト。現在は `--use-device-code` で利用する
 
 ### PKCEでログインする流れ
 
@@ -80,20 +80,20 @@ aws sso login --profile プロファイル名 --use-device-code
 
 127.0.0.1（ループバックアドレス）は「自分自身」を指すアドレスです。同じ127.0.0.1でも、どのマシンから見るかで指す先が変わります。
 
--   CLIにとっての127.0.0.1：IaCサーバー
--   ブラウザにとっての127.0.0.1：手元の端末
+- CLIにとっての127.0.0.1：IaCサーバー
+- ブラウザにとっての127.0.0.1：手元の端末
 
 CLIはIaCサーバーの37109番で待ち受けていますが、ブラウザは手元の端末の37109番へアクセスします。手元の端末では何も待ち受けていないため、エラーページが表示され、認可コードはCLIに届きません。
 
 ![PKCE方式ではリダイレクト先の127.0.0.1が手元の端末を指し、IaCサーバーのCLIに認可コードが届かない](../../assets/wp/2026/09/aws-sso-login-pkce-127001.png)
 
-*ブラウザにとっての127.0.0.1は手元の端末なので、IaCサーバーのCLIには届かない*
+_ブラウザにとっての127.0.0.1は手元の端末なので、IaCサーバーのCLIには届かない_
 
 ### 手元の端末では問題にならなかった理由
 
 手元の端末ではCLIとブラウザが同じマシンで動いているため、ブラウザにとっての127.0.0.1とCLIにとっての127.0.0.1が一致します。そのため、同じコマンドでも問題なくログインできていました。
 
-なお、症状の出力にもヒントが出ています。「If you are unable to open the URL on this device, run this command again with the '***\--use-device-code***' option.」は、「この端末でURLを開けない場合は --use-device-code を付けて再実行してください」という意味です。
+なお、症状の出力にもヒントが出ています。「If you are unable to open the URL on this device, run this command again with the '_**\--use-device-code**_' option.」は、「この端末でURLを開けない場合は --use-device-code を付けて再実行してください」という意味です。
 
 ## 対処法：--use-device-code を使う
 
@@ -103,8 +103,8 @@ CLIはIaCサーバーの37109番で待ち受けていますが、ブラウザは
 aws sso login --profile プロファイル名 --use-device-code
 ```
 
--   `--profile プロファイル名` ：`~/.aws/config` に定義したプロファイル名
--   `--use-device-code`：デバイス認可フローでログインする
+- `--profile プロファイル名` ：`~/.aws/config` に定義したプロファイル名
+- `--use-device-code`：デバイス認可フローでログインする
 
 実行すると、認証用のURLとコードが表示されます。
 
@@ -162,7 +162,7 @@ SSHのポートフォワードで、手元の端末の37109番をIaCサーバー
 ssh -L 37109:127.0.0.1:37109 user@iac-server
 ```
 
--   `-L ローカルポート:転送先ホスト:転送先ポート`：手元のポートへの通信を、SSH接続先から見た転送先へ中継する。ここでの `127.0.0.1` はIaCサーバーから見た自分自身
+- `-L ローカルポート:転送先ホスト:転送先ポート`：手元のポートへの通信を、SSH接続先から見た転送先へ中継する。ここでの `127.0.0.1` はIaCサーバーから見た自分自身
 
 ただし、CLIの待ち受けポートは実行のたびに変わるため、毎回ポートを確認して転送し直す必要があります。実用的には `--use-device-code` のほうが手軽です。
 
@@ -172,19 +172,19 @@ ssh -L 37109:127.0.0.1:37109 user@iac-server
 
 そのため、次のように使い分けるのがおすすめです。
 
--   ブラウザのある手元の端末：デフォルトのPKCE
--   IaCサーバーなどブラウザのない環境：`--use-device-code`
+- ブラウザのある手元の端末：デフォルトのPKCE
+- IaCサーバーなどブラウザのない環境：`--use-device-code`
 
 また、デバイス認可フローで承認するときは、自分が今実行したコマンドのコードであることを必ず確認しましょう。
 
 ## まとめ
 
--   AWS CLI 2.22.0以降、`aws sso login` のデフォルトはPKCE
--   PKCEは認証後にブラウザを127.0.0.1へ戻す方式なので、CLIとブラウザが別のマシンだと認可コードが届かない
--   ブラウザのないサーバーでは `--use-device-code` を使う
--   手元の端末ではPKCE、サーバーではdevice codeと使い分ける
+- AWS CLI 2.22.0以降、`aws sso login` のデフォルトはPKCE
+- PKCEは認証後にブラウザを127.0.0.1へ戻す方式なので、CLIとブラウザが別のマシンだと認可コードが届かない
+- ブラウザのないサーバーでは `--use-device-code` を使う
+- 手元の端末ではPKCE、サーバーではdevice codeと使い分ける
 
 ## 参考
 
--   [AWS CLI を使用した IAM Identity Center 認証の設定 - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-configure-sso.html)
--   [AWS CLI Adds PKCE-based Authorization for SSO - AWS Developer Tools Blog](https://aws.amazon.com/blogs/developer/aws-cli-adds-pkce-based-authorization-for-sso/)
+- [AWS CLI を使用した IAM Identity Center 認証の設定 - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-configure-sso.html)
+- [AWS CLI Adds PKCE-based Authorization for SSO - AWS Developer Tools Blog](https://aws.amazon.com/blogs/developer/aws-cli-adds-pkce-based-authorization-for-sso/)

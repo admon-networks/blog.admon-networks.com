@@ -2,7 +2,15 @@
 title: "ChromebookでWiresharkを使う方法｜インストールから権限設定まで"
 description: "ChromebookのLinux開発環境（Crostini）にWiresharkをインストールする手順を解説。apt installだけでは足りない権限設定と、ChromeOS本体のNICがキャプチャできない理由まで、実機の画面付きでまとめました。"
 pubDatetime: 2026-09-08T02:00:00.000Z
-tags: ["Chromebook", "LAB", "ネットワーク", "ネットワーク/ Network", "パケットキャプチャ", "検証環境"]
+tags:
+  [
+    "Chromebook",
+    "LAB",
+    "ネットワーク",
+    "ネットワーク/ Network",
+    "パケットキャプチャ",
+    "検証環境",
+  ]
 ogImage: "../../assets/wp/2026/09/eyecatch-chromebook-wireshark.png"
 ---
 
@@ -22,9 +30,9 @@ ogImage: "../../assets/wp/2026/09/eyecatch-chromebook-wireshark.png"
 
 扱う内容は以下の3点です。
 
--   ChromebookへのWiresharkのインストール手順
--   権限設定（ここを飛ばすとインターフェースが表示されません）
--   Chromebookで「見えるもの」と「見えないもの」
+- ChromebookへのWiresharkのインストール手順
+- 権限設定（ここを飛ばすとインターフェースが表示されません）
+- Chromebookで「見えるもの」と「見えないもの」
 
 なお、この環境にはGNS3のクライアント（GUI）も入れています。GNS3サーバ本体はAWS上にあり、Chromebookからリモート接続して使う構成です。GNS3側のパケットキャプチャについては別記事で扱います。
 
@@ -32,18 +40,18 @@ ogImage: "../../assets/wp/2026/09/eyecatch-chromebook-wireshark.png"
 
 今回使ったのは、HP Chromebook 14a-na0009TU です。Gemini Lake世代の入門機で、かなり非力な部類に入ります。
 
-| 項目 | 内容 |
-| --- | --- |
-| 機種 | HP Chromebook 14a-na0009TU |
-| 基板コードネーム | octopus / blooglet |
-| ファームウェア | Google\_Bloog.11297.440.0 |
-| ChromeOS | 16733.60.0（stable-channel） |
-| Chrome | 151.0.7922.222 |
-| CPU | Intel Celeron N4020（2コア / 1.10GHz） |
-| Linux環境 | Debian GNU/Linux 12 (bookworm) x86\_64 |
-| カーネル | 6.6.135 |
-| コンテナ割当メモリ | 2747MiB |
-| Wireshark | 4.0.17（4.0.17-0+deb12u3） |
+| 項目               | 内容                                   |
+| ------------------ | -------------------------------------- |
+| 機種               | HP Chromebook 14a-na0009TU             |
+| 基板コードネーム   | octopus / blooglet                     |
+| ファームウェア     | Google\_Bloog.11297.440.0              |
+| ChromeOS           | 16733.60.0（stable-channel）           |
+| Chrome             | 151.0.7922.222                         |
+| CPU                | Intel Celeron N4020（2コア / 1.10GHz） |
+| Linux環境          | Debian GNU/Linux 12 (bookworm) x86\_64 |
+| カーネル           | 6.6.135                                |
+| コンテナ割当メモリ | 2747MiB                                |
+| Wireshark          | 4.0.17（4.0.17-0+deb12u3）             |
 
 型番は本体裏面のラベルで確認できます。基板コードネームやファームウェアのバージョンは `chrome://version`、Linux側のスペックは `neofetch` でまとめて見られます。
 
@@ -76,7 +84,7 @@ Debian 12のリポジトリから入るので、追加のリポジトリ登録�
 
 ![wireshark-commonのパッケージ設定画面。非特権ユーザーにパケットキャプチャを許可するかを尋ねている](../../assets/wp/2026/09/Screenshot-2026-09-07-22.13.40.png)
 
-*インストール中に表示されるdebconfの設定画面。ここは Yes を選ぶ*
+_インストール中に表示されるdebconfの設定画面。ここは Yes を選ぶ_
 
 > Should non-superusers be able to capture packets?
 
@@ -127,7 +135,7 @@ wireshark &
 
 ![ChromebookのLinux環境で起動したWiresharkのWelcome画面。eth0やLoopback: loなどのインターフェースが一覧表示されている](../../assets/wp/2026/09/Screenshot-2026-09-07-22.18.26.png)
 
-*Chromebook上で起動したWireshark 4.0.17。eth0の右に波形が出ていればキャプチャ権限は正常*
+_Chromebook上で起動したWireshark 4.0.17。eth0の右に波形が出ていればキャプチャ権限は正常_
 
 Welcome画面のインターフェース一覧に `eth0` や `Loopback: lo` が並んでいれば成功です。`eth0` の右に波形（スパークライン）が動いていれば、実際にパケットが見えている証拠になります。
 
@@ -154,13 +162,13 @@ QT_QPA_PLATFORM=xcb wireshark &
 
 ここが一番重要な部分だと思うので、改めて整理しておきます。
 
-| 対象 | 可否 |
-| --- | --- |
-| Linuxコンテナの仮想NIC（eth0） | ○ |
-| ループバック（lo） | ○ |
-| pcapファイルの読み込み・解析 | ○ |
-| ChromeOS本体のWi-Fi / 物理NIC | × |
-| モニターモード（無線キャプチャ） | × |
+| 対象                             | 可否 |
+| -------------------------------- | ---- |
+| Linuxコンテナの仮想NIC（eth0）   | ○    |
+| ループバック（lo）               | ○    |
+| pcapファイルの読み込み・解析     | ○    |
+| ChromeOS本体のWi-Fi / 物理NIC    | ×    |
+| モニターモード（無線キャプチャ） | ×    |
 
 Crostiniのコンテナは、ChromeOS本体から見ると仮想マシンの中の一区画です。本体のネットワークスタックとは分離されているため、コンテナからは本体のトラフィックが見えません。
 
@@ -194,9 +202,9 @@ wireshark ~/capture.pcap &
 
 今回の内容を3行でまとめます。
 
--   ChromebookのLinux開発環境に `apt install wireshark` でインストールできる
--   debconf画面で <Yes> を選び、`usermod -aG wireshark $USER` でグループに追加するまでが必須
--   ChromeOS本体のNICは見えないため、リモート環境のキャプチャを表示するクライアント機として使うのが現実的
+- ChromebookのLinux開発環境に `apt install wireshark` でインストールできる
+- debconf画面で <Yes> を選び、`usermod -aG wireshark $USER` でグループに追加するまでが必須
+- ChromeOS本体のNICは見えないため、リモート環境のキャプチャを表示するクライアント機として使うのが現実的
 
 Celeron N4020・メモリ2GB台という控えめな構成でも、この用途なら不足を感じません。使い道に困っている古いChromebookがあれば、検証用のサブ機として仕立ててみる価値はあると思います。
 

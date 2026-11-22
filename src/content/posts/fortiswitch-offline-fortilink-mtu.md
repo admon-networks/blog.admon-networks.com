@@ -2,7 +2,16 @@
 title: "FortiSwitchがオンラインにならない原因はFortiLinkのMTU設定だった"
 description: "FortiSwitchがFortiGateのSwitch Controller上でオンラインにならない事象の原因と切り分け手順を解説します。DHCPは通るのにCAPWAPのDTLSハンドシェイクに進まない場合、FortiLinkインタフェースのMTU設定を疑ってください。"
 pubDatetime: 2026-09-08T22:23:00.000Z
-tags: ["FortiGate", "セキュリティ", "セキュリティ / Security", "トラブルシュート", "ネットワーク", "ネットワーク/ Network", "ファイアウォール"]
+tags:
+  [
+    "FortiGate",
+    "セキュリティ",
+    "セキュリティ / Security",
+    "トラブルシュート",
+    "ネットワーク",
+    "ネットワーク/ Network",
+    "ファイアウォール",
+  ]
 ogImage: "../../assets/wp/2026/09/fortilink-image.png"
 ---
 
@@ -20,15 +29,15 @@ FortiGateでFortiSwitchを管理する構成（FortiLink）で、「FortiSwitch�
 
 **確認できた事実**
 
--   FortiSwitchはDHCPでIPアドレスを取得できていた
--   パケットキャプチャ上、CAPWAP Discovery Request / Response までは観測できた
--   その先のDTLSハンドシェイクに進んでいなかった
--   正常稼働している他構成とのコンフィグ差分は、FortiGate側のFortiLinkインタフェースのMTU（2500 / 1500）だった
--   FortiGate側でFortilinkインターフェースのMTUを2500に戻したところ、FortiSwitchはオンラインになった
+- FortiSwitchはDHCPでIPアドレスを取得できていた
+- パケットキャプチャ上、CAPWAP Discovery Request / Response までは観測できた
+- その先のDTLSハンドシェイクに進んでいなかった
+- 正常稼働している他構成とのコンフィグ差分は、FortiGate側のFortiLinkインタフェースのMTU（2500 / 1500）だった
+- FortiGate側でFortilinkインターフェースのMTUを2500に戻したところ、FortiSwitchはオンラインになった
 
 **推定したメカニズム（未検証）**
 
--   MTU不足により、Discoveryより大きいDTLSハンドシェイクのパケットが到達できなかった
+- MTU不足により、Discoveryより大きいDTLSハンドシェイクのパケットが到達できなかった
 
 後述しますが、この推定は「あり得る説明」であって、パケットサイズやPMTU Discoveryの挙動まで確認したわけではありません。
 
@@ -44,13 +53,13 @@ CAPWAPそのものの仕組みについては、無線AP（LAP）とWLCの例で
 
 FortiLinkの構成としてはこうなっています。
 
-| 項目 | 内容 |
-| --- | --- |
-| 管理VLAN | 4094（FortiLinkのデフォルト） |
-| 制御チャネル | UDP 5246（デフォルト。変更可能） |
-| データチャネル | UDP 5247（デフォルト） |
-| 暗号化 | DTLS |
-| IPアドレス配布 | FortiGate上のDHCPサーバ |
+| 項目           | 内容                             |
+| -------------- | -------------------------------- |
+| 管理VLAN       | 4094（FortiLinkのデフォルト）    |
+| 制御チャネル   | UDP 5246（デフォルト。変更可能） |
+| データチャネル | UDP 5247（デフォルト）           |
+| 暗号化         | DTLS                             |
+| IPアドレス配布 | FortiGate上のDHCPサーバ          |
 
 ポイントは、**この管理通信がトンネルである**ということです。トンネルということは、中身のパケットに外側のヘッダが追加されます。ここがMTUの話に関わってきます。
 
@@ -78,12 +87,12 @@ RFC 5415のステートマシンをざっくり整理すると、こういう流
 
 ![CAPWAPセッション確立の6フェーズ。Discovery、DTLS Setup、Join、Configure、Data Check、Runの順に進み、今回はDiscoveryまでで停止したことを示した図](../../assets/wp/2026/09/image.png)
 
-*図1：CAPWAPセッション確立の流れ。今回の事象では①Discoveryまでは観測できたが、②DTLS Setupに進まなかった。*
+_図1：CAPWAPセッション確立の流れ。今回の事象では①Discoveryまでは観測できたが、②DTLS Setupに進まなかった。_
 
 ここで重要なのが、**各フェーズで飛ぶパケットのサイズが違う**という点です。
 
--   **Discovery Request / Response** … 数百バイト程度で小さい
--   **DTLSハンドシェイク** … 証明書チェーンを交換するため、相対的にかなり大きい
+- **Discovery Request / Response** … 数百バイト程度で小さい
+- **DTLSハンドシェイク** … 証明書チェーンを交換するため、相対的にかなり大きい
 
 MTUに起因する問題であれば、小さいDiscoveryは通過し、より大きいDTLSハンドシェイクで顕在化する、という順序になります。今回観測した「Discoveryは見える、DTLSに進まない」という症状は、これと整合します。
 
@@ -103,12 +112,12 @@ RFC 5415には、CAPWAPメッセージがMTUを超える場合のfragmentation�
 
 なお、これは「このフェーズならこの原因」という断定ではなく、あくまで優先的に見る候補です。実際には複数要因が絡むこともあります。
 
-| 止まった場所 | 主な確認ポイント |
-| --- | --- |
-| DHCPでIPが取れない | VLAN設定、DHCPサーバ設定、vci-match、物理結線 |
-| Discoveryが届かない/返らない | L2疎通、ポート設定、ACL、FortiLink未認可 |
+| 止まった場所                    | 主な確認ポイント                                  |
+| ------------------------------- | ------------------------------------------------- |
+| DHCPでIPが取れない              | VLAN設定、DHCPサーバ設定、vci-match、物理結線     |
+| Discoveryが届かない/返らない    | L2疎通、ポート設定、ACL、FortiLink未認可          |
 | Discoveryは通るがDTLSに進まない | MTU、証明書、時刻ズレ（NTP）、cipherの不一致、ACL |
-| DTLSは通るがJoinで落ちる | ファームウェア非互換、認可状態、ライセンス |
+| DTLSは通るがJoinで落ちる        | ファームウェア非互換、認可状態、ライセンス        |
 
 トラブルシュートの速度は、扱っているプロトコルへの事前理解の量にかなり比例すると考えています。
 
@@ -129,7 +138,7 @@ get system status
 対応するバージョンの組み合わせは、Fortinetが「FortiLink Compatibility」というPDFで公開しています。組み合わせの数が多く、改訂も入るため、この記事では表を転載せず参照先だけ示します。**必ず最新版で確認してください。**
 
 > [FortiLink Compatibility（Fortinet公式）](https://docs.fortinet.com/document/fortiswitch/8.0.0/fortilink-compatibility)
-> 
+>
 > ※上記ページで確認した時点（2026年9月）では、ドキュメントの最終更新は2026年9月3日でした。
 
 なお、対応外の組み合わせの場合はDTLSまで進んでからJoinやConfigureの段階で落ちることが多く、今回のような「Discoveryで止まる」挙動とは出方が異なる可能性があります。前掲のフェーズ別の表と合わせて切り分けると、どちらを疑うべきか判断しやすくなります。
@@ -164,9 +173,9 @@ diagnose sniffer packet any "port 5246 or port 5247" 4 0 a
 
 観測結果は以下の通りでした。
 
--   CAPWAP Discovery Request … 見える
--   CAPWAP Discovery Response … 見える
--   **DTLSハンドシェイク … 進まない**
+- CAPWAP Discovery Request … 見える
+- CAPWAP Discovery Response … 見える
+- **DTLSハンドシェイク … 進まない**
 
 前掲の表に照らすと、この時点で見るべき箇所がかなり絞れます。  
 ※FortiGate側でFortilinkインターフェースのパケットキャプチャでも可です
@@ -218,11 +227,11 @@ end
 
 ## まとめ
 
--   FortiLinkの管理通信はCAPWAP（デフォルトでUDP 5246/5247）でカプセル化され、DTLSで暗号化される
--   カプセル化を前提とするため、FortiGate側のFortiLinkインタフェースには標準の1500より大きいMTUが使われる（筆者環境では2500）
--   「DHCPは通る / Discoveryは見える / DTLSに進まない」という切り分け結果からMTUを疑い、デフォルト値に戻して復旧した
--   ただしCAPWAP/DTLSにはfragmentationやPMTU Discoveryの仕組みがあるため、「1500だと必ず落ちる」とは言えない。厳密な因果は未検証
--   MTUを疑う前に、FortiOSとFortiSwitchOSの互換性も確認しておくと切り分けが早い
--   実務上の結論はシンプルで、**FortiLinkのMTUはデフォルトのまま触らない**
+- FortiLinkの管理通信はCAPWAP（デフォルトでUDP 5246/5247）でカプセル化され、DTLSで暗号化される
+- カプセル化を前提とするため、FortiGate側のFortiLinkインタフェースには標準の1500より大きいMTUが使われる（筆者環境では2500）
+- 「DHCPは通る / Discoveryは見える / DTLSに進まない」という切り分け結果からMTUを疑い、デフォルト値に戻して復旧した
+- ただしCAPWAP/DTLSにはfragmentationやPMTU Discoveryの仕組みがあるため、「1500だと必ず落ちる」とは言えない。厳密な因果は未検証
+- MTUを疑う前に、FortiOSとFortiSwitchOSの互換性も確認しておくと切り分けが早い
+- 実務上の結論はシンプルで、**FortiLinkのMTUはデフォルトのまま触らない**
 
 同じ症状で詰まっている人の手がかりになれば幸いです。

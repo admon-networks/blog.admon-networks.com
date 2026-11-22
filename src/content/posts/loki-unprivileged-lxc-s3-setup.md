@@ -2,14 +2,15 @@
 title: "非特権LXCに Loki を入れて S3 に書き込むまで｜設定ファイルを1行ずつ読み解く"
 description: "Proxmox の非特権LXCに Loki 3.7 を入れ、S3 にチャンクを書き込むまでの記録です。config.yml の各項目をなぜその値にしたのか、GOMEMLIMIT が必要な理由、retention を効かせる設定、起動前の構文チェックまで解説します。"
 pubDatetime: 2026-09-16T04:26:00.000Z
-tags: ["AWS", "S3", "サーバ", "サーバー", "ネットワーク", "ネットワーク/ Network"]
+tags:
+  ["AWS", "S3", "サーバ", "サーバー", "ネットワーク", "ネットワーク/ Network"]
 ogImage: "../../assets/wp/2026/09/eyecatch-loki-lxc-s3-setup.png"
 ---
 
 自宅ネットワークのログ基盤を作っています。
 
--   [Proxmox の非特権LXCで syslog 514番が開かない理由と対処法](/proxmox-unprivileged-lxc-rsyslog-514/)（rsyslog で syslog を受ける）
--   [Loki のログ保管に S3 を使う設計](/loki-s3-bucket-retention-cost/)（保管先の S3 を設計する）
+- [Proxmox の非特権LXCで syslog 514番が開かない理由と対処法](/proxmox-unprivileged-lxc-rsyslog-514/)（rsyslog で syslog を受ける）
+- [Loki のログ保管に S3 を使う設計](/loki-s3-bucket-retention-cost/)（保管先の S3 を設計する）
 
 今回はその続きで、**Loki を非特権LXCに入れて、S3 にチャンクが書き込まれるところまで**を扱います。
 
@@ -23,12 +24,12 @@ ogImage: "../../assets/wp/2026/09/eyecatch-loki-lxc-s3-setup.png"
 
 前回までで、以下ができている状態です。
 
-| 項目 | 状態 |
-| --- | --- |
-| LXC | Debian 12、非特権、Nesting有効、メモリ4GB、ディスク16GB |
-| rsyslog | 514/udp で受信、`/var/log/network/` に出力 |
-| S3 バケット | 東京リージョン、SSE-S3、ライフサイクル180日 |
-| IAM | 対象バケットのみに `Get/Put/Delete/List` を許可したユーザーとアクセスキー |
+| 項目        | 状態                                                                      |
+| ----------- | ------------------------------------------------------------------------- |
+| LXC         | Debian 12、非特権、Nesting有効、メモリ4GB、ディスク16GB                   |
+| rsyslog     | 514/udp で受信、`/var/log/network/` に出力                                |
+| S3 バケット | 東京リージョン、SSE-S3、ライフサイクル180日                               |
+| IAM         | 対象バケットのみに `Get/Put/Delete/List` を許可したユーザーとアクセスキー |
 
 Loki の用語（チャンク、flush、WAL、ストリーム、ingester/querier/compactor）は [前回の記事](/loki-s3-bucket-retention-cost/) で整理しているので、そちらを先に読んでいただけると設定の意味が追いやすいと思います。
 
@@ -110,12 +111,12 @@ WantedBy=multi-user.target
 
 読み取れることが4つあります。
 
-| 項目 | 値 | 意味 |
-| --- | --- | --- |
-| `User=loki` | 専用ユーザー | root で動いていない。良い既定値 |
-| 設定ファイル | `/etc/loki/config.yml` | `loki.yaml` ではない |
-| `Restart=on-failure` | 異常終了時のみ | S3 到達不能時に無限再起動しない |
-| unit の場所 | `/etc/systemd/system/` | 通常の `/lib/systemd/system/` ではない |
+| 項目                 | 値                     | 意味                                   |
+| -------------------- | ---------------------- | -------------------------------------- |
+| `User=loki`          | 専用ユーザー           | root で動いていない。良い既定値        |
+| 設定ファイル         | `/etc/loki/config.yml` | `loki.yaml` ではない                   |
+| `Restart=on-failure` | 異常終了時のみ         | S3 到達不能時に無限再起動しない        |
+| unit の場所          | `/etc/systemd/system/` | 通常の `/lib/systemd/system/` ではない |
 
 **unit が `/etc/systemd/system/` に置かれているのは少し珍しいです。** ここは管理者用の領域なので、直接編集できてしまいます。
 
@@ -189,14 +190,14 @@ schema_config:
 
 **問題がある部分はこちらです。**
 
-| 箇所 | 既定値 | 問題 |
-| --- | --- | --- |
-| `path_prefix` | `/tmp/loki` | 再起動で消える。WAL がここにあるのは論外 |
-| `object_store` | `filesystem` | S3 にする |
-| `log_level` | `debug` | 平常運転でログが膨大になる |
-| `from` | `2020-10-24` | 過去日付。運用開始日にすべき |
-| retention | 設定なし | 無期限。180日の設計が反映されていない |
-| `analytics` | 有効（既定） | 外部への送信。自宅環境では不要 |
+| 箇所           | 既定値       | 問題                                     |
+| -------------- | ------------ | ---------------------------------------- |
+| `path_prefix`  | `/tmp/loki`  | 再起動で消える。WAL がここにあるのは論外 |
+| `object_store` | `filesystem` | S3 にする                                |
+| `log_level`    | `debug`      | 平常運転でログが膨大になる               |
+| `from`         | `2020-10-24` | 過去日付。運用開始日にすべき             |
+| retention      | 設定なし     | 無期限。180日の設計が反映されていない    |
+| `analytics`    | 有効（既定） | 外部への送信。自宅環境では不要           |
 
 ## config.yml を書き換える
 
@@ -479,7 +480,7 @@ level=info caller=main.go:109 msg="config is valid"
 **`loki` ユーザーで実行しているのがポイントです。** root で通っても `loki` で通らない、という事態を避けられます。
 
 > **`sudo` は入っていません。** Debian の LXC テンプレートは最小構成なので、root 運用前提で `sudo` が省かれています。代わりに `runuser` を使います。util-linux に含まれており最初から入っています。
-> 
+>
 > `--` は「ここから先はコマンド本体」という区切りで、`-config.file` が `runuser` のオプションと誤解されるのを防ぎます。
 
 ## 起動と確認
@@ -615,12 +616,12 @@ aws s3 ls s3://example-loki-logs/ --recursive
 
 キーの構造はこうなっています。
 
-| 部分 | 意味 |
-| --- | --- |
-| `fake` | テナントID |
-| `2604b9a74c5896b5` | ストリームのフィンガープリント（ラベルの組み合わせから導出） |
-| `1a096112c58:1a096112c58` | チャンクの開始・終了時刻（16進） |
-| `7ee34e17` | チェックサム |
+| 部分                      | 意味                                                         |
+| ------------------------- | ------------------------------------------------------------ |
+| `fake`                    | テナントID                                                   |
+| `2604b9a74c5896b5`        | ストリームのフィンガープリント（ラベルの組み合わせから導出） |
+| `1a096112c58:1a096112c58` | チャンクの開始・終了時刻（16進）                             |
+| `7ee34e17`                | チェックサム                                                 |
 
 flush ログの `fp=2604b9a74c5896b5` と一致しています。**ログに出たチャンクが、そのまま S3 のオブジェクトになったことが追跡できます。**
 
@@ -666,11 +667,11 @@ Mem:           4.0Gi       113Mi       3.3Gi        88Ki       635Mi       3.9Gi
 Swap:          512Mi          0B       512Mi
 ```
 
-| 項目 | 値 |
-| --- | --- |
-| Loki プロセス | 56 MB |
-| コンテナ全体 | 113 MiB / 4.0 GiB |
-| Swap | 未使用 |
+| 項目          | 値                |
+| ------------- | ----------------- |
+| Loki プロセス | 56 MB             |
+| コンテナ全体  | 113 MiB / 4.0 GiB |
+| Swap          | 未使用            |
 
 **割り当ての2.8%です。** 当初の見積もり「Loki 500MB〜1GB」を大きく下回りました。
 
@@ -706,20 +707,20 @@ cat -A /etc/loki/config.yml | head -20
 -bash: $'\E[200~id': command not found
 ```
 
-* * *
+---
 
 ## まとめ
 
-| やりたいこと | 対応 |
-| --- | --- |
-| インストール直後の事故を防ぐ | `apt install` 後すぐ `systemctl stop`。既定は `/tmp` に書く |
-| WAL を消えない場所に置く | `path_prefix` を `/var/lib/loki` に |
-| S3 を使う | `schema_config` の `object_store: aws` + `storage_config.aws` |
-| 認証情報を分離する | `EnvironmentFile` で drop-in から読ませ、`0600` に |
-| OOM を避ける | **`GOMEMLIMIT` を明示**。Go は cgroup の制限を自動で読まない |
-| retention を効かせる | `retention_enabled: true` と `retention_period` の**両方**が必要 |
-| 起動前に検証する | `runuser -u loki -- loki -verify-config` |
-| S3 連携を確認する | push → `/flush` → `aws s3 ls`。起動しただけでは書き込まれない |
+| やりたいこと                 | 対応                                                             |
+| ---------------------------- | ---------------------------------------------------------------- |
+| インストール直後の事故を防ぐ | `apt install` 後すぐ `systemctl stop`。既定は `/tmp` に書く      |
+| WAL を消えない場所に置く     | `path_prefix` を `/var/lib/loki` に                              |
+| S3 を使う                    | `schema_config` の `object_store: aws` + `storage_config.aws`    |
+| 認証情報を分離する           | `EnvironmentFile` で drop-in から読ませ、`0600` に               |
+| OOM を避ける                 | **`GOMEMLIMIT` を明示**。Go は cgroup の制限を自動で読まない     |
+| retention を効かせる         | `retention_enabled: true` と `retention_period` の**両方**が必要 |
+| 起動前に検証する             | `runuser -u loki -- loki -verify-config`                         |
+| S3 連携を確認する            | push → `/flush` → `aws s3 ls`。起動しただけでは書き込まれない    |
 
 今回いちばん引っかかったのは、**`loki` ユーザーのグループが `nogroup` だった**ことでした。
 

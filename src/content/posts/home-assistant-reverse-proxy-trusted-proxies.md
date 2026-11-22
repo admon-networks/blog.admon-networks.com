@@ -2,7 +2,14 @@
 title: "Home Assistantのリバースプロキシで400になる原因と対処法"
 description: "Home Assistantをnginx経由で開くと400エラーに。YAMLのtrusted_proxiesが効かない原因は仕様変更でした。画面での設定方法を解説します。"
 pubDatetime: 2026-09-23T12:31:33.000Z
-tags: ["HomeAssistant", "サーバー", "トラブルシュート", "ネットワーク/ Network", "リバースプロキシ"]
+tags:
+  [
+    "HomeAssistant",
+    "サーバー",
+    "トラブルシュート",
+    "ネットワーク/ Network",
+    "リバースプロキシ",
+  ]
 ogImage: "../../assets/wp/2026/09/home-assistant-reverse-proxy-trusted-proxies.png"
 ---
 
@@ -14,21 +21,21 @@ nginxの設定自体はよくある形なので、すぐ終わるだろうと思
 
 ## 先に結論
 
--   `400 Bad Request` は「Home Assistantまで届いたうえで、拒否されている」状態です。
--   最近のHome Assistantでは、`http:` の設定はYAMLではなく画面（設定 → システム → ネットワーク）で行います。YAMLに書いても無視されます。
--   `configuration.yaml` の `http:` ブロックは削除推奨です（2027.2.0以降は使えなくなると警告が出ます）。
--   接続テストの`curl -I` で `405` が返っても失敗ではありません。`GET` で確認します。
+- `400 Bad Request` は「Home Assistantまで届いたうえで、拒否されている」状態です。
+- 最近のHome Assistantでは、`http:` の設定はYAMLではなく画面（設定 → システム → ネットワーク）で行います。YAMLに書いても無視されます。
+- `configuration.yaml` の `http:` ブロックは削除推奨です（2027.2.0以降は使えなくなると警告が出ます）。
+- 接続テストの`curl -I` で `405` が返っても失敗ではありません。`GET` で確認します。
 
 ## 環境
 
 IPアドレスとドメイン名は、ドキュメント用の例示の値に置き換えています（`192.0.2.0/24` はRFC 5737で説明用に予約されている範囲です）。
 
-| 項目 | 内容 |
-| --- | --- |
-| リバースプロキシ | nginx（Debian 13のLXC）、`192.0.2.1` |
-| Home Assistant | Proxmox上のVM、`192.0.2.10:8123`、バージョン:2026.9.1 |
-| ホスト名 | `has.home.example.com` |
-| 証明書 | Let's Encryptのワイルドカード証明書（取得済み） |
+| 項目             | 内容                                                  |
+| ---------------- | ----------------------------------------------------- |
+| リバースプロキシ | nginx（Debian 13のLXC）、`192.0.2.1`                  |
+| Home Assistant   | Proxmox上のVM、`192.0.2.10:8123`、バージョン:2026.9.1 |
+| ホスト名         | `has.home.example.com`                                |
+| 証明書           | Let's Encryptのワイルドカード証明書（取得済み）       |
 
 ## nginxにHome Assistant用の設定を追加する
 
@@ -80,11 +87,11 @@ map $http_upgrade $connection_upgrade {
 curl -sI -m 10 -H "Host: has.home.example.com" http://192.0.2.1/ | head -n 1
 ```
 
--   `-s`：進捗表示を出さない
--   `-I`：応答のヘッダーだけを取得する（`HEAD` という方式で問い合わせる）
--   `-m 10`：10秒で打ち切る
--   `-H "Host: ..."`：IPアドレス宛てでも、nginxにどのサイト宛てかを伝える
--   `| head -n 1`：結果の1行目（ステータス）だけを表示する
+- `-s`：進捗表示を出さない
+- `-I`：応答のヘッダーだけを取得する（`HEAD` という方式で問い合わせる）
+- `-m 10`：10秒で打ち切る
+- `-H "Host: ..."`：IPアドレス宛てでも、nginxにどのサイト宛てかを伝える
+- `| head -n 1`：結果の1行目（ステータス）だけを表示する
 
 ```text file="結果"
 HTTP/1.1 400 Bad Request
@@ -107,7 +114,7 @@ http:
 
 ![Home Assistantの修復画面に表示された、HTTP YAML configuration is ignored after migrationの警告](../../assets/wp/2026/09/Screenshot-2026-09-23-15.54.22-1.png)
 
-*修復に表示された警告*
+_修復に表示された警告_
 
 タイトルは「`HTTP YAML configuration is ignored after migration`」です。本文には、`http:` の設定はすでに画面側へ移行済みで、YAMLの内容は無視されていると書かれていました。YAMLから `http:` ブロックを削除し、「Settings > System > Network」で管理するように、という案内です。さらに、2027.2.0以降は利用できなくなるので、アップグレード前に対処するようにとも表示されていました。
 
@@ -117,12 +124,12 @@ http:
 
 まず `configuration.yaml` から `http:` ブロックを削除しました。そのうえで、「設定」→「システム」→「ネットワーク」の「Reverse proxy」で、次のように設定しました。
 
--   `Trust X-Forwarded-For`：有効
--   `Trusted proxies`：`192.0.2.1`（「追加Trusted proxies」ボタンで項目を追加）
+- `Trust X-Forwarded-For`：有効
+- `Trusted proxies`：`192.0.2.1`（「追加Trusted proxies」ボタンで項目を追加）
 
 ![Home Assistantのネットワーク設定のReverse proxyで、Trust X-Forwarded-Forを有効にし、Trusted proxiesにリバースプロキシのIPアドレスを追加した画面](../../assets/wp/2026/09/Screenshot-2026-09-23-15.58.13-1.png)
 
-*Reverse proxyの設定画面*
+_Reverse proxyの設定画面_
 
 途中、`Trusted proxies` にIPアドレスを入れないまま保存しようとしたところ、次のエラーが出ました。
 
@@ -150,8 +157,8 @@ HTTP/1.1 405 Method Not Allowed
 curl -s -o /dev/null -w "%{http_code}\n" -m 10 -H "Host: has.home.example.com" http://192.0.2.1/
 ```
 
--   `-o /dev/null`：ページの本文は捨てる
--   `-w "%{http_code}\n"`：ステータスコードだけを表示する
+- `-o /dev/null`：ページの本文は捨てる
+- `-w "%{http_code}\n"`：ステータスコードだけを表示する
 
 ```text file="結果"
 200
@@ -163,9 +170,9 @@ curl -s -o /dev/null -w "%{http_code}\n" -m 10 -H "Host: has.home.example.com" h
 
 今回はまったのは、「昔からの正しい方法」が仕様変更で効かなくなっていたからでした。YAMLの書き方を何度見直しても直らないはずです。振り返ると、次の3つが判断のポイントでした。
 
--   `400` は届いたうえで拒否されている。まずは誰が返しているかを考える
--   設定が効かないときは、修復（リペア）の警告も確認する
--   ステータスコードが変わったら、状況が進んだサインとして読む
+- `400` は届いたうえで拒否されている。まずは誰が返しているかを考える
+- 設定が効かないときは、修復（リペア）の警告も確認する
+- ステータスコードが変わったら、状況が進んだサインとして読む
 
 自宅インフラ全体の構成は、[自宅ネットワーク基本設計書](/home-network-basicdesign/)にまとめています。  
 同じ環境でのトラブル対応として、[UnboundのSERVFAILの記事](/unbound-servfail-infra-cache/)もあわせてどうぞ。

@@ -3,16 +3,24 @@ title: "【基本編】CiscoのルータでBGPを設定してみた"
 description: "概要 現在CCNP ENCORの試験対策で、BGPの設定を勉強中です。 備忘も兼ねて設定の手順を解説します。 紹介している設定手順で進めると、BGPによるルートの広告とBGPネイバー関係の確立が出来ます。 構成図（超ざっ…"
 pubDatetime: 2025-06-24T14:09:57.000Z
 modDatetime: 2025-10-02T14:43:48.000Z
-tags: ["BGP設定", "CCNP", "Cisco", "ネットワーク", "ネットワーク/ Network", "ルーティング"]
+tags:
+  [
+    "BGP設定",
+    "CCNP",
+    "Cisco",
+    "ネットワーク",
+    "ネットワーク/ Network",
+    "ルーティング",
+  ]
 ogImage: "../../assets/wp/2025/06/image-1.png"
 ---
 
 ## 概要
 
 現在CCNP ENCORの試験対策で、BGPの設定を勉強中です。  
-備忘も兼ねて設定の手順を解説します。  
-  
-紹介している設定手順で進めると、BGPによるルートの広告とBGPネイバー関係の確立が出来ます。  
+備忘も兼ねて設定の手順を解説します。
+
+紹介している設定手順で進めると、BGPによるルートの広告とBGPネイバー関係の確立が出来ます。
 
 ## 構成図（超ざっくり）
 
@@ -30,29 +38,29 @@ Router2(config-router)#neighbor 192.168.10.1 remote-as 65001
 Router2(config-router)#network 192.168.20.0 mask 255.255.255.0
 ```
 
-コマンドについて、解説していきます。  
-  
+コマンドについて、解説していきます。
+
 **①BGPの有効化　（BGPのルータコンフィグレーションモードに遷移）**  
 コマンド：router bgp ＜自AS番号＞  
-コマンドを実行するモード：グローバルコンフィグレーションモード　 (config)#  
-  
+コマンドを実行するモード：グローバルコンフィグレーションモード　 (config)#
+
 **②ネイバーの設定**  
 コマンド：neighbor ＜ネイバーのIPアドレス＞ remote-as　＜ネイバーのAS番号＞  
-コマンドを実行するモード：ルータコンフィグレーションモード　(config-router)#  
-  
+コマンドを実行するモード：ルータコンフィグレーションモード　(config-router)#
+
 **③広告するネットワークの設定（アドバタイズ設定）**  
 コマンド：network ＜広告するネットワークアドレス＞ \[mask ＜サブネットマスク＞\]  
 コマンドを実行するモード：ルータコンフィグレーションモード　(config-router)#  
 ※\[mask ＜サブネットマスク＞\]は省略することも可能です。  
-省略した場合は、クラスフルネットワークを広告します。  
+省略した場合は、クラスフルネットワークを広告します。
 
 ## 設定値の確認①
 
 上記の手順によりBGPの設定が出来たら、コマンドで設定状態を確認します。  
-コマンド：show ip bgp neighbors  
+コマンド：show ip bgp neighbors
 
 ```text
-Router2#show ip bgp neighbors 
+Router2#show ip bgp neighbors
 BGP neighbor is 192.168.10.1,  remote AS 65001, external link　 >>ネイバーのIPアドレスとAS番号
   BGP version 4, remote router ID 192.168.10.1
   BGP state = Established, up for 00:01:38　　　　　　　　　　　　>>状態が確認できる　※Establishedのため正常にBGP関係が確立できている
@@ -64,12 +72,12 @@ BGP neighbor is 192.168.10.1,  remote AS 65001, external link　 >>ネイバー�
     Four-octets ASN Capability: advertised and received
     Address family IPv4 Unicast: advertised and received
     Enhanced Refresh Capability: advertised and received
-    Multisession Capability: 
+    Multisession Capability:
     Stateful switchover support enabled: NO for session 1
   Message statistics:
     InQ depth is 0
     OutQ depth is 0
-    
+
                          Sent       Rcvd
     Opens:                  1          1
     Notifications:          0          0
@@ -114,7 +122,7 @@ BGP neighbor is 192.168.10.1,  remote AS 65001, external link　 >>ネイバー�
   Last reset never
   Transport(tcp) path-mtu-discovery is enabled
   Graceful-Restart is disabled
-Connection state is ESTAB, I/O status: 1, unread input bytes: 0            
+Connection state is ESTAB, I/O status: 1, unread input bytes: 0
 Connection is ECN Disabled, Mininum incoming TTL 0, Outgoing TTL 1
 Local host: 192.168.10.2, Local port: 26046
 Foreign host: 192.168.10.1, Foreign port: 179
@@ -147,26 +155,26 @@ Rcvd: 9 (out of order: 0), with data: 5, total data bytes: 137
 Sent: 10 (retransmit: 0, fastretransmit: 0, partialack: 0, Second Congestion: 0), with data: 5, total data bytes: 191
  Packets received in fast path: 0, fast processed: 0, slow path: 0
  fast lock acquisition failures: 0, slow path: 0
-TCP Semaphore      0x0EBACB30  FREE 
+TCP Semaphore      0x0EBACB30  FREE
 ```
 
-上記は\[show ip bgp neighbors\]の実行例です。  
-  
+上記は\[show ip bgp neighbors\]の実行例です。
+
 2行目の出力を参照すると、ネイバーのIPアドレスとAS番号が確認できます。  
-「BGP neighbor is 192.168.10.1, remote AS 65001, external link」  
-  
+「BGP neighbor is 192.168.10.1, remote AS 65001, external link」
+
 なお、4行目の「BGP state」の状態を確認すると、BGP関係が確立できているかを確認できます。  
-Establishedと表示されているため、正常に接続が確立できている状態です。  
-  
+Establishedと表示されているため、正常に接続が確立できている状態です。
+
 **Establishedの状態では、  
 UPDATEメッセージを交換し、経路情報の交換を行います。**  
 そして、NOTIFICATIONメッセージを受信した場合や問題が発生した場合は、stateはIdleに戻ります。  
-※この辺の解説はまた改めてまとめます。  
-  
+※この辺の解説はまた改めてまとめます。
+
 ※UPDATEメッセージとは・・・  
 経路情報を広告するために用いられるパケット。このパケットに経路情報が格納されている。  
 なお、UPDATEメッセージには、①転送可能な経路情報、②転送が不可能になり削除が必要な経路情報、③パス属性  
-が含まれている。  
+が含まれている。
 
 ## 設定値の確認②
 

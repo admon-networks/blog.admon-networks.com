@@ -21,9 +21,9 @@ ssh: Could not resolve hostname builder.home.example.com: Name or service not kn
 
 ## 環境
 
--   クライアント：Chromebook（Linux開発環境 / Crostini）
--   内部DNS：Pi-hole ＋ Unbound（`home.example.com` の内部ゾーンを持っている）
--   公開DNS：`example.com` は Route 53 で管理
+- クライアント：Chromebook（Linux開発環境 / Crostini）
+- 内部DNS：Pi-hole ＋ Unbound（`home.example.com` の内部ゾーンを持っている）
+- 公開DNS：`example.com` は Route 53 で管理
 
 ## 結論
 
@@ -73,10 +73,10 @@ example.com.        523     IN      SOA     ns-xxxx.awsdns-xx.co.uk. awsdns-host
 
 見るところは4つです。
 
--   **status: NXDOMAIN**：「その名前はない」と言われています。
--   **AUTHORITY SECTION のSOAが awsdns**：ここがポイントでした。「ない」と答えたのは、Route 53の公開ゾーンです。Unboundの内部ゾーンから答えたのであれば、Route 53のSOAは出てきません。
--   **SERVER: 100.115.92.193**：ChromeOSのDNSプロキシです。Linux環境からの問い合わせはいったんここを通るので、この行から本当の問い合わせ先はわかりません。
--   **TTL**：43秒後にもう一度実行したら、523が480に減っていました。新しく問い合わせているなら、毎回同じ値から始まるはずです。減っていくのは、キャッシュされた答えを使い回しているサインです。
+- **status: NXDOMAIN**：「その名前はない」と言われています。
+- **AUTHORITY SECTION のSOAが awsdns**：ここがポイントでした。「ない」と答えたのは、Route 53の公開ゾーンです。Unboundの内部ゾーンから答えたのであれば、Route 53のSOAは出てきません。
+- **SERVER: 100.115.92.193**：ChromeOSのDNSプロキシです。Linux環境からの問い合わせはいったんここを通るので、この行から本当の問い合わせ先はわかりません。
+- **TTL**：43秒後にもう一度実行したら、523が480に減っていました。新しく問い合わせているなら、毎回同じ値から始まるはずです。減っていくのは、キャッシュされた答えを使い回しているサインです。
 
 ### ② 内部DNSに直接聞く
 
@@ -111,15 +111,15 @@ Chromebookの場合は、Wi-Fiを一度切断して再接続すれば、キャ�
 
 ほかにも、次の方法で解決できます。
 
--   **待つ**：最大でSOAのTTLの時間（Route 53なら15分）がたてば、自然に消えます。
--   **IPアドレスで入る**：とりあえず作業を進めたいなら、これが一番早いです。
+- **待つ**：最大でSOAのTTLの時間（Route 53なら15分）がたてば、自然に消えます。
+- **IPアドレスで入る**：とりあえず作業を進めたいなら、これが一番早いです。
 
 ## まとめ
 
--   DNSは「ない」という答えもキャッシュする。Route 53のゾーンなら最大15分残る
--   公開DNSのまま内部の名前を引くと、内部DNSに戻したあともしばらく引けない
--   Chromebookなら、Wi-Fiの切断・再接続で直る
--   digでは、status、AUTHORITYのSOA、SERVER、TTLの減り方の4点を見ると、「誰が」「いつの答えを」返しているかがわかる
+- DNSは「ない」という答えもキャッシュする。Route 53のゾーンなら最大15分残る
+- 公開DNSのまま内部の名前を引くと、内部DNSに戻したあともしばらく引けない
+- Chromebookなら、Wi-Fiの切断・再接続で直る
+- digでは、status、AUTHORITYのSOA、SERVER、TTLの減り方の4点を見ると、「誰が」「いつの答えを」返しているかがわかる
 
 ## 関連記事
 

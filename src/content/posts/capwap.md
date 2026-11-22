@@ -3,7 +3,19 @@ title: "【図解】CAPWAPとは？無線APとWLCのセッション確立手順�
 description: "CAPWAPの概要とCAPWAPセッションの確立手順について解説しています。 | CCNA/CCNP対策や実務で役立つ知識"
 pubDatetime: 2025-09-30T14:45:32.000Z
 modDatetime: 2025-12-29T10:37:43.000Z
-tags: ["CCNA", "CCNP", "CCNP ENCOR", "Cisco", "Wireless", "ネットワーク", "ネットワーク/ Network", "プロトコル", "無線", "無線 / Wireless"]
+tags:
+  [
+    "CCNA",
+    "CCNP",
+    "CCNP ENCOR",
+    "Cisco",
+    "Wireless",
+    "ネットワーク",
+    "ネットワーク/ Network",
+    "プロトコル",
+    "無線",
+    "無線 / Wireless",
+  ]
 ogImage: "../../assets/wp/2025/09/ChatGPT-Image-2025年9月30日-23_43_21.png"
 ---
 
@@ -17,9 +29,10 @@ WLC (Wireless LAN Controller) とLAP (Lightweight Access Point)の通信に使�
 CAPWAP (正式名称：Control And Provisioning of Wireless Access Points)は、LAP (Lightweight AP)とWLC間で制御情報とデータのやり取りを行うプロトコルです。
 
 > [!NOTE] CAPWAPの特徴
-> -   UDPベースの通信（制御用:UDP 5246 、 データ用:UDP 5247）
-> -   DTLSによる暗号化に対応
-> -   LWAPPから進化した標準化プロトコル
+>
+> - UDPベースの通信（制御用:UDP 5246 、 データ用:UDP 5247）
+> - DTLSによる暗号化に対応
+> - LWAPPから進化した標準化プロトコル
 
 ![](../../assets/wp/2025/09/capwap-tunnel.jpg)
 
@@ -36,20 +49,20 @@ CAPWAPセッションを確立する前に無線APはWLCを探索します。
 ### 原因①：コントローラ側の時刻が、APの証明書有効期限外の時刻に設定されてしまっている
 
 CAPWAP では、AP と WLC 間の制御通信に DTLS が使用されており、  
-この DTLS セッションの確立には AP に搭載されている証明書（MIC / SSC） が利用されます。  
-  
+この DTLS セッションの確立には AP に搭載されている証明書（MIC / SSC） が利用されます。
+
 AP の証明書状態は、AP CLI から以下のコマンドで確認できます。
 
 ```text
 show crypto ca certificate
 ```
 
-このコマンドにより、AP にインストールされている証明書の 有効期間（Validity Date） を確認できます。  
-  
+このコマンドにより、AP にインストールされている証明書の 有効期間（Validity Date） を確認できます。
+
 出力には複数の証明書情報が含まれる場合がありますが、  
 Associated Trustpoints に表示される証明書のうち、Name フィールドが AP 名と一致するもの が、  
-実際に CAPWAP/DTLS 通信で使用される証明書です。  
-  
+実際に CAPWAP/DTLS 通信で使用される証明書です。
+
 この証明書の有効期限が切れている場合、  
 AP は WLC と DTLS セッションを確立できず、CAPWAP Join に失敗します。
 

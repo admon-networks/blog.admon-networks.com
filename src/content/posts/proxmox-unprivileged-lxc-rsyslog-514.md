@@ -2,7 +2,17 @@
 title: "Proxmox の非特権LXCで syslog 514番が開かない理由と対処法"
 description: "Proxmoxの非特権LXCでは514番などの特権ポートをbindできません。systemdのAmbientCapabilitiesでCAP_NET_BIND_SERVICEを付与し、rsyslogでsyslogを受信する手順を解説します。"
 pubDatetime: 2026-09-06T16:15:43.000Z
-tags: ["LXC", "Proxmox", "syslog", "サーバ", "サーバー", "ネットワーク", "ネットワーク/ Network", "仮想化"]
+tags:
+  [
+    "LXC",
+    "Proxmox",
+    "syslog",
+    "サーバ",
+    "サーバー",
+    "ネットワーク",
+    "ネットワーク/ Network",
+    "仮想化",
+  ]
 ogImage: "../../assets/wp/2026/09/eyecatch-proxmox-lxc-rsyslog-514.png"
 ---
 
@@ -16,7 +26,7 @@ ogImage: "../../assets/wp/2026/09/eyecatch-proxmox-lxc-rsyslog-514.png"
 
 > **記事中のIPアドレスについて** 実環境のアドレスは伏せ、`192.0.2.0/24` に置き換えています。これは RFC 5737 で**ドキュメント用に予約されたレンジ**(TEST-NET-1)です。実在のホストに割り当てられることがないため、記事やドキュメントで例示するのに適しています。逆に言うと、**このアドレスをそのまま設定しても動きません**。ご自身の環境のアドレスに読み替えてください。
 
-* * *
+---
 
 ## 目指す構成
 
@@ -42,14 +52,14 @@ ogImage: "../../assets/wp/2026/09/eyecatch-proxmox-lxc-rsyslog-514.png"
 
 ### 環境
 
-| 項目 | 内容 |
-| --- | --- |
-| ホスト | ThinkCentre M720q (i5-8500T / メモリ16GB / SSD 512GB) |
-| ハイパーバイザ | Proxmox VE 8.4.0 (Linux 6.8.12-9-pve) |
-| コンテナ | Debian 12 (bookworm) / **非特権LXC** |
-| rsyslog | 8.2302.0 |
+| 項目           | 内容                                                  |
+| -------------- | ----------------------------------------------------- |
+| ホスト         | ThinkCentre M720q (i5-8500T / メモリ16GB / SSD 512GB) |
+| ハイパーバイザ | Proxmox VE 8.4.0 (Linux 6.8.12-9-pve)                 |
+| コンテナ       | Debian 12 (bookworm) / **非特権LXC**                  |
+| rsyslog        | 8.2302.0                                              |
 
-* * *
+---
 
 ## LXC の作成
 
@@ -57,7 +67,7 @@ Proxmox の Web UI から作ります。右上の **Create CT** です。
 
 ![Proxmox VE 8.4.0のノード概要画面。右上のCreate CTボタンからLXCを作成する](../../assets/wp/2026/09/01_push-create-CT_Screenshot-2026-09-06-22.00.26.png)
 
-*Proxmox VE 8.4.0のノード概要画面。右上のCreate CTボタンからLXCを作成する*
+_Proxmox VE 8.4.0のノード概要画面。右上のCreate CTボタンからLXCを作成する_
 
 `Create VM` の隣にあるボタンなので、押し間違えないよう注意してください。VM(KVM)と CT(LXC)では作成ウィザードがまったく別物です。
 
@@ -65,29 +75,29 @@ Proxmox の Web UI から作ります。右上の **Create CT** です。
 
 ![Proxmox LXC作成ウィザードのGeneralタブ。Unprivileged containerとNestingにチェックが入った状態](../../assets/wp/2026/09/02_Naming-and-EnterPassword_Screenshot-2026-09-06-22.02.19.png)
 
-*Proxmox LXC作成ウィザードのGeneralタブ。Unprivileged containerとNestingにチェックが入った状態*
+_Proxmox LXC作成ウィザードのGeneralタブ。Unprivileged containerとNestingにチェックが入った状態_
 
-| 項目 | 値 | 備考 |
-| --- | --- | --- |
-| Node | pve01 |  |
-| CT ID | 104 | 既存コンテナからの連番 |
-| Hostname | SV-LOG-01 | 既存の命名規則に合わせる |
-| Unprivileged container | **✓** | デフォルトのまま |
-| Nesting | **✓** | デフォルトのまま。**後述するが重要** |
-| Password | 任意 | SSH公開鍵を貼ってもよい |
+| 項目                   | 値        | 備考                                 |
+| ---------------------- | --------- | ------------------------------------ |
+| Node                   | pve01     |                                      |
+| CT ID                  | 104       | 既存コンテナからの連番               |
+| Hostname               | SV-LOG-01 | 既存の命名規則に合わせる             |
+| Unprivileged container | **✓**     | デフォルトのまま                     |
+| Nesting                | **✓**     | デフォルトのまま。**後述するが重要** |
+| Password               | 任意      | SSH公開鍵を貼ってもよい              |
 
 ホスト名は `SV-LOKI-01` でもよかったのですが、この LXC には rsyslog・Loki・Grafana が同居します。製品名ではなく役割で `LOG` としました。**将来 Loki を別のものに差し替えても名前を変えずに済む**からです。
 
 `Unprivileged container` と `Nesting` はデフォルトでチェックが入っています。両方ともそのままにします。
 
--   **Unprivileged container**:この記事の主題になる設定です。有効にすると UID マッピングが働き、セキュリティが上がる代わりに特権ポートが使えなくなります
--   **Nesting**:非特権コンテナで systemd を正常に動かすために必要です。**これを外すと一部の systemd サービスが起動しなくなります**(後述のハマりどころで実例を挙げます)
+- **Unprivileged container**:この記事の主題になる設定です。有効にすると UID マッピングが働き、セキュリティが上がる代わりに特権ポートが使えなくなります
+- **Nesting**:非特権コンテナで systemd を正常に動かすために必要です。**これを外すと一部の systemd サービスが起動しなくなります**(後述のハマりどころで実例を挙げます)
 
 ### Template:Debian か Ubuntu か
 
 ![LXC作成のTemplateタブでdebian-12-standardテンプレートを選択した画面](../../assets/wp/2026/09/03_Set-Template_Screenshot-2026-09-06-22.05.13.png)
 
-*LXC作成のTemplateタブでdebian-12-standardテンプレートを選択した画面*
+_LXC作成のTemplateタブでdebian-12-standardテンプレートを選択した画面_
 
 `debian-12-standard_12.12-1_amd64.tar.zst` を選びました。Ubuntu ではなく Debian にした理由は3つあります。
 
@@ -111,23 +121,23 @@ Grafana Labs の APT リポジトリ(`apt.grafana.com`)は Debian・Ubuntu 共�
 
 ![LXC作成のDisksタブ。Disk sizeがデフォルトの8GiBの状態](../../assets/wp/2026/09/04-01_Disk-Setting-Default-Value_Screenshot-2026-09-06-22.06.26.png)
 
-*LXC作成のDisksタブ。Disk sizeがデフォルトの8GiBの状態*
+_LXC作成のDisksタブ。Disk sizeがデフォルトの8GiBの状態_
 
 16GB に変更します。
 
 ![LXC作成のDisksタブでDisk sizeを16GiBに変更した画面](../../assets/wp/2026/09/04-02_Disk-Setting-Change-ValueScreenshot-2026-09-06-22.06.42.png)
 
-*LXC作成のDisksタブでDisk sizeを16GiBに変更した画面*
+_LXC作成のDisksタブでDisk sizeを16GiBに変更した画面_
 
 Loki のストレージバックエンドを S3 にする設計のため、**ローカルには WAL とキャッシュしか残りません**。内訳の見積もりは以下のとおりです。
 
-| 用途 | 想定サイズ |
-| --- | --- |
-| OS + パッケージ | 2〜3GB |
-| Loki の WAL | 数百MB〜1GB |
+| 用途               | 想定サイズ                 |
+| ------------------ | -------------------------- |
+| OS + パッケージ    | 2〜3GB                     |
+| Loki の WAL        | 数百MB〜1GB                |
 | チャンクキャッシュ | 1〜2GB(設定で上限を決める) |
-| Grafana の SQLite | 数十MB |
-| 予備 | 残り |
+| Grafana の SQLite  | 数十MB                     |
+| 予備               | 残り                       |
 
 足りなくなったら `pct resize 104 rootfs +8G` でオンライン拡張できます。**最初から大きく取る必要はありません。**
 
@@ -137,13 +147,13 @@ Loki のストレージバックエンドを S3 にする設計のため、**ロ
 
 ![LXC作成のCPUタブ。Coresがデフォルトの1の状態](../../assets/wp/2026/09/05-01_CPU-Setting-Default-Value_Screenshot-2026-09-06-22.09.13.png)
 
-*LXC作成のCPUタブ。Coresがデフォルトの1の状態*
+_LXC作成のCPUタブ。Coresがデフォルトの1の状態_
 
 2に変更します。
 
 ![LXC作成のCPUタブでCoresを2に変更した画面](../../assets/wp/2026/09/05-02_CPU-Setting-Change-Value_Screenshot-2026-09-06-22.09.55.png)
 
-*LXC作成のCPUタブでCoresを2に変更した画面*
+_LXC作成のCPUタブでCoresを2に変更した画面_
 
 Loki は取り込み時にチャンクを gzip 圧縮し、クエリ時は並列でチャンクを展開します。1コアだと LogQL の全文検索が体感で重くなります。
 
@@ -155,21 +165,21 @@ LXC の CPU 割り当ては**上限を決めるだけで、予約ではありま
 
 ![LXC作成のMemoryタブ。Memory 512MiB、Swap 512MiBのデフォルト状態](../../assets/wp/2026/09/06-01_Memory-Setting-Default-Value_Screenshot-2026-09-06-22.11.01.png)
 
-*LXC作成のMemoryタブ。Memory 512MiB、Swap 512MiBのデフォルト状態*
+_LXC作成のMemoryタブ。Memory 512MiB、Swap 512MiBのデフォルト状態_
 
 Memory だけ 4096 に変更します。
 
 ![LXC作成のMemoryタブでMemoryを4096MiBに変更した画面](../../assets/wp/2026/09/06-02_Memory-Setting-Change-Value_Screenshot-2026-09-06-22.11.45.png)
 
-*LXC作成のMemoryタブでMemoryを4096MiBに変更した画面*
+_LXC作成のMemoryタブでMemoryを4096MiBに変更した画面_
 
 内訳の見積もりです。
 
-| プロセス | 想定消費 |
-| --- | --- |
+| プロセス                  | 想定消費   |
+| ------------------------- | ---------- |
 | Loki (ingester + querier) | 500MB〜1GB |
-| Grafana | 100〜200MB |
-| rsyslog | 数十MB |
+| Grafana                   | 100〜200MB |
+| rsyslog                   | 数十MB     |
 
 実際には 1.5〜2GB あれば動きます。それでも 4GB にしたのは、長期間の LogQL 検索をかけたときに querier がメモリを持っていくためです。**稼働後に実消費を見て削る前提**の割り当てです。
 
@@ -183,23 +193,23 @@ Swap を 0 にしなかったのは、メモリ逼迫時に OOM Killer が即座
 
 ![LXC作成のNetworkタブ。Bridgeがvmbr0でIPアドレス未設定のデフォルト状態](../../assets/wp/2026/09/07-01_Network-Setting-Default-Value-Screenshot-2026-09-06-22.15.49.png)
 
-*LXC作成のNetworkタブ。Bridgeがvmbr0でIPアドレス未設定のデフォルト状態*
+_LXC作成のNetworkタブ。Bridgeがvmbr0でIPアドレス未設定のデフォルト状態_
 
 既存のコンテナに合わせて `vmbr1` を選び、IPv4 を Static で設定します。
 
 ![LXC作成のNetworkタブでBridgeをvmbr1に変更し、IPv4をStaticに設定した画面](../../assets/wp/2026/09/07-02_Network-Setting-Change-Value_Screenshot-2026-09-06-22.17.07.png)
 
-*LXC作成のNetworkタブでBridgeをvmbr1に変更し、IPv4をStaticに設定した画面*
+_LXC作成のNetworkタブでBridgeをvmbr1に変更し、IPv4をStaticに設定した画面_
 
-| 項目 | 値 |
-| --- | --- |
-| Name | eth0 |
-| Bridge | vmbr1 |
-| VLAN Tag | no VLAN |
-| Firewall | **チェックを外す** |
-| IPv4/Cider | Static / `192.0.2.51/24` |
-| Gateway (IPv4) | `192.0.2.254` |
-| IPv6 | 未設定 |
+| 項目           | 値                       |
+| -------------- | ------------------------ |
+| Name           | eth0                     |
+| Bridge         | vmbr1                    |
+| VLAN Tag       | no VLAN                  |
+| Firewall       | **チェックを外す**       |
+| IPv4/Cider     | Static / `192.0.2.51/24` |
+| Gateway (IPv4) | `192.0.2.254`            |
+| IPv6           | 未設定                   |
 
 **VLAN Tag が `no VLAN` なのは、ブリッジ側で既に VLAN が確定しているためです。** 物理NICのサブインターフェースを切っているか、スイッチ側でアクセスポートとして VLAN を割り当てている構成では、LXC 側でタグを打つ必要がありません。ここは環境によって変わるので、既存コンテナの設定を確認してから決めてください。
 
@@ -221,17 +231,17 @@ Proxmox の LXC ファイアウォールは、**Datacenter・Node・CT の3階�
 
 ![LXC作成のDNSタブ。両項目がuse host settingsのデフォルト状態](../../assets/wp/2026/09/08-01_DNS-Setting-Default-Value_Screenshot-2026-09-06-22.21.21.png)
 
-*LXC作成のDNSタブ。両項目がuse host settingsのデフォルト状態*
+_LXC作成のDNSタブ。両項目がuse host settingsのデフォルト状態_
 
 DNS servers を明示します。
 
 ![LXC作成のDNSタブでDNSサーバを2つ、スペース区切りで指定した画面](../../assets/wp/2026/09/08-02_DNS-Setting-Change-Value_Screenshot-2026-09-06-22.28.46.png)
 
-*LXC作成のDNSタブでDNSサーバを2つ、スペース区切りで指定した画面*
+_LXC作成のDNSタブでDNSサーバを2つ、スペース区切りで指定した画面_
 
-| 項目 | 値 |
-| --- | --- |
-| DNS domain | 空欄 |
+| 項目        | 値                  |
+| ----------- | ------------------- |
+| DNS domain  | 空欄                |
 | DNS servers | `192.0.2.1 1.1.1.1` |
 
 **区切りはカンマではなくスペースです。** カンマで書くと正しく解釈されません。
@@ -279,7 +289,7 @@ TASK OK
 
 `4194304 4k blocks` は 4194304 × 4KiB = 16GiB で、指定どおりです。
 
-* * *
+---
 
 ## 初期設定と確認
 
@@ -351,7 +361,7 @@ N: Repository 'http://deb.debian.org/debian bookworm InRelease' changed its
 
 これは、テンプレートが作られた後に Debian のポイントリリースが進んだという意味です。異常ではなく、`apt upgrade` で追従します。
 
-* * *
+---
 
 ## 本題:なぜ 514/udp を待ち受けできないのか
 
@@ -379,17 +389,17 @@ Proxmox の非特権 LXC では **UID マッピング**という仕組みが働�
 
 つまり、非特権コンテナのセキュリティ上の利点と、514番を使いたいという要求が正面から衝突している、という構図です。
 
-* * *
+---
 
 ## 解決策の比較
 
 方法は3つあります。
 
-| 方式 | 内容 | 利点 | 欠点 |
-| --- | --- | --- | --- |
-| **Ambient Capability** | systemd の unit で `CAP_NET_BIND_SERVICE` を付与 | 機器側の設定変更が不要。設定がコンテナ内で完結 | 概念の理解が必要 |
-| **高位ポート** | 1514/udp で待ち受け、送信側の宛先ポートを変更 | 特権が一切不要。最もシンプル | 送信側**全機器**の設定変更が必要。機器によってはポート指定不可 |
-| **ホスト側NAT** | ホストの nftables で 514 → 1514 に転送 | 両側とも素直な設定のまま | ホストに設定が残る。**コンテナ移設時に追従を忘れる** |
+| 方式                   | 内容                                             | 利点                                           | 欠点                                                           |
+| ---------------------- | ------------------------------------------------ | ---------------------------------------------- | -------------------------------------------------------------- |
+| **Ambient Capability** | systemd の unit で `CAP_NET_BIND_SERVICE` を付与 | 機器側の設定変更が不要。設定がコンテナ内で完結 | 概念の理解が必要                                               |
+| **高位ポート**         | 1514/udp で待ち受け、送信側の宛先ポートを変更    | 特権が一切不要。最もシンプル                   | 送信側**全機器**の設定変更が必要。機器によってはポート指定不可 |
+| **ホスト側NAT**        | ホストの nftables で 514 → 1514 に転送           | 両側とも素直な設定のまま                       | ホストに設定が残る。**コンテナ移設時に追従を忘れる**           |
 
 今回は **Ambient Capability** を選びました。
 
@@ -397,7 +407,7 @@ Proxmox の非特権 LXC では **UID マッピング**という仕組みが働�
 
 **送信側に制約を課さない方式を選んでおけば、後から機器が増えても対応できます。** 設定がコンテナ内で完結するため、バックアップやリストアの対象が1箇所にまとまるのも利点です。
 
-* * *
+---
 
 ## ケーパビリティとは何か
 
@@ -411,16 +421,16 @@ Ambient Capability を理解するために、まずケーパビリティその�
 
 そこで Linux 2.2 以降、**root の権限が40個以上の細かい単位に分解**されました。これがケーパビリティです。
 
-| ケーパビリティ | できること | ビット位置 |
-| --- | --- | --- |
-| `CAP_CHOWN` | ファイル所有者の変更 | 0 |
-| `CAP_DAC_OVERRIDE` | パーミッションチェックの回避 | 1 |
-| `CAP_KILL` | 他ユーザーのプロセスへのシグナル送信 | 5 |
-| `CAP_NET_BIND_SERVICE` | **1024未満のポートへの bind** | **10** |
-| `CAP_NET_ADMIN` | ネットワーク設定の変更 | 12 |
-| `CAP_SYS_MODULE` | カーネルモジュールのロード | 16 |
-| `CAP_SYS_TIME` | システム時刻の変更 | 25 |
-| `CAP_SYSLOG` | カーネルログへのアクセス | 34 |
+| ケーパビリティ         | できること                           | ビット位置 |
+| ---------------------- | ------------------------------------ | ---------- |
+| `CAP_CHOWN`            | ファイル所有者の変更                 | 0          |
+| `CAP_DAC_OVERRIDE`     | パーミッションチェックの回避         | 1          |
+| `CAP_KILL`             | 他ユーザーのプロセスへのシグナル送信 | 5          |
+| `CAP_NET_BIND_SERVICE` | **1024未満のポートへの bind**        | **10**     |
+| `CAP_NET_ADMIN`        | ネットワーク設定の変更               | 12         |
+| `CAP_SYS_MODULE`       | カーネルモジュールのロード           | 16         |
+| `CAP_SYS_TIME`         | システム時刻の変更                   | 25         |
+| `CAP_SYSLOG`           | カーネルログへのアクセス             | 34         |
 
 必要なものだけを渡せば、プロセスが乗っ取られても被害範囲が限定されます。**privilege level 15 をまるごと渡す代わりに、必要なコマンドだけ level を下げて許可する**運用に近いイメージです。
 
@@ -434,7 +444,7 @@ Ambient Capability を理解するために、まずケーパビリティその�
 
 自宅サーバのように長く動かし続けるものほど、**更新で壊れない書き方**を選んでおく価値があります。
 
-* * *
+---
 
 ## 設定手順
 
@@ -553,16 +563,16 @@ EOF
 
 `$syslogseverity <= 5` が notice 以上です。syslog の severity は**数値が小さいほど重大**という並びになっています。
 
-| 値 | severity | 意味 | 今回 |
-| --- | --- | --- | --- |
-| 0 | emerg | システム利用不可 | 収集 |
-| 1 | alert | 即座に対処が必要 | 収集 |
-| 2 | crit | 危機的 | 収集 |
-| 3 | err | エラー | 収集 |
-| 4 | warning | 警告 | 収集 |
-| 5 | **notice** | 通常だが重要 | **収集** |
-| 6 | info | 情報 | 破棄 |
-| 7 | debug | デバッグ | 破棄 |
+| 値  | severity   | 意味             | 今回     |
+| --- | ---------- | ---------------- | -------- |
+| 0   | emerg      | システム利用不可 | 収集     |
+| 1   | alert      | 即座に対処が必要 | 収集     |
+| 2   | crit       | 危機的           | 収集     |
+| 3   | err        | エラー           | 収集     |
+| 4   | warning    | 警告             | 収集     |
+| 5   | **notice** | 通常だが重要     | **収集** |
+| 6   | info       | 情報             | 破棄     |
+| 7   | debug      | デバッグ         | 破棄     |
 
 info と debug を落としているのは、**S3 の保管費用とクエリ速度に直結する**からです。ログ基盤は「全部集めれば安心」ではなく、**何を集めないかを決めることが設計**だと考えています。
 
@@ -606,7 +616,7 @@ rsyslogd: End of config validation run. Bye.
 #systemctl restart rsyslog
 ```
 
-* * *
+---
 
 ## 動作確認
 
@@ -655,28 +665,28 @@ CapAmb: 0000000000000400
 
 5つのフィールドはそれぞれ意味が違います。
 
-| フィールド | 意味 |
-| --- | --- |
-| **CapInh** (Inheritable) | exec 時に引き継がれる候補 |
-| **CapPrm** (Permitted) | プロセスが持つことを許された集合 |
-| **CapEff** (Effective) | **現在実際に有効な集合**。カーネルが権限チェックで見るのはここ |
-| **CapBnd** (Bounding) | 上限。ここに無いものは取得できない |
-| **CapAmb** (Ambient) | 非特権実行ファイルを exec しても保持される集合 |
+| フィールド               | 意味                                                           |
+| ------------------------ | -------------------------------------------------------------- |
+| **CapInh** (Inheritable) | exec 時に引き継がれる候補                                      |
+| **CapPrm** (Permitted)   | プロセスが持つことを許された集合                               |
+| **CapEff** (Effective)   | **現在実際に有効な集合**。カーネルが権限チェックで見るのはここ |
+| **CapBnd** (Bounding)    | 上限。ここに無いものは取得できない                             |
+| **CapAmb** (Ambient)     | 非特権実行ファイルを exec しても保持される集合                 |
 
 `CapAmb` の `0000000000000400` を2進数に直すとビット10だけが立っています。表で示したとおり、**ビット10 は `CAP_NET_BIND_SERVICE` そのもの**です。狙ったとおり、必要な権限だけが渡っていることが確認できます。
 
 `CapBnd` の `00000004100004cb` も分解してみます。
 
-| 立っているビット | ケーパビリティ |
-| --- | --- |
-| 0 | CAP\_CHOWN |
-| 1 | CAP\_DAC\_OVERRIDE |
-| 3 | CAP\_FOWNER |
-| 6 | CAP\_SETGID |
-| 7 | CAP\_SETUID |
-| 10 | CAP\_NET\_BIND\_SERVICE |
-| 28 | CAP\_LEASE |
-| 34 | CAP\_SYSLOG |
+| 立っているビット | ケーパビリティ          |
+| ---------------- | ----------------------- |
+| 0                | CAP\_CHOWN              |
+| 1                | CAP\_DAC\_OVERRIDE      |
+| 3                | CAP\_FOWNER             |
+| 6                | CAP\_SETGID             |
+| 7                | CAP\_SETUID             |
+| 10               | CAP\_NET\_BIND\_SERVICE |
+| 28               | CAP\_LEASE              |
+| 34               | CAP\_SYSLOG             |
 
 **drop-in の `CapabilityBoundingSet` に書いた8つと完全に一致します。** 設定が意図どおり反映されていることが、数値レベルで裏付けられました。
 
@@ -712,7 +722,7 @@ logger -n 192.0.2.51 -P 514 -p user.err    -d "test err level"
 
 `/var/log/syslog` の方にリモートのログが入っていないことも確認してください。入っていたら `stop` が効いていません。
 
-* * *
+---
 
 ## ログローテーション
 
@@ -739,14 +749,14 @@ Alloy が読み取って Loki に送る前提なので、ローカルの保持�
 EOF
 ```
 
-| 設定 | 意味 |
-| --- | --- |
-| `rotate 7` / `daily` | 日次で7世代保持。Alloy が1週間止まっても取りこぼさない |
-| `compress` | 古い世代を gzip |
-| `delaycompress` | 圧縮を1世代遅らせる。**Alloy が読んでいる最中に gzip されるのを防ぐ** |
-| `notifempty` | 中身が空ならローテートしない |
-| `postrotate` | **rsyslog にファイルハンドルを再オープンさせる。最重要** |
-| `create 0640 root adm` | ローテート後の新規ファイルも同じ権限で作る |
+| 設定                   | 意味                                                                  |
+| ---------------------- | --------------------------------------------------------------------- |
+| `rotate 7` / `daily`   | 日次で7世代保持。Alloy が1週間止まっても取りこぼさない                |
+| `compress`             | 古い世代を gzip                                                       |
+| `delaycompress`        | 圧縮を1世代遅らせる。**Alloy が読んでいる最中に gzip されるのを防ぐ** |
+| `notifempty`           | 中身が空ならローテートしない                                          |
+| `postrotate`           | **rsyslog にファイルハンドルを再オープンさせる。最重要**              |
+| `create 0640 root adm` | ローテート後の新規ファイルも同じ権限で作る                            |
 
 ### postrotate が最重要な理由
 
@@ -793,7 +803,7 @@ NEXT                        LEFT       LAST PASSED UNIT            ACTIVATES
 Mon 2026-09-07 00:00:00 JST 37min left -    -      logrotate.timer logrotate.service
 ```
 
-* * *
+---
 
 ## ハマりどころ
 
@@ -893,22 +903,22 @@ Fetched 15.8 MB in 19s (820 kB/s)
 
 **症状が出てから対処すれば十分**です。先回りして設定を増やすと、後で「なぜこの設定があるのか」が分からなくなります。
 
-* * *
+---
 
 ## まとめ
 
-| やりたいこと | 対応 |
-| --- | --- |
+| やりたいこと                 | 対応                                                          |
+| ---------------------------- | ------------------------------------------------------------- |
 | 非特権LXCで514/udpを待ち受け | systemd drop-in に `AmbientCapabilities=CAP_NET_BIND_SERVICE` |
-| 付与されたか確認 | `grep Cap /proc/$(pgrep rsyslogd)/status` の **CapAmb** |
-| imklog のエラー | 非特権LXCでは正常。コメントアウトでよい |
-| 送信元ごとに分割 | `%HOSTNAME%` の動的ファイル名 |
-| 二重書き込みを防ぐ | ruleset の末尾に `stop` |
-| notice以上のみ収集 | `if $syslogseverity <= 5` |
-| パーミッションが効かない | `$FileCreateMode` ではなく action に直接書く |
-| ローテート後にログが消える | `postrotate` に `rsyslog-rotate` |
-| タイムスタンプがずれる | **送信側**のタイムゾーンを直す |
-| systemd サービスが起動しない | **Nesting** を確認 |
+| 付与されたか確認             | `grep Cap /proc/$(pgrep rsyslogd)/status` の **CapAmb**       |
+| imklog のエラー              | 非特権LXCでは正常。コメントアウトでよい                       |
+| 送信元ごとに分割             | `%HOSTNAME%` の動的ファイル名                                 |
+| 二重書き込みを防ぐ           | ruleset の末尾に `stop`                                       |
+| notice以上のみ収集           | `if $syslogseverity <= 5`                                     |
+| パーミッションが効かない     | `$FileCreateMode` ではなく action に直接書く                  |
+| ローテート後にログが消える   | `postrotate` に `rsyslog-rotate`                              |
+| タイムスタンプがずれる       | **送信側**のタイムゾーンを直す                                |
+| systemd サービスが起動しない | **Nesting** を確認                                            |
 
 非特権コンテナで特権ポートを扱うのは一見面倒に見えますが、**必要な権限だけを渡すという考え方は、そもそも正しい設計**です。root をまるごと渡す代わりに `CAP_NET_BIND_SERVICE` ひとつで済むなら、その方が安全に決まっています。
 

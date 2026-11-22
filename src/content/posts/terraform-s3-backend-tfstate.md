@@ -14,19 +14,19 @@ ogImage: "../../assets/wp/2026/09/eyecatch-terraform-s3-backend.png"
 
 ## この記事でわかること
 
--   Terraformの基本的な仕組み（Provider / Resource / State / Backend）
--   tfstate（terraform.tfstate）が何を記録しているのか
--   S3バケットを作るコードと、S3 Backendの設定が「両方」必要な理由
--   Bootstrapという考え方と、ローカルstateからS3 Backendへの移行手順
--   terraform initが裏側でやっていること
--   .terraform.lock.hclの役割
+- Terraformの基本的な仕組み（Provider / Resource / State / Backend）
+- tfstate（terraform.tfstate）が何を記録しているのか
+- S3バケットを作るコードと、S3 Backendの設定が「両方」必要な理由
+- Bootstrapという考え方と、ローカルstateからS3 Backendへの移行手順
+- terraform initが裏側でやっていること
+- .terraform.lock.hclの役割
 
 こんな方を想定しています。
 
--   AIにTerraformコードを書いてもらったけれど、中身が読めていない方
--   tfstateやBackendという言葉は聞いたことがあるが、説明はできない方
--   AWSを触り始めたネットワークエンジニアの方
--   「terraform initはとりあえず最初に打つもの」になっている方
+- AIにTerraformコードを書いてもらったけれど、中身が読めていない方
+- tfstateやBackendという言葉は聞いたことがあるが、説明はできない方
+- AWSを触り始めたネットワークエンジニアの方
+- 「terraform initはとりあえず最初に打つもの」になっている方
 
 ## はじめに：AIが書いたTerraformは動いた。でも意味がわからなかった
 
@@ -36,12 +36,12 @@ ogImage: "../../assets/wp/2026/09/eyecatch-terraform-s3-backend.png"
 
 ところが、コードを見返すと疑問だらけでした。
 
--   一番上の `terraform { ... }` ブロックは何？
--   `required_providers` と `provider "aws"` は何が違う？
--   tfstateって何？
--   S3バケットを作っているのに、なぜ別に `backend "s3"` を書くの？
--   Bootstrapって何？
--   terraform initって、結局なにをしているの？
+- 一番上の `terraform { ... }` ブロックは何？
+- `required_providers` と `provider "aws"` は何が違う？
+- tfstateって何？
+- S3バケットを作っているのに、なぜ別に `backend "s3"` を書くの？
+- Bootstrapって何？
+- terraform initって、結局なにをしているの？
 
 ネットワーク機器なら、コンフィグを1行ずつ説明できないまま本番投入することはまずありません。Terraformも同じで、動いたからOKにしてしまうと、トラブルが起きたときに手も足も出なくなります。
 
@@ -188,10 +188,10 @@ terraform {
 
 `terraform { ... }` ブロックは、AWSのリソースではなく**Terraform自身の設定**を書く場所です。
 
--   `required_version`：このコードを実行できるTerraform本体のバージョン条件
--   `required_providers`：このコードで使うProviderの一覧
--   `source = "hashicorp/aws"`：Providerの配布元（Terraform Registry上のhashicorp/aws）
--   `version = ">= 5.0"`：使ってよいProviderのバージョン条件
+- `required_version`：このコードを実行できるTerraform本体のバージョン条件
+- `required_providers`：このコードで使うProviderの一覧
+- `source = "hashicorp/aws"`：Providerの配布元（Terraform Registry上のhashicorp/aws）
+- `version = ">= 5.0"`：使ってよいProviderのバージョン条件
 
 つまりここは「このコードを動かすには、AWS Providerのバージョン5.0以上が必要です」という**宣言**です。実際のダウンロードは、後で説明する `terraform init` のタイミングで行われます。
 
@@ -212,8 +212,8 @@ provider "aws" {
 
 こちらは、AWS Providerを**どういう設定で使うか**を書く場所です。
 
--   `region`：操作するAWSリージョン（ap-northeast-1は東京リージョン）
--   `default_tags`：このProviderで作るリソースに共通で付けるタグ
+- `region`：操作するAWSリージョン（ap-northeast-1は東京リージョン）
+- `default_tags`：このProviderで作るリソースに共通で付けるタグ
 
 `default_tags` を書いておくと、リソースごとにタグを書かなくても、全リソースに「ManagedBy = terraform」などが付きます。あとからAWSのコンソールで見たときに、「これはTerraformで作ったものだ」とすぐ判別できるので便利です。
 
@@ -221,10 +221,10 @@ provider "aws" {
 
 2つの違いを整理すると、次のとおりです。
 
-| 記述 | 役割 | たとえるなら |
-| --- | --- | --- |
-| required\_providers | このProviderが必要だと宣言する | 「このドライバを使います」 |
-| provider "aws" | そのProviderの使い方を設定する | 「ドライバの設定値はこれです」 |
+| 記述                | 役割                           | たとえるなら                   |
+| ------------------- | ------------------------------ | ------------------------------ |
+| required\_providers | このProviderが必要だと宣言する | 「このドライバを使います」     |
+| provider "aws"      | そのProviderの使い方を設定する | 「ドライバの設定値はこれです」 |
 
 ## resourceとは？「AWSに何を作るか」
 
@@ -246,9 +246,9 @@ resource "リソースタイプ" "Terraform内での名前" {
 }
 ```
 
--   `aws_s3_bucket`：リソースタイプ。AWS Providerが提供している「S3バケット」という種類
--   `tfstate`：Terraformのコード内でこのリソースを呼ぶための名前（AWS上の名前ではない）
--   `bucket = "バケット名"`：AWS上に作られる実際のバケット名
+- `aws_s3_bucket`：リソースタイプ。AWS Providerが提供している「S3バケット」という種類
+- `tfstate`：Terraformのコード内でこのリソースを呼ぶための名前（AWS上の名前ではない）
+- `bucket = "バケット名"`：AWS上に作られる実際のバケット名
 
 Terraform内での名前は、ほかのリソースから参照するときに使います。たとえば、バージョニング設定のリソースでは次のように書いています。
 
@@ -265,12 +265,12 @@ resource "aws_s3_bucket_versioning" "tfstate" {
 
 今回のS3バケットには、tfstateを安全に保管するための設定をいくつか入れています。
 
-| 設定 | リソース / 記述 | 目的 |
-| --- | --- | --- |
-| バージョニング | aws\_s3\_bucket\_versioning | tfstateの過去バージョンを保持し、壊れたときに戻せるようにする |
-| サーバー側暗号化 | aws\_s3\_bucket\_server\_side\_encryption\_configuration | SSE-S3（AES256）で保存時に暗号化する |
-| パブリックアクセスブロック | aws\_s3\_bucket\_public\_access\_block | バケットが誤って公開されるのを防ぐ |
-| 削除防止 | lifecycle { prevent\_destroy = true } | Terraformの操作でバケットを消そうとするとエラーにする |
+| 設定                       | リソース / 記述                                          | 目的                                                          |
+| -------------------------- | -------------------------------------------------------- | ------------------------------------------------------------- |
+| バージョニング             | aws\_s3\_bucket\_versioning                              | tfstateの過去バージョンを保持し、壊れたときに戻せるようにする |
+| サーバー側暗号化           | aws\_s3\_bucket\_server\_side\_encryption\_configuration | SSE-S3（AES256）で保存時に暗号化する                          |
+| パブリックアクセスブロック | aws\_s3\_bucket\_public\_access\_block                   | バケットが誤って公開されるのを防ぐ                            |
+| 削除防止                   | lifecycle { prevent\_destroy = true }                    | Terraformの操作でバケットを消そうとするとエラーにする         |
 
 なぜここまで慎重にするのかは、次のtfstateの話を読むとわかります。
 
@@ -301,9 +301,9 @@ Terraformは、設計書（.tf）と管理台帳（state）、実機（AWS）の
 
 また、tfstateには手元のPCだけに置いておくと困る点もあります。
 
--   PCが壊れたら、stateも一緒に消える
--   別のPCや他の人と作業すると、stateが食い違う
--   リソースの属性値がそのまま記録されるため、機密情報が含まれることがある
+- PCが壊れたら、stateも一緒に消える
+- 別のPCや他の人と作業すると、stateが食い違う
+- リソースの属性値がそのまま記録されるため、機密情報が含まれることがある
 
 そこで、stateを安全な場所に置くための仕組みが「Backend」です。
 
@@ -324,10 +324,10 @@ terraform {
 }
 ```
 
--   `bucket`：stateを保存するS3バケット
--   `key`：バケット内でのstateファイルの保存場所（オブジェクトキー）
--   `region`：バケットがあるリージョン
--   `use_lockfile`：stateのロックを有効にするかどうか
+- `bucket`：stateを保存するS3バケット
+- `key`：バケット内でのstateファイルの保存場所（オブジェクトキー）
+- `region`：バケットがあるリージョン
+- `use_lockfile`：stateのロックを有効にするかどうか
 
 `bucket` と `key` の関係は、次のようなイメージです。
 
@@ -375,10 +375,10 @@ terraform {
 
 一見すると同じことを2回書いているように見えますが、役割はまったく別物です。
 
-| 記述 | 役割 | 誰のための設定か |
-| --- | --- | --- |
-| resource "aws\_s3\_bucket" | AWS上にS3バケットを**作る** | AWSのインフラ（管理対象） |
-| backend "s3" | Terraformのstateの**保存先**をS3にする | Terraform自身 |
+| 記述                       | 役割                                   | 誰のための設定か          |
+| -------------------------- | -------------------------------------- | ------------------------- |
+| resource "aws\_s3\_bucket" | AWS上にS3バケットを**作る**            | AWSのインフラ（管理対象） |
+| backend "s3"               | Terraformのstateの**保存先**をS3にする | Terraform自身             |
 
 `resource` は「AWSに何を作るか」、`backend` は「Terraform自身の管理台帳をどこに置くか」です。
 
@@ -435,7 +435,7 @@ Bootstrapとは、もともと「最初の立ち上げ処理」を指す言葉�
 terraform init
 ```
 
--   `terraform init`：作業ディレクトリを初期化するコマンドです。この段階ではBackendの指定がないので、stateはローカルに保存される設定で初期化され、required\_providersに書いたAWS Providerがダウンロードされます。
+- `terraform init`：作業ディレクトリを初期化するコマンドです。この段階ではBackendの指定がないので、stateはローカルに保存される設定で初期化され、required\_providersに書いたAWS Providerがダウンロードされます。
 
 ### 手順2：変更内容を確認して、S3バケットを作る
 
@@ -444,8 +444,8 @@ terraform plan
 terraform apply
 ```
 
--   `terraform plan`：.tfの内容とstate・AWSの状態を比べて、「何が作られ、何が変わるか」を表示します。この時点ではまだ何も作られません。ネットワーク機器でいう、投入前のコンフィグ差分確認に近いイメージです。
--   `terraform apply`：planの内容を表示したうえで、確認プロンプトで `yes` と入力すると実際に適用します。
+- `terraform plan`：.tfの内容とstate・AWSの状態を比べて、「何が作られ、何が変わるか」を表示します。この時点ではまだ何も作られません。ネットワーク機器でいう、投入前のコンフィグ差分確認に近いイメージです。
+- `terraform apply`：planの内容を表示したうえで、確認プロンプトで `yes` と入力すると実際に適用します。
 
 applyが終わると、AWS上にS3バケットができ、手元には `terraform.tfstate` ができています。
 
@@ -457,8 +457,8 @@ applyが終わると、AWS上にS3バケットができ、手元には `terrafor
 terraform init -migrate-state
 ```
 
--   `terraform init`：Backendの設定が変わったことを検出し、新しいBackend（S3）で初期化し直します。
--   `-migrate-state`：既存のstateを新しいBackendへ移行するオプションです。
+- `terraform init`：Backendの設定が変わったことを検出し、新しいBackend（S3）で初期化し直します。
+- `-migrate-state`：既存のstateを新しいBackendへ移行するオプションです。
 
 実行すると、「既存のstateを新しいBackendにコピーするか」を確認されるので、`yes` と入力します。これで、ローカルにあったstateがS3の `bootstrap/terraform.tfstate` にコピーされます。
 
@@ -471,8 +471,8 @@ terraform state list
 aws s3 ls s3://バケット名/bootstrap/
 ```
 
--   `terraform state list`：stateに記録されているリソースの一覧を表示します。S3 Backendから読んだstateに、4つのリソース（aws\_s3\_bucket.tfstateなど）が表示されればOKです。
--   `aws s3 ls s3://バケット名/プレフィックス/`：AWS CLIで、指定した場所にあるオブジェクトを一覧表示します。`terraform.tfstate` が表示されれば、S3にstateが保存されています。
+- `terraform state list`：stateに記録されているリソースの一覧を表示します。S3 Backendから読んだstateに、4つのリソース（aws\_s3\_bucket.tfstateなど）が表示されればOKです。
+- `aws s3 ls s3://バケット名/プレフィックス/`：AWS CLIで、指定した場所にあるオブジェクトを一覧表示します。`terraform.tfstate` が表示されれば、S3にstateが保存されています。
 
 移行後は、手元の `terraform.tfstate` はBackendとして使われなくなります。S3側に移ったことを確認してから整理しましょう。ここまでで、Bootstrapは完了です。
 
@@ -480,11 +480,11 @@ aws s3 ls s3://バケット名/bootstrap/
 
 最初は、terraform initを「Terraformを使うときに、とりあえず最初に打つおまじない」だと思っていました。実際には、今回の流れの中でかなり重要な仕事をしています。
 
--   作業ディレクトリの初期化（`.terraform` ディレクトリの作成）
--   required\_providersに書いたProviderのダウンロード
--   Backendの初期化（stateの保存先への接続）
--   Backend設定が変わったときの、stateの移行
--   `.terraform.lock.hcl` の作成・更新
+- 作業ディレクトリの初期化（`.terraform` ディレクトリの作成）
+- required\_providersに書いたProviderのダウンロード
+- Backendの初期化（stateの保存先への接続）
+- Backend設定が変わったときの、stateの移行
+- `.terraform.lock.hcl` の作成・更新
 
 特に押さえておきたいのは、次の2つの流れです。
 
@@ -516,9 +516,9 @@ terraform initを実行すると、`.terraform.lock.hcl` というファイル�
 
 名前に「lock」と付いていますが、先ほどのstateのロック（use\_lockfile）とは別物です。
 
-| 名前 | 何をロックするか |
-| --- | --- |
-| .terraform.lock.hcl | Providerのバージョン |
+| 名前                     | 何をロックするか      |
+| ------------------------ | --------------------- |
+| .terraform.lock.hcl      | Providerのバージョン  |
 | use\_lockfile（.tflock） | stateへの同時書き込み |
 
 `.terraform.lock.hcl` は、基本的にGitで管理します。一方で、Providerの実体が入る `.terraform` ディレクトリや、tfstateはGitに入れません。私は次のような `.gitignore` にしています。
@@ -542,13 +542,13 @@ Terraformは、**同じディレクトリにある .tf ファイルをすべて�
 
 それでもファイルを分けるのは、読みやすくするためです。よく見かける分け方は次のとおりです。
 
-| ファイル名 | 書くもの |
-| --- | --- |
-| backend.tf | stateの保存先（Backend） |
-| provider.tf | required\_providersとProviderの設定 |
-| s3.tf など | AWSリソース（サービスごとに分けることが多い） |
-| variables.tf | 入力値（変数） |
-| outputs.tf | 出力値 |
+| ファイル名   | 書くもの                                      |
+| ------------ | --------------------------------------------- |
+| backend.tf   | stateの保存先（Backend）                      |
+| provider.tf  | required\_providersとProviderの設定           |
+| s3.tf など   | AWSリソース（サービスごとに分けることが多い） |
+| variables.tf | 入力値（変数）                                |
+| outputs.tf   | 出力値                                        |
 
 ## 全体像を一枚で整理する
 
@@ -608,7 +608,7 @@ AIにコードを書いてもらうこと自体は、とても便利ですし、
 
 このブログでは、Terraformを「Terraformとは？」からトラブルシュートまで、段階的に整理していく予定です。次は、今回作ったS3 Backendを使って、AWS上にネットワークを組んでいきます。
 
--   Terraformの基本コマンド（init / plan / apply / destroy）を整理する（準備中）
--   TerraformでAWS VPCとサブネットを作る（準備中）
--   ルートテーブルとセキュリティグループをTerraformで管理する（準備中）
--   Terraformでよくあるエラーとトラブルシュート（準備中）
+- Terraformの基本コマンド（init / plan / apply / destroy）を整理する（準備中）
+- TerraformでAWS VPCとサブネットを作る（準備中）
+- ルートテーブルとセキュリティグループをTerraformで管理する（準備中）
+- Terraformでよくあるエラーとトラブルシュート（準備中）

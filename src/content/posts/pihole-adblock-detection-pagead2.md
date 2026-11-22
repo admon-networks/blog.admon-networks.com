@@ -20,8 +20,8 @@ ogImage: "../../assets/wp/2026/09/pihole-adblock-detection-pagead2.png"
 
 ## 環境
 
--   端末：Chromebook
--   DNS：自宅のProxmox上で動かしているPi-hole v6
+- 端末：Chromebook
+- DNS：自宅のProxmox上で動かしているPi-hole v6
 
 ## なぜPi-holeでこの表示が出るのか
 
@@ -94,9 +94,9 @@ Pi-hole v6には「グループ」の機能があり、端末ごとに許可・�
 
 ## まとめ
 
--   拡張を切っても表示が消えないなら、DNS側（Pi-hole）を疑う
--   一時無効化で切り分けて、Query Logで原因のドメインを特定する
--   `pagead2.googlesyndication.com` をexactで許可すれば解決
--   許可しても広告はほぼ出ないが、全端末に効く点には注意
+- 拡張を切っても表示が消えないなら、DNS側（Pi-hole）を疑う
+- 一時無効化で切り分けて、Query Logで原因のドメインを特定する
+- `pagead2.googlesyndication.com` をexactで許可すれば解決
+- 許可しても広告はほぼ出ないが、全端末に効く点には注意
 
 Pi-holeを入れている人は、同じ表示が出たらまずQuery Logを見てみてください。

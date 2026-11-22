@@ -6,14 +6,14 @@ title: "プロフィール"
 
 ネットワークエンジニアです。  
 おもにJuniper、FortiGate、Cisco、Allied Telesisの製品などに触れる機会が多いです。  
-CCNP ENCOR勉強中。  
+CCNP ENCOR勉強中。
 
 ## 保有資格
 
--   CCNA
--   基本情報技術者
--   AWS Solution Architect Asociate
--   AWS Solution Architect Professional
+- CCNA
+- 基本情報技術者
+- AWS Solution Architect Asociate
+- AWS Solution Architect Professional
 
 ## 写真
 

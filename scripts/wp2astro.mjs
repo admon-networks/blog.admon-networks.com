@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable no-console -- CLI スクリプトなので進捗の表示に console を使う */
 // WordPress（WXR）→ AstroPaper 用 Markdown 変換スクリプト
 //
 // 使い方（blog リポジトリのルートで）:
