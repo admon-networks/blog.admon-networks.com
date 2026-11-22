@@ -24,6 +24,9 @@ import config from "./astro-paper.config";
 
 export default defineConfig({
   site: config.site.url,
+  // WordPress時代と同じ /<スラッグ>/ の形を維持する
+  trailingSlash: "always",
+  build: { format: "directory" },
   integrations: [
     mdx(),
     sitemap({
@@ -33,8 +36,8 @@ export default defineConfig({
     inlineTocDeprecation(),
   ],
   i18n: {
-    locales: ["en"],
-    defaultLocale: "en",
+    locales: ["ja"],
+    defaultLocale: "ja",
     routing: {
       prefixDefaultLocale: false,
     },
