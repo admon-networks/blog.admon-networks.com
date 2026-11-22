@@ -4,7 +4,7 @@ description: "FortiGateの正しい電源の切り方を詳しく解説。シャ
 pubDatetime: 2025-01-23T15:24:45.000Z
 modDatetime: 2026-01-01T13:55:11.000Z
 tags: ["FortiGate", "セキュリティ", "ネットワーク", "ファイアウォール"]
-ogImage: "../../assets/wp/2025/01/ChatGPT-Image-2026年1月1日-22_40_47.jpg"
+ogImage: "../../assets/wp/2025/01/fortigate-shutdown-01.jpg"
 ---
 
 ## はじめに
@@ -48,15 +48,15 @@ GUIによる画面操作でシャットダウンする際は、以下の手順�
 
 画面右上に表示されているユーザ名にカーソルを合わせ、
 
-![GUIでFortiGateをシャットダウンする手順1](../../assets/wp/2025/01/スライド1.jpg)
+![GUIでFortiGateをシャットダウンする手順1](../../assets/wp/2025/01/fortigate-shutdown-02.jpg)
 
 画面が切り替わったら、以下の「OK」をクリックします。
 
-![GUIでFortiGateをシャットダウンする手順2](../../assets/wp/2025/01/スライド2.jpg)
+![GUIでFortiGateをシャットダウンする手順2](../../assets/wp/2025/01/fortigate-shutdown-03.jpg)
 
 以下の画面になったら、GUI上の操作は終了です。
 
-![GUIでFortiGateをシャットダウン操作後に表示される画面](../../assets/wp/2025/01/スライド3.jpg)
+![GUIでFortiGateをシャットダウン操作後に表示される画面](../../assets/wp/2025/01/fortigate-shutdown-04.jpg)
 
 最後に、1分程度待ち、機器の各インターフェースと「status」ランプが消灯したことを確認してから、電源ケーブルを抜きます。
 

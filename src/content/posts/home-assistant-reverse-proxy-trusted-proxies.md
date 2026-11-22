@@ -7,7 +7,7 @@ tags:
     "HomeAssistant",
     "サーバー",
     "トラブルシュート",
-    "ネットワーク/ Network",
+    "ネットワーク",
     "リバースプロキシ",
   ]
 ogImage: "../../assets/wp/2026/09/home-assistant-reverse-proxy-trusted-proxies.png"

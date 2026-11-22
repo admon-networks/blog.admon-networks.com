@@ -3,8 +3,8 @@ title: "DNSとは？初心者向けに仕組み・Aレコード/AAAAレコード
 description: "概要 DNSの仕組みやDNSレコードの種類と役割について、まとめております。 DNSとは DNS (Domain Name System)とは、 人間が覚えやすいドメイン名をコンピュータが理解できるIPアドレスに自動的に…"
 pubDatetime: 2025-09-26T11:00:21.000Z
 modDatetime: 2025-10-02T15:19:35.000Z
-tags: ["IT用語", "ネットワーク", "ネットワーク/ Network"]
-ogImage: "../../assets/wp/2025/09/ChatGPT-Image-2025年9月26日-20_05_24.png"
+tags: ["IT用語", "ネットワーク"]
+ogImage: "../../assets/wp/2025/09/dns-01.png"
 ---
 
 ## 概要
@@ -26,7 +26,7 @@ DNSでは、DNSサーバがDNSレコードを使用してIPアドレスとドメ
 
 ### DNSによるアドレス解決の仕組み（図解）
 
-![](../../assets/wp/2025/09/スライド1.jpg)
+![](../../assets/wp/2025/09/dns-02.jpg)
 
 DNSによるアドレス解決は上の図のような流れで行われています。
 

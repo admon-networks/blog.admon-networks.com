@@ -2,7 +2,7 @@
 title: "デジカレTOKYOに落ちたら？受講者が考える次の選択肢"
 description: "デジカレTOKYOに落ちても、未経験からITに行く道はあります。デジカレ経由でネットワークエンジニアになった筆者が、大手エージェントで苦戦した体験をもとに、給付金・未経験特化の就職支援・未経験歓迎求人の選び方をまとめました。"
 pubDatetime: 2026-10-04T12:27:35.000Z
-tags: ["IT就職", "IT就職・転職", "IT転職", "未経験"]
+tags: ["IT転職", "未経験"]
 ogImage: "../../assets/wp/2026/10/digicare-tokyo-next-steps-eyecatch.png"
 ---
 

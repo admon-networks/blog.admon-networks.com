@@ -3,7 +3,7 @@ title: "【Route53】TXTレコードを設定しても dig で表示されない
 description: "Route53でTXTレコードを設定してもdigで表示されない原因を解説。72時間待っても解決しないNS委任の問題と対処をまとめました"
 pubDatetime: 2026-01-06T13:22:46.000Z
 tags: ["AWS", "Route 53"]
-ogImage: "../../assets/wp/2026/01/ChatGPT-Image-2026年1月6日-01_09_28.jpg"
+ogImage: "../../assets/wp/2026/01/aws-route53-txt-dig-not-visible-01.jpg"
 ---
 
 ## 本記事の結論
@@ -60,7 +60,7 @@ Route 53 の管理画面上では、**TXT レコードは正しく登録**され
 Google が提供する **[DNS 確認ツール](https://toolbox.googleapps.com/apps/dig/)**では、  
 **TXT レコードが検出されない状態が続いていました**。
 
-![Google Admin Toolbox DigでTXTレコードが見つからないと表示されていた時のスクリーンショット](../../assets/wp/2026/01/スクリーンショット-2026-01-06-215143.png)
+![Google Admin Toolbox DigでTXTレコードが見つからないと表示されていた時のスクリーンショット](../../assets/wp/2026/01/aws-route53-txt-dig-not-visible-02.png)
 
 通常であれば DNS 伝播の影響を考慮し、  
 数十分～数時間、**長くても 72 時間程度で反映されるケースが一般的**です。  
@@ -315,7 +315,7 @@ DNS 伝播の問題ではなく、
 
 ## 今回の環境で実際に起きていたNS委任のズレ
 
-![DNSの名前解決において、NS委任が誤っている場合に再帰DNSが正しい権威DNSへ到達できず、TXTレコードが参照されない仕組みを示した図](../../assets/wp/2026/01/NS委任が間違っているケースでのDNS問合せのイメージ図.drawio.png)
+![DNSの名前解決において、NS委任が誤っている場合に再帰DNSが正しい権威DNSへ到達できず、TXTレコードが参照されない仕組みを示した図](../../assets/wp/2026/01/aws-route53-txt-dig-not-visible-03.png)
 
 今回の環境では、  
 **DNS のレコード自体は Route 53 のホストゾーンで管理している一方**で、  
@@ -363,7 +363,7 @@ Route 53 のホストゾーン自体は
 
 ## 対応内容：登録済みドメインのネームサーバーを修正
 
-![ホストゾーンと登録済みドメインのNSレコードと委任がズレているイメージ図](../../assets/wp/2026/01/NS委任のずれ.png)
+![ホストゾーンと登録済みドメインのNSレコードと委任がズレているイメージ図](../../assets/wp/2026/01/aws-route53-txt-dig-not-visible-04.png)
 
 原因が NS 委任の不整合であることが分かったため、  
 対応としては、  

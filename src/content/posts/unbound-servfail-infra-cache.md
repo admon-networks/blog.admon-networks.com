@@ -2,7 +2,7 @@
 title: "UnboundがSERVFAILを返す原因はinfraキャッシュだった"
 description: "Proxmox再起動後、UnboundがSERVFAILを返して名前解決できなくなった原因と対処法。infraキャッシュの仕組みと再発防止の設定を解説します。"
 pubDatetime: 2026-09-22T16:10:24.000Z
-tags: ["サーバ", "サーバー", "トラブルシュート", "ネットワーク"]
+tags: ["サーバー", "トラブルシュート", "ネットワーク"]
 ogImage: "../../assets/wp/2026/09/unbound-servfail-infra-cache.png"
 ---
 

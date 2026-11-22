@@ -4,10 +4,10 @@ description: "こんにちは、yuttyです。今回は「コールドシャワ�
 pubDatetime: 2025-01-30T14:20:54.000Z
 modDatetime: 2025-10-02T14:38:14.000Z
 tags: ["健康", "習慣"]
-ogImage: "../../assets/wp/2025/01/B452B207-E6DF-4F18-A11A-C3A9DE2AF01E.webp"
+ogImage: "../../assets/wp/2025/01/engineer-health-cold-shower-01.webp"
 ---
 
-![](../../assets/wp/2025/01/B452B207-E6DF-4F18-A11A-C3A9DE2AF01E.webp)
+![](../../assets/wp/2025/01/engineer-health-cold-shower-01.webp)
 
 こんにちは、yuttyです。今回は**「コールドシャワーを半年続けたらどうなるのか？」**について、実体験をもとにお話しします。
 

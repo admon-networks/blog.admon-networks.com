@@ -2,7 +2,7 @@
 title: "ChromebookでEnte Authが黒い画面になる原因と対処法"
 description: "ChromebookのLinuxでEnte Authが黒い画面になる原因と対処法を解説しています。キーリングの手動解除とGDK_BACKEND=x11の指定で解決します。"
 pubDatetime: 2026-09-22T08:44:28.000Z
-tags: ["セキュリティ", "セキュリティ / Security", "ツール", "トラブルシュート"]
+tags: ["セキュリティ", "ツール", "トラブルシュート"]
 ogImage: "../../assets/wp/2026/09/chromebook-ente-auth-black-screen.png"
 ---
 

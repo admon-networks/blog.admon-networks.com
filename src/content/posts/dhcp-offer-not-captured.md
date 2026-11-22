@@ -2,15 +2,7 @@
 title: "【DHCP】OfferとACKがキャプチャできない原因｜Meraki MR36"
 description: "DHCPのキャプチャでOfferとACKが見えない原因を解説。Discoverのbroadcast flagが0だとサーバはユニキャストで返すため、同一VLANの別ポートでは観測できません。Meraki MR36で遭遇した事例と切り分け手順をまとめました。"
 pubDatetime: 2026-09-08T21:30:00.000Z
-tags:
-  [
-    "Cisco",
-    "Meraki",
-    "トラブルシュート",
-    "ネットワーク",
-    "ネットワーク/ Network",
-    "無線",
-  ]
+tags: ["Cisco", "Meraki", "トラブルシュート", "ネットワーク", "無線"]
 ogImage: "../../assets/wp/2026/09/dhcp-offer-not-captured-eyecatch.png"
 ---
 

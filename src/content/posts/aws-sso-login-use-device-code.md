@@ -2,7 +2,7 @@
 title: "サーバーでaws sso loginが127.0.0.1で止まる原因と対処法"
 description: "SSH接続したサーバーで aws sso login を実行すると、ブラウザが127.0.0.1に飛ばされてログインが完了しません。AWS CLI 2.22.0で変わった認証方式（PKCE）の仕組みから原因を解説し、--use-device-code での対処法を紹介します。"
 pubDatetime: 2026-09-24T15:36:02.000Z
-tags: ["AWS", "サーバ", "トラブルシュート"]
+tags: ["AWS", "サーバー", "トラブルシュート"]
 ogImage: "../../assets/wp/2026/09/aws-sso-login-use-device-code-eyecatch.png"
 ---
 

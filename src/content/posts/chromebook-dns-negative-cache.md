@@ -2,7 +2,7 @@
 title: "ChromebookでDNSを戻しても名前解決できない原因と対処法"
 description: "DNSを8.8.8.8から内部DNSに戻したのに、内部の名前だけ引けない。digの出力を読んで切り分けたら、原因は「存在しない」という応答のキャッシュでした。ChromebookならWi-Fiの再接続で直ります。"
 pubDatetime: 2026-09-25T14:35:55.000Z
-tags: ["DNS", "トラブルシュート", "ネットワーク/ Network"]
+tags: ["DNS", "トラブルシュート", "ネットワーク"]
 ogImage: "../../assets/wp/2026/09/chromebook-dns-negative-cache-eyecatch.png"
 ---
 

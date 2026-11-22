@@ -3,8 +3,8 @@ title: "Ansible・Puppet・Chef・SaltStackの違い｜Terraformとの比較も"
 description: "CCNP ENCORで出てくるAnsible・Puppet・Chef・SaltStackの違いを比較表で整理。エージェントの有無やPush/Pull型などの共通点に加え、よく比較されるTerraformとの違い（構成管理とプロビジョニング）も解説します。"
 pubDatetime: 2025-09-21T11:14:56.000Z
 modDatetime: 2026-09-22T14:13:45.000Z
-tags: ["CCNP", "CCNP ENCOR", "IT用語", "ネットワーク", "ネットワーク/ Network"]
-ogImage: "../../assets/wp/2025/09/ansibleとか文字は書かないで-背景はいい感じなので-勉強している人が移っているイメージで.png"
+tags: ["CCNP", "CCNP ENCOR", "IT用語", "ネットワーク"]
+ogImage: "../../assets/wp/2025/09/cisco-ccnp-encor-ansible-chef-etc-01.png"
 ---
 
 ## 概要

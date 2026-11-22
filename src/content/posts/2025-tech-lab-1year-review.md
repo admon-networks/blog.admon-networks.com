@@ -5,7 +5,7 @@ pubDatetime: 2025-12-31T14:40:15.000Z
 modDatetime: 2026-01-03T09:32:05.000Z
 tags:
   ["Search Console", "WordPress", "ブログ振り返り", "ブログ運営", "技術ブログ"]
-ogImage: "../../assets/wp/2026/01/ChatGPT-Image-2026年1月3日-17_15_04.jpg"
+ogImage: "../../assets/wp/2026/01/2025-tech-lab-1year-review-01.jpg"
 ---
 
 ## はじめに
@@ -130,7 +130,7 @@ PVだけを見ると、月300前後と決して多い数字ではありません
 
 ### Search Consoleで見る1年間の表示回数とクリック数の推移
 
-![Search Consoleで見る1年間の表示回数とクリック数の推移](../../assets/wp/2025/12/スクリーンショット-2026-01-02-195951.png)
+![Search Consoleで見る1年間の表示回数とクリック数の推移](../../assets/wp/2025/12/2025-tech-lab-1year-review-02.png)
 
 もう一つ、続けてよかったと感じた理由が、  
 Jetpackで見た月ごとのアクセス推移です。
@@ -150,7 +150,7 @@ PVの数字以上に、
 
 ### Jetpackで見る、2025年の月別アクセス推移
 
-![Jetpackで見る、2025年の月別アクセス推移](../../assets/wp/2025/12/スクリーンショット-2026-01-02-195815.png)
+![Jetpackで見る、2025年の月別アクセス推移](../../assets/wp/2025/12/2025-tech-lab-1year-review-03.png)
 
 ## 2025年のPVを支えてくれた記事一覧
 

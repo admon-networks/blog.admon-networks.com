@@ -2,14 +2,7 @@
 title: "VRRPのグループ番号（VRID）が既存と被って大変だった話"
 description: "ルータをVRRPで冗長化したところ、既存機器とグループ番号（VRID）が被っており、状態が不安定になったり既存端末がオフラインになったりしました。VRIDが重複すると何が起きるのかをRFCをもとに整理し、導入前の確認方法をまとめました。"
 pubDatetime: 2026-10-14T15:10:37.000Z
-tags:
-  [
-    "CCNP",
-    "CCNP ENCOR",
-    "トラブルシュート",
-    "ネットワーク",
-    "ネットワーク/ Network",
-  ]
+tags: ["CCNP", "CCNP ENCOR", "トラブルシュート", "ネットワーク"]
 ogImage: "../../assets/wp/2026/10/vrrp-vrid-eyecatch.png"
 ---
 

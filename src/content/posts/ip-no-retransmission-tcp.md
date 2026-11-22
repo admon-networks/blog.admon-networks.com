@@ -2,7 +2,7 @@
 title: "IPはなぜ再送しない？TCPとの役割分担を現場目線で解説"
 description: "IPはなぜ再送しないのか？コネクションレス型の意味から、TCPのフロー制御・輻輳制御・スロースタート、QoSとの違い、YouTubeが途切れない理由、現場のadjust-mssまで、ネスペの疑問を起点に解説します。"
 pubDatetime: 2026-10-15T14:50:10.000Z
-tags: ["ネットワーク", "ネットワーク/ Network"]
+tags: ["ネットワーク"]
 ogImage: "../../assets/wp/2026/10/ip-no-retransmission-tcp-eyecatch.png"
 ---
 

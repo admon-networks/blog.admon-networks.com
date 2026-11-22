@@ -3,16 +3,8 @@ title: "【CCNP学習】usernameコマンドで作成するユーザにパスワ
 description: "概要 CCNP ENCORの試験対策で機器にログインするユーザを作成し、パスワードポリシーを適用する方法を学んだので、 備忘も兼ねてまとめてます。 コマンドと解説 手順は下記の通り。 ①aaa newmodel コマンド…"
 pubDatetime: 2025-09-23T07:38:36.000Z
 modDatetime: 2025-10-02T15:18:00.000Z
-tags:
-  [
-    "CCNP",
-    "CCNP ENCOR",
-    "Cisco",
-    "セキュリティ",
-    "ネットワーク",
-    "ネットワーク/ Network",
-  ]
-ogImage: "../../assets/wp/2025/09/image-4.png"
+tags: ["CCNP", "CCNP ENCOR", "Cisco", "セキュリティ", "ネットワーク"]
+ogImage: "../../assets/wp/2025/09/cisco-username-password-policy-01.png"
 ---
 
 ## 概要
