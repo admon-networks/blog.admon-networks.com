@@ -13,9 +13,8 @@ tags:
     "セキュリティ",
     "トラブルシュート",
     "ネットワーク",
-    "ネットワーク/ Network",
   ]
-ogImage: "../../assets/wp/2025/12/ChatGPT-Image-2025年12月28日-22_45_37.jpg"
+ogImage: "../../assets/wp/2025/12/strongswan-cisco-ipsec-subnet-add-failure-01.jpg"
 ---
 
 ## はじめに

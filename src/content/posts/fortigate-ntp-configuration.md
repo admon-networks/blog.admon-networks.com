@@ -4,7 +4,7 @@ description: "FortiGateが時刻同期をするための設定について解説
 pubDatetime: 2025-01-21T15:36:33.000Z
 modDatetime: 2025-12-28T02:05:54.000Z
 tags: ["FortiGate", "セキュリティ", "ネットワーク", "ファイアウォール"]
-ogImage: "../../assets/wp/2025/01/プレゼンテーション1.jpg"
+ogImage: "../../assets/wp/2025/01/fortigate-ntp-configuration-01.jpg"
 ---
 
 FortiGateが時刻同期をするための設定について解説します。

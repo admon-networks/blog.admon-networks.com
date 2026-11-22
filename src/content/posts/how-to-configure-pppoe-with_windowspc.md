@@ -2,8 +2,8 @@
 title: "Windows PCでPPPoE接続を行う方法"
 description: "本ページでは、WindowsのPCを使用して、PPPoEに接続する方法を解説します。 用途は、ネットワーク機器のPPPoE設定の接続前にPCで動作確認を行いたい場合（切り分けのためなど）を想定しております。 手順の解説 …"
 pubDatetime: 2025-06-22T09:11:22.000Z
-tags: ["pppoe", "Windows", "ネットワーク/ Network"]
-ogImage: "../../assets/wp/2025/06/良い感じですが中に書かれている言語を英語にして-pppoeの設定画面-1.png"
+tags: ["PPPoE", "Windows", "ネットワーク"]
+ogImage: "../../assets/wp/2025/06/how-to-configure-pppoe-with_windowspc-01.png"
 ---
 
 本ページでは、WindowsのPCを使用して、PPPoEに接続する方法を解説します。  

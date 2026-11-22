@@ -4,19 +4,8 @@ description: "CAPWAPの概要とCAPWAPセッションの確立手順について
 pubDatetime: 2025-09-30T14:45:32.000Z
 modDatetime: 2025-12-29T10:37:43.000Z
 tags:
-  [
-    "CCNA",
-    "CCNP",
-    "CCNP ENCOR",
-    "Cisco",
-    "Wireless",
-    "ネットワーク",
-    "ネットワーク/ Network",
-    "プロトコル",
-    "無線",
-    "無線 / Wireless",
-  ]
-ogImage: "../../assets/wp/2025/09/ChatGPT-Image-2025年9月30日-23_43_21.png"
+  ["CCNA", "CCNP", "CCNP ENCOR", "Cisco", "無線", "ネットワーク", "プロトコル"]
+ogImage: "../../assets/wp/2025/09/capwap-01.png"
 ---
 
 ## 概要

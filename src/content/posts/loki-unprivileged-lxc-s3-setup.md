@@ -2,8 +2,7 @@
 title: "非特権LXCに Loki を入れて S3 に書き込むまで｜設定ファイルを1行ずつ読み解く"
 description: "Proxmox の非特権LXCに Loki 3.7 を入れ、S3 にチャンクを書き込むまでの記録です。config.yml の各項目をなぜその値にしたのか、GOMEMLIMIT が必要な理由、retention を効かせる設定、起動前の構文チェックまで解説します。"
 pubDatetime: 2026-09-16T04:26:00.000Z
-tags:
-  ["AWS", "S3", "サーバ", "サーバー", "ネットワーク", "ネットワーク/ Network"]
+tags: ["AWS", "S3", "サーバー", "ネットワーク"]
 ogImage: "../../assets/wp/2026/09/eyecatch-loki-lxc-s3-setup.png"
 ---
 

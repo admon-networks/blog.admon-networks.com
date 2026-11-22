@@ -3,8 +3,8 @@ title: "Google ChromeにBitwardenを導入する方法｜無料で使えるパ�
 description: "概要 普段使うブラウザアプリのGoogle chromeの拡張機能としてBitwardenを導入しました。 Bitwardenは、高度なパスワード管理アプリで、ログイン情報の自動入力や、パスワードの自動生成・管理などを行…"
 pubDatetime: 2025-09-27T12:48:10.000Z
 modDatetime: 2025-10-02T15:20:50.000Z
-tags: ["VPN", "セキュリティ", "セキュリティ / Security", "パスワード管理"]
-ogImage: "../../assets/wp/2025/09/ChatGPT-Image-2025年9月27日-21_47_05.png"
+tags: ["VPN", "セキュリティ", "パスワード管理"]
+ogImage: "../../assets/wp/2025/09/bitwarden-configuration-01.png"
 ---
 
 ## 概要

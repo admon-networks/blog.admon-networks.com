@@ -3,19 +3,8 @@ title: "Cisco LAP がWLCを見つける仕組みを解説｜DHCP Option43〜DNS�
 description: "概要 CCNAやCCNPの試験で頻出の、LAP（WLC管理による無線AP）のWLC探索に関する説明記事です。 この内容はCAPWAPセッションを確立する前に行われるLAPがWLCを探索する方法についてまとめております。 …"
 pubDatetime: 2025-09-29T15:24:42.000Z
 modDatetime: 2026-06-05T13:02:21.000Z
-tags:
-  [
-    "CCNA",
-    "CCNP",
-    "CCNP ENCOR",
-    "Cisco",
-    "Wireless",
-    "ネットワーク",
-    "ネットワーク/ Network",
-    "無線",
-    "無線 / Wireless",
-  ]
-ogImage: "../../assets/wp/2025/09/ChatGPT-Image-2025年9月30日-00_23_41.png"
+tags: ["CCNA", "CCNP", "CCNP ENCOR", "Cisco", "無線", "ネットワーク"]
+ogImage: "../../assets/wp/2025/09/lap-wlc-discovery-process-01.png"
 ---
 
 ## 概要

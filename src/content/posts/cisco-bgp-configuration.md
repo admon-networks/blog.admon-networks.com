@@ -3,16 +3,8 @@ title: "【基本編】CiscoのルータでBGPを設定してみた"
 description: "概要 現在CCNP ENCORの試験対策で、BGPの設定を勉強中です。 備忘も兼ねて設定の手順を解説します。 紹介している設定手順で進めると、BGPによるルートの広告とBGPネイバー関係の確立が出来ます。 構成図（超ざっ…"
 pubDatetime: 2025-06-24T14:09:57.000Z
 modDatetime: 2025-10-02T14:43:48.000Z
-tags:
-  [
-    "BGP設定",
-    "CCNP",
-    "Cisco",
-    "ネットワーク",
-    "ネットワーク/ Network",
-    "ルーティング",
-  ]
-ogImage: "../../assets/wp/2025/06/image-1.png"
+tags: ["BGP", "CCNP", "Cisco", "ネットワーク", "ルーティング"]
+ogImage: "../../assets/wp/2025/06/cisco-bgp-configuration-01.png"
 ---
 
 ## 概要
@@ -24,7 +16,7 @@ ogImage: "../../assets/wp/2025/06/image-1.png"
 
 ## 構成図（超ざっくり）
 
-![](../../assets/wp/2025/06/スライド1.jpg)
+![](../../assets/wp/2025/06/cisco-bgp-configuration-02.jpg)
 
 上の図の「router②」の設定を中心に解説していきます。  
 同様の流れで対向のルータも設定することで、BGPのネイバー関係が確立されます。

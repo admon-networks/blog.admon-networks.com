@@ -2,7 +2,7 @@
 title: "【BGP】NLRI属性とは？実は属性ではなくフィールドです"
 description: "BGPの「NLRI属性」という言葉に違和感を持ったことはありませんか。実はNLRIは属性ではなくフィールドです。この記事ではNLRIの意味、属性との違い、MP_REACH_NLRIと混同されやすい理由を、図を使ってわかりやすく解説します。"
 pubDatetime: 2026-09-07T13:04:09.000Z
-tags: ["BGP", "CCNP", "ネットワーク", "ネットワーク/ Network"]
+tags: ["BGP", "CCNP", "ネットワーク"]
 ogImage: "../../assets/wp/2026/09/eyecatch_bgp_nlri_ogp.png"
 ---
 

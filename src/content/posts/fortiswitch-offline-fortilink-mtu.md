@@ -6,10 +6,8 @@ tags:
   [
     "FortiGate",
     "セキュリティ",
-    "セキュリティ / Security",
     "トラブルシュート",
     "ネットワーク",
-    "ネットワーク/ Network",
     "ファイアウォール",
   ]
 ogImage: "../../assets/wp/2026/09/fortilink-image.png"
@@ -85,7 +83,7 @@ FortiLink上を流れるフレームは、内側にペイロードがあり、�
 
 RFC 5415のステートマシンをざっくり整理すると、こういう流れになります。
 
-![CAPWAPセッション確立の6フェーズ。Discovery、DTLS Setup、Join、Configure、Data Check、Runの順に進み、今回はDiscoveryまでで停止したことを示した図](../../assets/wp/2026/09/image.png)
+![CAPWAPセッション確立の6フェーズ。Discovery、DTLS Setup、Join、Configure、Data Check、Runの順に進み、今回はDiscoveryまでで停止したことを示した図](../../assets/wp/2026/09/fortiswitch-offline-fortilink-mtu-01.png)
 
 _図1：CAPWAPセッション確立の流れ。今回の事象では①Discoveryまでは観測できたが、②DTLS Setupに進まなかった。_
 

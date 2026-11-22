@@ -17,7 +17,7 @@ CCNP ENCOR勉強中。
 
 ## 写真
 
-![](../../assets/wp/2025/09/img_4882.jpg)
+![](../../assets/wp/2025/09/profile-01.jpg)
 
 2025年 5月 北海道旅行
 
@@ -27,4 +27,4 @@ CCNP ENCOR勉強中。
 
 ステンドガラス博物館
 
-![](../../assets/wp/2025/09/img_5269.jpg)
+![](../../assets/wp/2025/09/profile-02.jpg)

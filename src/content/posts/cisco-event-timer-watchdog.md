@@ -3,8 +3,8 @@ title: "Event Timer Watchdogコマンド簡易解説"
 description: "概要 Cisco機器で設定する event timer watchdogについてまとめました。 （CCNPの学習をしていてコマンド構文を毎回忘れてしまうため備忘録として・・・） コマンド構文 (configapplet)…"
 pubDatetime: 2025-09-21T10:40:41.000Z
 modDatetime: 2025-10-02T15:14:51.000Z
-tags: ["CCNP", "Cisco", "ネットワーク", "ネットワーク/ Network"]
-ogImage: "../../assets/wp/2025/09/image.png"
+tags: ["CCNP", "Cisco", "ネットワーク"]
+ogImage: "../../assets/wp/2025/09/cisco-event-timer-watchdog-01.png"
 ---
 
 ## 概要

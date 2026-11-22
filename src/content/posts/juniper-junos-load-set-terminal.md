@@ -2,7 +2,7 @@
 title: "【Juniper / JUNOS】load set terminal の使い方｜設定を一括投入"
 description: "はじめに Juniper JUNOSでは、複数の設定投入方法がありますが、検証や構築作業を効率化したいときに、特に便利なのが load set terminal です。 set 形式のコマンドをまとめて投入することができ…"
 pubDatetime: 2025-12-31T13:31:40.000Z
-tags: ["Juniper", "ネットワーク/ Network"]
+tags: ["Juniper", "ネットワーク"]
 ogImage: "../../assets/wp/2025/12/juniper-junos-load-set-terminal.jpg"
 ---
 
@@ -90,7 +90,7 @@ load set terminalは、次のような場面に向いています。
 
 ### ～設定の流れ～
 
-![JUNOS load set terminal の設定投入手順](../../assets/wp/2025/12/ChatGPT-Image-2025年12月31日-22_07_46.jpg)
+![JUNOS load set terminal の設定投入手順](../../assets/wp/2025/12/juniper-junos-load-set-terminal-01.jpg)
 
 ### 設定モードに入る
 

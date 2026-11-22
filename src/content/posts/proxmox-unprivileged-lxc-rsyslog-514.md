@@ -2,17 +2,7 @@
 title: "Proxmox の非特権LXCで syslog 514番が開かない理由と対処法"
 description: "Proxmoxの非特権LXCでは514番などの特権ポートをbindできません。systemdのAmbientCapabilitiesでCAP_NET_BIND_SERVICEを付与し、rsyslogでsyslogを受信する手順を解説します。"
 pubDatetime: 2026-09-06T16:15:43.000Z
-tags:
-  [
-    "LXC",
-    "Proxmox",
-    "syslog",
-    "サーバ",
-    "サーバー",
-    "ネットワーク",
-    "ネットワーク/ Network",
-    "仮想化",
-  ]
+tags: ["LXC", "Proxmox", "syslog", "サーバー", "ネットワーク", "仮想化"]
 ogImage: "../../assets/wp/2026/09/eyecatch-proxmox-lxc-rsyslog-514.png"
 ---
 

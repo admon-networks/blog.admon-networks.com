@@ -4,7 +4,7 @@ description: "Paloaltoの機器の電源を停止する際は、シャットダ�
 pubDatetime: 2025-05-03T11:15:48.000Z
 modDatetime: 2025-10-02T14:40:08.000Z
 tags: ["Paloalto", "セキュリティ", "ネットワーク", "ファイアウォール"]
-ogImage: "../../assets/wp/2025/05/cdb1a7f6-6190-4850-9bb3-834c2edbf4a6-1.png"
+ogImage: "../../assets/wp/2025/05/paloalto-shutdown-01.png"
 ---
 
 Paloaltoの機器の電源を停止する際は、シャットダウンコマンドを実行した後に電源ケーブルを抜くことが推奨されています。  

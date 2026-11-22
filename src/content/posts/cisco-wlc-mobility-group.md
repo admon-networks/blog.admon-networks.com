@@ -3,9 +3,8 @@ title: "WLCモビリティグループとは？仕組み・設定・試験ポイ
 description: "CCNP ENCORやCCNA試験のワイヤレス分野で出題されるWLCのモビリティグループについての解説です。"
 pubDatetime: 2025-10-01T12:42:14.000Z
 modDatetime: 2026-06-05T13:04:39.000Z
-tags:
-  ["CCNA", "CCNP ENCOR", "Cisco", "ネットワーク/ Network", "無線 / Wireless"]
-ogImage: "../../assets/wp/2025/10/ChatGPT-Image-2025年10月1日-21_41_29.png"
+tags: ["CCNA", "CCNP ENCOR", "Cisco", "ネットワーク", "無線"]
+ogImage: "../../assets/wp/2025/10/cisco-wlc-mobility-group-01.png"
 ---
 
 ## 概要

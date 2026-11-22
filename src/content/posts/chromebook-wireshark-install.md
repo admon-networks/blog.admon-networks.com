@@ -2,15 +2,7 @@
 title: "ChromebookでWiresharkを使う方法｜インストールから権限設定まで"
 description: "ChromebookのLinux開発環境（Crostini）にWiresharkをインストールする手順を解説。apt installだけでは足りない権限設定と、ChromeOS本体のNICがキャプチャできない理由まで、実機の画面付きでまとめました。"
 pubDatetime: 2026-09-08T02:00:00.000Z
-tags:
-  [
-    "Chromebook",
-    "LAB",
-    "ネットワーク",
-    "ネットワーク/ Network",
-    "パケットキャプチャ",
-    "検証環境",
-  ]
+tags: ["Chromebook", "検証環境", "ネットワーク", "パケットキャプチャ"]
 ogImage: "../../assets/wp/2026/09/eyecatch-chromebook-wireshark.png"
 ---
 

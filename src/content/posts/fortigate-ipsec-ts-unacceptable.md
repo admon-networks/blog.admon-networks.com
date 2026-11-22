@@ -28,7 +28,7 @@ ogImage: "../../assets/wp/2026/08/Gemini_Generated_Image_yuwhovyuwhovyuwh.jpeg"
 
 # 今回の構成
 
-![IPsec 終端装置の移行前後を比較した構成図。移行前は Cisco C891FJ、移行後は FortiGate が AWS 上の strongSwan と IPsec トンネルを終端している](../../assets/wp/2026/08/ブログ用画像_20260829.jpg)
+![IPsec 終端装置の移行前後を比較した構成図。移行前は Cisco C891FJ、移行後は FortiGate が AWS 上の strongSwan と IPsec トンネルを終端している](../../assets/wp/2026/08/fortigate-ipsec-ts-unacceptable-01.jpg)
 
 移行前はCisco C891FJがIPsec VPNを終端していました。
 

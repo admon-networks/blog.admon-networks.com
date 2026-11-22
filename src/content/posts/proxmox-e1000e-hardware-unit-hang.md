@@ -2,7 +2,7 @@
 title: "Proxmoxで通信が止まる原因はe1000eのHardware Unit Hangだった"
 description: "Proxmoxで、リンクはUpなのに通信だけが止まる。原因はIntel I219系NIC（e1000e）の「Detected Hardware Unit Hang」でした。M720qでの実例をもとに、該当するかの確認方法と、TSO/GSO/GROを無効化する対策を解説します。"
 pubDatetime: 2026-09-18T15:25:12.000Z
-tags: ["Proxmox", "サーバ", "サーバー", "トラブルシュート"]
+tags: ["Proxmox", "サーバー", "トラブルシュート"]
 ogImage: "../../assets/wp/2026/09/eyecatch-proxmox-e1000e-hardware-unit-hang-v2.png"
 ---
 
