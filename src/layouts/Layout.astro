@@ -7,6 +7,7 @@ import config from "@/config";
 import "@/styles/global.css";
 import CustomHead from "@/custom/Head.astro";
 import CustomBodyEnd from "@/custom/BodyEnd.astro";
+import PreviewBanner from "@/components/PreviewBanner.astro";
 
 type Props = {
   title?: string;
@@ -118,6 +119,7 @@ const rssHref = getAssetPath("rss.xml");
   <body
     class="bg-background font-app text-foreground selection:bg-accent/75 selection:text-accent-foreground flex min-h-svh flex-col"
   >
+    <PreviewBanner />
     <slot />
     <script>
       import "@/scripts/theme";
