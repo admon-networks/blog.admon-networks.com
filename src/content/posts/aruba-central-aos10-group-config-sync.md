@@ -2,6 +2,7 @@
 title: "Aruba Centralでconfigが同期しない｜APがAOS 8"
 description: "Aruba CentralでAOS 10のグループに入れたAPのconfigが同期せず、SSIDが反映されませんでした。AOS 8.x出荷のAPがAOS 10へアップグレードされて解決した経緯と、公式ドキュメントで確かめた仕様、確認ポイントをまとめます。"
 pubDatetime: 2026-11-23T18:00:00+09:00
+draft: true
 tags: ["Aruba", "トラブルシュート", "ネットワーク", "無線"]
 ogImage: "../../assets/posts/eyecatch-aruba-central-aos10-group-config-sync.png"
 ---

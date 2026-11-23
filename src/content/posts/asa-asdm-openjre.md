@@ -1,12 +1,12 @@
 ---
 title: "ASDMが起動しない原因はJava｜OpenJRE版への切り替え方"
 description: "ASA 9.22でASDMが起動しない原因は、同梱のASDMがPCのJavaを使うOracle JRE版だったことでした。show asdm imageでの見分け方、2種類ある理由、invisible.vbsエラーの正体、OpenJRE版への切り替え手順をまとめました。"
-pubDatetime: 2026-11-23T18:00:00+09:00
+pubDatetime: 2026-11-23T18:10:00+09:00
 tags: ["Cisco", "ファイアウォール", "トラブルシュート", "ネットワーク"]
 ogImage: "../../assets/posts/eyecatch-asa-asdm-openjre.png"
 ---
 
-ASA 9.22にバージョンアップしたあと、ASDM（Adaptive Security Device Manager）が起動しなくなりました。ブラウザでASDMのページは開けるのに、Launcherを起動すると`javaw.exe が見つかりません`や`invisible.vbs が見つかりません`が出て、GUIが立ち上がりません。
+ASA 9.22にバージョンアップしたあと、ASDM（Adaptive Security Device Manager）が起動しなくなりました。ブラウザーでASDMのページは開けるのに、Launcherを起動すると`javaw.exe が見つかりません`や`invisible.vbs が見つかりません`が出て、GUIが立ち上がりません。
 
 原因は、ASAに同梱されているASDMが、**PC側にJavaが入っている前提のOracle JRE版**だったことでした。Javaを同梱した「OpenJRE版」（`asdm-openjre-xxxx.bin`）に切り替えると、PCにJavaを入れなくても起動しました。
 
@@ -27,7 +27,7 @@ ASAの再起動は不要で、通信にも影響しません。
 | ASDM         | 7.22(1)                                         |
 | 管理PC       | Windows                                         |
 | ASA管理IP    | 192.0.2.1（ドキュメント用のアドレスに置き換え） |
-| 作業した時期 | <!-- TODO: 確認（作業した年月） -->             |
+| 作業した時期 | 2026年7月                                       |
 
 ## ASDMは「ASA側の配布元」と「PC側のアプリ」の2層でできている
 
@@ -40,7 +40,7 @@ ASDMは、ASAの中で動くWebアプリではありません。ASAの上にあ�
 | 配布元 | ASAのflash（`disk0:/asdm.bin`など） | ASDMのイメージを持ち、HTTPSでLauncherとアプリ本体を配る（`http server enable`で有効になる） |
 | 実体   | 管理PC                              | ASDM-IDM LauncherとJavaのアプリが動き、ASAに接続してGUIを表示する                           |
 
-ブラウザで`https://192.0.2.1`を開いて「Install ASDM Launcher」が表示されるのは、配布元の層が正常に動いているということです。ネットワークの疎通、HTTPSでの管理アクセス、ASAのWebサーバー機能までは問題ありません。
+ブラウザーで`https://192.0.2.1`を開いて「Install ASDM Launcher」が表示されるのは、配布元の層が正常に動いているということです。ネットワークの疎通、HTTPSでの管理アクセス、ASAのWebサーバー機能までは問題ありません。
 
 一方で、起動するかどうかは実体の層、つまりPC側でJavaのアプリが動くかどうかで決まります。配布元が正常でも、PC側の実行環境がそろっていなければ起動しません。「ページは開けるのに起動しない」は、この2層の片方だけが壊れている状態として普通に起こります。
 
@@ -103,7 +103,7 @@ Java 11以降のOracle JDKはOpenJDKのソースをベースにしていて、�
 
 ### 2019年に有償化されたのは「Oracle版のJava」
 
-2019年1月、OracleはJava SEのライセンスを変更し、商用利用を有償のサブスクリプションにしました。
+OracleのJava SE 8は、2019年4月16日の定期アップデートからライセンスが変わりました。それ以降のアップデートは「Oracle Technology Network License Agreement for Oracle Java SE」で提供され、無償で使えるのは個人利用や開発などの用途に限られます。業務で使うには、有償のサブスクリプションなどの契約が必要です。従来のライセンス（BCL）で提供された最後のアップデートは、2019年1月の8u201／8u202でした（[Oracle JDK License General FAQs](https://www.oracle.com/java/technologies/javase/jdk-faqs.html)、[Oracle Java SE Support Roadmap](https://www.oracle.com/java/technologies/java-se-support-roadmap.html)）。
 
 よく「Javaが有償化された」と言われますが、正確には「Oracle版が有償化された」です。無償で使える実装はもともとありました。ただ、ASDMのようにOracle JREを前提にしたソフトウェアにとっては、利用者がOracle Javaを気軽に入れられなくなった、という影響が残りました。
 
@@ -122,10 +122,12 @@ Classpath例外は、GPLのライブラリとリンクしたプログラムで�
 
 ### ASAにOracle JRE版がバンドルされる理由（考察）
 
+OpenJRE版は、ASA 9.12(2)／ASDM 7.12(2)（2019年5月30日）の新機能として追加されました（[Release Notes for Cisco ASDM, 7.12(x)](https://www.cisco.com/c/en/us/td/docs/security/asdm/7_12/release/notes/rn712.html)）。それ以前のASDMは、Oracle JRE版の1種類だけでした。
+
 > [!NOTE]
 > ここからは私の考察です。Ciscoは、バンドルするのがOracle JRE版である理由を明記していません。
 
-- OpenJRE版が登場したのはASA 9.12(2)／ASDM 7.12(2)のころです。それ以前はASDMが1種類しかなく、あとから追加されたOpenJRE版がオプションの扱いのまま据え置かれているのだと思われます
+- あとから追加されたOpenJRE版が、オプションの扱いのまま据え置かれているのだと思われます
 - CLIだけで運用する現場や、Oracle Javaのライセンスを持っている企業、FMC（Secure Firewall Management Center）などで管理していてASDMを使わない構成も普通にあります。そうした利用者にとっては、どちらがバンドルされていても困りません
 
 ただ、利用者の側から見ると、Oracle Javaを導入しづらくなった今、デフォルトのまま使える人のほうが少数派だと思います。仕様と実態がずれている状態です。
@@ -175,15 +177,13 @@ Windows Script Host
 C:\Windows\System32\wscript.exe invisible.vbs run.bat
 ```
 
-一見すると壊れているように見えますが、**これはCiscoの標準の、正しい形です。** Ciscoのコミュニティでも、リンク先をこの形に直すのが正解として共有されています。
+一見すると壊れているように見えますが、**これはCiscoの標準の、正しい形です。** Ciscoのコミュニティでも、リンク先をこの形に直す方法が共有されています（[ASDM "this app can't run on your PC" - Windows 10 - Cisco Community](https://community.cisco.com/t5/network-security/asdm-quot-this-app-can-t-run-on-your-pc-quot-windows-10/td-p/3782580)）。
 
 | 部分                              | 意味                                                           |
 | --------------------------------- | -------------------------------------------------------------- |
 | `C:\Windows\System32\wscript.exe` | Windows Script Host。VBScriptを実行するWindows標準のプログラム |
 | `invisible.vbs`                   | wscript.exeに実行させるスクリプト（1つ目の引数）               |
 | `run.bat`                         | invisible.vbsに渡す引数                                        |
-
-<!-- TODO: 確認（invisible.vbsとrun.batの中身。run.batがasdm-launcher.jarをjavaで起動している、invisible.vbsがrun.batを画面を出さずに実行している、と書けるか） -->
 
 ファイルの実体は、ASDMの既定のインストール先にありました。
 
@@ -232,8 +232,6 @@ ciscoasa# copy tftp://<TFTPサーバー>/asdm-openjre-7221-xx.bin disk0:
 
 TFTPのほかに、SCPやFTPでも転送できます。TFTPは認証も暗号化もないので、管理用のネットワークの中だけで使ってください。
 
-<!-- AD: USB-シリアル（RJ45）コンソールケーブル -->
-
 ### 3. 転送できたかを確認する
 
 ```text
@@ -270,7 +268,7 @@ ciscoasa# show asdm image
 
 ### 6. PCのLauncherを入れ直す
 
-PCに入っている既存のASDM Launcherをアンインストールし、ブラウザで`https://192.0.2.1`を開いて、表示される「Install ASDM Launcher」からLauncherをインストールし直します。
+PCに入っている既存のASDM Launcherをアンインストールし、ブラウザーで`https://192.0.2.1`を開いて、表示される「Install ASDM Launcher」からLauncherをインストールし直します。
 
 ### 切り替えの影響範囲
 
@@ -310,19 +308,17 @@ Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException
 
 `javaw.exe が見つかりません`が出ると、とりあえず最新のJavaを入れたくなります。ですが、Oracle JRE版のASDMが要件としているのはOracle JRE 8.0かOpenJRE 1.8.xです。私が入れたTemurin 17も対象外でした。
 
-### ブラウザだけでは起動できない
+### ブラウザーだけでは起動できない
 
-ASDM 7.18以降は、Java Web Start（ブラウザからJavaのアプリを起動する仕組み）のサポートが終わっています。Launcherのインストールが必須で、ブラウザの中で完結させる逃げ道はありません。
+ASDM 7.18以降は、Java Web Start（ブラウザーからJavaのアプリを起動する仕組み）のサポートが終わっています。Launcherのインストールが必須で、ブラウザーの中で完結させる逃げ道はありません。
 
 ### invisible.vbsのショートカットは壊れていない
 
 `wscript.exe invisible.vbs run.bat`というリンク先は、見慣れないので壊れているように見えます。ですが、これがCiscoの標準の形です。直すのはリンク先ではなく作業フォルダーです。
 
-<!-- AD: Cisco ASAの参考書 -->
-
 ## まとめ：ASA更改の手順書にOpenJRE版への差し替えを入れておく
 
-- ASDMは、ASA側の配布元とPC側のアプリの2層でできている。ブラウザでページが開けても、PC側の実行環境がなければ起動しない
+- ASDMは、ASA側の配布元とPC側のアプリの2層でできている。ブラウザーでページが開けても、PC側の実行環境がなければ起動しない
 - `show asdm image`のファイル名に`openjre`がなければOracle JRE版。PCにOracle JRE 8.0かOpenJRE 1.8.xが必要
 - ASAにバンドルされるのはOracle JRE版だけ。Oracle JREは再配布できず、OpenJDKは再配布できる、というライセンスの違いが2種類ある理由
 - `invisible.vbs が見つかりません`は、ショートカットの作業フォルダーが空なのが原因。リンク先は正しい
@@ -333,5 +329,8 @@ ASAのバージョンアップや機器の更改では、新しいイメージ�
 ## 参考リンク
 
 - [Release Notes for Cisco Secure Firewall ASDM, 7.22(x) - Cisco](https://www.cisco.com/c/en/us/td/docs/security/asdm/7_22/release/notes/rn722.html)
+- [Release Notes for Cisco ASDM, 7.12(x) - Cisco](https://www.cisco.com/c/en/us/td/docs/security/asdm/7_12/release/notes/rn712.html)
+- [Oracle JDK License General FAQs - Oracle](https://www.oracle.com/java/technologies/javase/jdk-faqs.html)
+- [Oracle Java SE Support Roadmap - Oracle](https://www.oracle.com/java/technologies/java-se-support-roadmap.html)
 - [Troubleshoot ASDM Launch Problems - Cisco](https://www.cisco.com/c/en/us/support/docs/security/secure-firewall-asdm/222646-troubleshoot-asdm-launch-problems.html)
 - [Troubleshoot ASDM License, Upgrade and Compatibility Problems - Cisco](https://www.cisco.com/c/en/us/support/docs/security/secure-firewall-asdm/222645-troubleshoot-asdm-license-upgrade-and-c.html)
