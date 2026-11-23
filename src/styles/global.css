@@ -97,3 +97,8 @@ html {
 .app-prose :not(pre) > code {
   word-break: break-all;
 }
+
+/* WordPress から移行したアフィリエイトの枠は背景が白いので、ダークモードでも文字を暗い色にする */
+.app-prose div[style*="background:#fafaf7"] p {
+  color: #282728;
+}
