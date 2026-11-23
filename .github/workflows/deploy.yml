@@ -1,0 +1,68 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# デプロイが同時に2つ走らないようにする（後から来た方は、前のデプロイが終わるまで待つ）
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    name: CI
+    uses: ./.github/workflows/ci.yml
+
+  deploy:
+    name: Deploy to S3 / CloudFront
+    needs: ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: "☁️ Checkout repository"
+        uses: actions/checkout@v7
+
+      - name: Use Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: "npm"
+
+      - name: "📦 Install dependencies"
+        run: npm ci
+
+      - name: "🚀 Build the project"
+        run: npm run build
+
+      - name: "🔑 Configure AWS credentials (OIDC)"
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ap-northeast-1
+
+      - name: "📤 Upload assets (_astro)"
+        run: >-
+          aws s3 sync dist/_astro "s3://${{ vars.S3_BUCKET }}/_astro"
+          --cache-control "public,max-age=31536000,immutable"
+
+      - name: "📤 Upload pages"
+        run: >-
+          aws s3 sync dist/ "s3://${{ vars.S3_BUCKET }}/"
+          --delete --exclude "_astro/*"
+          --cache-control "public,max-age=300"
+
+      - name: "🧹 Invalidate CloudFront cache"
+        run: >-
+          aws cloudfront create-invalidation
+          --distribution-id "${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}"
+          --paths "/*"
