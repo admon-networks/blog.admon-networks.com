@@ -1,4 +1,7 @@
 ---
+import { Image } from "astro:assets";
+import logoLight from "@/assets/brand/logo-light.png";
+import logoDark from "@/assets/brand/logo-dark.png";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import IconUnderline from "@/assets/icons/IconUnderline.svg";
 import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
@@ -50,9 +53,24 @@ const isActive = (path: string) => {
   >
     <a
       href={getRelativeLocaleUrl(locale, "")}
-      class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
+      class="absolute shrink-0 py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
     >
-      {site.title}
+      <Image
+        src={logoLight}
+        alt={site.title}
+        height={44}
+        densities={[1, 2]}
+        class="block h-9 w-auto max-w-none sm:h-11 dark:hidden"
+        loading="eager"
+      />
+      <Image
+        src={logoDark}
+        alt={site.title}
+        height={44}
+        densities={[1, 2]}
+        class="hidden h-9 w-auto max-w-none sm:h-11 dark:block"
+        loading="eager"
+      />
     </a>
     <nav
       id="nav-menu"
@@ -88,6 +106,14 @@ const isActive = (path: string) => {
             class:list={{ "active-nav": isActive("/tags") }}
           >
             {t.nav.tags}
+          </a>
+        </li>
+        <li class="col-span-2">
+          <a
+            href={getRelativeLocaleUrl(locale, "home-network-basicdesign")}
+            class:list={{ "active-nav": isActive("/home-network-basicdesign") }}
+          >
+            自宅ラボ
           </a>
         </li>
         <li class="col-span-2">
