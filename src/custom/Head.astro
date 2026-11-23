@@ -3,6 +3,8 @@
 // your own tags here: analytics, site verification, extra <meta> or
 // <link>, stylesheets. This file is yours: AstroPaper never changes it
 // after release.
+import { isPreview } from "@/utils/isPreview";
+
 type Props = {
   title: string;
   description: string;
@@ -26,9 +28,13 @@ gtag("config", "${GA_ID}");
   href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap"
 />
 
+{/* プレビュー（PUBLIC_PREVIEW=true）では検索エンジンに載せない */}
+{isPreview && <meta name="robots" content="noindex, nofollow" />}
+
 <!-- アクセス解析（Google Analytics 4）。本番用のビルドのときだけ読み込む -->
+{/* プレビュー（PUBLIC_PREVIEW=true）のビルドでも読み込まない */}
 {
-  import.meta.env.PROD && (
+  import.meta.env.PROD && !isPreview && (
     <Fragment>
       <script
         is:inline

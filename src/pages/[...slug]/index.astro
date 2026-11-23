@@ -17,6 +17,7 @@ import AdjacentPostNav from "./_components/AdjacentPostNav.astro";
 import PostToc from "./_components/PostToc.astro";
 import PostEnd from "@/custom/PostEnd.astro";
 import config from "@/config";
+import { isPreview } from "@/utils/isPreview";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
@@ -74,6 +75,7 @@ const {
   tags,
   hideEditPost,
   hideToc,
+  draft,
 } = post.data;
 
 const { Content, headings } = await render(post);
@@ -117,6 +119,16 @@ const ogImage = ogImageUrl
     class:list={["app-layout", { "mt-8": !config.features.showBackButton }]}
     data-pagefind-body
   >
+    {
+      isPreview && draft && (
+        <p
+          data-pagefind-ignore
+          class="mb-2 w-fit rounded border-2 border-amber-500 px-2 py-0.5 text-sm font-bold text-amber-700 dark:text-amber-300"
+        >
+          下書き（draft: true）：本番には公開されません
+        </p>
+      )
+    }
     <h1
       style={{ viewTransitionName: toTransitionName(post.id) }}
       class="text-accent inline-block text-2xl font-bold sm:text-3xl"

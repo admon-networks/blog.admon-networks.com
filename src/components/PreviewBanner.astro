@@ -1,0 +1,17 @@
+---
+// プレビュー用のビルド（PUBLIC_PREVIEW=true）のときだけ、全ページの上部に出す帯。
+// 本番のビルドでは何も出力しない。
+import { isPreview } from "@/utils/isPreview";
+---
+
+{
+  isPreview && (
+    <div
+      role="note"
+      data-pagefind-ignore
+      class="w-full bg-amber-300 px-4 py-1.5 text-center text-sm font-bold text-black"
+    >
+      プレビュー（未公開）：このページは確認用です。本番のサイトではありません
+    </div>
+  )
+}
