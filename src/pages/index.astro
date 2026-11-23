@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import IconRss from "@/assets/icons/IconRss.svg";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
@@ -33,38 +32,20 @@ const homePath = getRelativeLocaleUrl(locale, "");
     data-home-path={homePath}
     class="app-layout my-1"
   >
-    <section id="hero" class="border-border border-b pt-8 pb-6">
-      <h1 class="my-4 inline-block text-3xl font-bold sm:my-8 sm:text-4xl">
-        ネットワークエンジニアの検証ノート
-      </h1>{" "}
-      <a
-        target="_blank"
-        href={`${import.meta.env.BASE_URL.replace(/\/?$/, "/")}rss.xml`}
-        class="inline-block"
-        aria-label="RSS Feed"
-        title="RSS Feed"
-      >
-        <IconRss
-          width={20}
-          height={20}
-          class="stroke-accent scale-125 stroke-3 rtl:-rotate-90"
-        />
-        <span class="sr-only">RSS Feed</span>
-      </a>
-
+    <section id="hero" class="hero-brand">
+      <p class="hero-prompt"><span>&gt;_</span> admon_</p>
+      <h1 class="my-3 text-2xl font-bold sm:text-4xl">
+        「動いた」の先の「なぜ」まで。
+      </h1>
       <p>
-        本業ネットワークエンジニアの admon
-        が、ネットワーク・サーバー・クラウドの検証やトラブルシュートを記録しています。
+        ネットワークエンジニアのあどもんです。フルスタックエンジニアを目指して、ネットワークを軸に、サーバーやクラウドまで手を動かして検証しています。
       </p>
       <p class="mt-2">
-        現場で詰まったことや自宅ラボで試したことを、再現手順と一緒にまとめています。
+        現場で詰まったことや自宅ラボで試したことを、仕組みと再現手順まで含めて、読んだ人の役に立つ形でまとめていきます。
       </p>
       {
         socials.length > 0 && (
-          <div class="mt-4 flex max-sm:flex-col sm:items-center">
-            <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">
-              {t.home.socialLinks}:
-            </div>
+          <div class="mt-4">
             <Socials />
           </div>
         )

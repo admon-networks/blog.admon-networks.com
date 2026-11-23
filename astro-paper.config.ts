@@ -3,7 +3,7 @@ import { defineAstroPaperConfig } from "./src/types/config";
 export default defineAstroPaperConfig({
   site: {
     url: "https://blog.admon-networks.com/",
-    title: "Admonネットワーク",
+    title: "あどもんネットワーク",
     description: "本業ネットワークエンジニアの admon が、ネットワーク・サーバー・クラウドの検証やトラブルシュートを記録する技術ブログ",
     author: "admon",
     profile: "https://blog.admon-networks.com/profile/",
