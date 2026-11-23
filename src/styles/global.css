@@ -103,6 +103,60 @@ html {
   color: #282728;
 }
 
+/* 楽天アフィリエイトの商品リンク（表で組まれた「画像＋テキスト」形式）
+   本文の表・画像のスタイルを打ち消し、スマホ幅でも収まるようにする。背景は白なので、ダークモードでも文字を暗い色にする */
+.app-prose table:has(a[href*="afl.rakuten.co.jp"]) {
+  width: auto;
+  margin: 0;
+
+  td {
+    border: 0;
+    padding: 0;
+  }
+
+  div[style*="width:504px"] {
+    max-width: 100%;
+  }
+
+  img {
+    display: inline;
+    border: 0;
+    margin: 2px;
+  }
+
+  p,
+  span {
+    color: #282728;
+  }
+
+  a {
+    color: #0b57d0;
+  }
+}
+
+/* テキストの欄は楽天のコードで display: block になっていて上下中央に寄るので、表のセルに戻して上揃えにする */
+@media (min-width: 561px) {
+  .app-prose
+    table:has(a[href*="afl.rakuten.co.jp"])
+    td[style*="display: block"] {
+    display: table-cell !important;
+  }
+}
+
+/* スマホ幅では表をやめて、画像とテキストを縦に並べる */
+@media (max-width: 560px) {
+  .app-prose table:has(a[href*="afl.rakuten.co.jp"]) {
+    display: block;
+
+    tbody,
+    tr,
+    td {
+      display: block;
+      width: auto !important;
+    }
+  }
+}
+
 /* トップページのヒーロー：アイキャッチと同じ「紺＋グリッド線＋左の水色ライン」 */
 #hero.hero-brand {
   position: relative;
