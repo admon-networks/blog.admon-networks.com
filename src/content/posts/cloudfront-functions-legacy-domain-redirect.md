@@ -10,17 +10,20 @@ ogImage: "../../assets/posts/eyecatch-cloudfront-functions-legacy-domain-redirec
 
 私はこの構成で、ブログの旧ドメイン`tech-lablog.com`へのアクセスを`blog.admon-networks.com`へ転送しました。
 
-| 項目                            | 内容                                     |
-| ------------------------------- | ---------------------------------------- |
-| 作業した時期                    | 2026年11月                               |
-| 転送元                          | `tech-lablog.com`・`www.tech-lablog.com` |
-| 転送先                          | `https://blog.admon-networks.com`        |
-| 関数のランタイム                | `cloudfront-js-2.0`                      |
-| Terraform（コードの指定）       | `required_version = ">= 1.10"`           |
-| AWSプロバイダー（コードの指定） | `hashicorp/aws` `~> 6.0`                 |
-| DNS                             | Route 53（旧ドメインのホストゾーン）     |
+| 項目             | 内容                                     |
+| ---------------- | ---------------------------------------- |
+| 作業した時期     | 2026年11月                               |
+| 転送元           | `tech-lablog.com`・`www.tech-lablog.com` |
+| 転送先           | `https://blog.admon-networks.com`        |
+| 関数のランタイム | `cloudfront-js-2.0`                      |
+| DNS              | Route 53（旧ドメインのホストゾーン）     |
 
-<!-- TODO: 確認（実際に使った Terraform と AWS プロバイダーのバージョン。表にはコードの指定だけを書いた） -->
+TerraformとAWSプロバイダーのバージョンは次のとおりです。
+
+| ソフトウェア                       | コードの指定 | 実際に使ったバージョン |
+| ---------------------------------- | ------------ | ---------------------- |
+| Terraform                          | `>= 1.10`    | v1.16.3                |
+| AWSプロバイダー（`hashicorp/aws`） | `~> 6.0`     | 6.73.0                 |
 
 Terraformのコードは[admon-networks/public-infra](https://github.com/admon-networks/public-infra)の`infra/blog/legacy-redirect.tf`と`infra/blog/functions/legacy-redirect.js`で公開しています。
 
@@ -108,9 +111,7 @@ function handler(event) {
 
 ### cache-controlを付けた
 
-レスポンスには`cache-control: max-age=86400`（1日）を付けました。
-
-<!-- TODO: 確認（max-age を 86400 にした理由。材料には値だけがあり、理由がない） -->
+レスポンスには`cache-control: max-age=86400`（1日）を付けました。301は「恒久的な移転」を表すステータスなので、期限を指定しないと、ブラウザーが転送先をずっと覚えたままになることがあります。私は、転送先を間違えたときでも1日でブラウザー側のキャッシュが切れて直るように、期限を明示しました。
 
 ## Terraformで作ったリソース
 
@@ -272,24 +273,18 @@ resource "aws_route53_record" "legacy_apex_aaaa" {
 
 ## 転送できたかをcurlで確かめた
 
-`curl -sI`でヘッダーだけを取得して、ステータスコードと`location`を確かめました。`-s`は進捗表示を出さないオプション、`-I`はHEADリクエストを送ってレスポンスヘッダーだけを表示するオプションです。
+`curl -sI`でレスポンスヘッダーだけを取得し、`grep`でステータス行・`location`・`cache-control`だけに絞って確かめました。`-s`は進捗表示を出さないオプション、`-I`はHEADリクエストを送ってレスポンスヘッダーだけを表示するオプションです。`grep -iE`は大文字・小文字を区別せずに、正規表現で行を絞り込みます。
 
-```bash
-# 旧ドメインのページへ https でアクセスしたときの応答ヘッダーを見る
-curl -sI https://tech-lablog.com/capwap/
+```console
+$ curl -sI "https://tech-lablog.com/home-network-basicdesign/?utm_source=test" | grep -iE '^(HTTP|location|cache-control)'
+HTTP/2 301
+cache-control: max-age=86400
+location: https://blog.admon-networks.com/home-network-basicdesign/?utm_source=test
 ```
 
-結果は次のとおりです。
+同じパスへの301が返り、関数で付けた`cache-control: max-age=86400`も届いています。クエリ文字列の`?utm_source=test`も、そのまま転送先のURLに引き継がれました。
 
-| リクエストしたURL                    | ステータス | location                                  |
-| ------------------------------------ | ---------- | ----------------------------------------- |
-| `https://tech-lablog.com/capwap/`    | 301        | `https://blog.admon-networks.com/capwap/` |
-| `http://www.tech-lablog.com/capwap/` | 301        | `https://blog.admon-networks.com/capwap/` |
-| `https://tech-lablog.com/?p=123`     | 301        | `https://blog.admon-networks.com/?p=123`  |
-
-パスもクエリ文字列も引き継がれ、`http://www.`で来たアクセスも1回の301で新ドメインのhttpsに届いています。転送先の`/capwap/`は、[CAPWAPの解説記事](/capwap/)です。
-
-<!-- TODO: 確認（curl の出力をそのまま貼るか。材料にはステータスと location だけがあり、ほかのヘッダーの実際の値がない） -->
+ほかに、`https://tech-lablog.com/capwap/`と`http://www.tech-lablog.com/capwap/`はどちらも`https://blog.admon-networks.com/capwap/`への301になり、`http://www.`で来たアクセスも1回の転送で新ドメインのhttpsに届きました。`https://tech-lablog.com/?p=123`も`https://blog.admon-networks.com/?p=123`へ転送されています。転送先の`/capwap/`は、[CAPWAPの解説記事](/capwap/)です。
 
 ## よくある誤解
 
