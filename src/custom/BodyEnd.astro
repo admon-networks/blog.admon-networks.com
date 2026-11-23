@@ -2,4 +2,20 @@
 // Rendered right before </body> on every page. Add your own scripts
 // or widgets here. This file is yours: AstroPaper never changes it
 // after release.
+
+// Cloudflare Web Analytics のトークン（HTML に埋め込まれる公開値なので秘密情報ではない）
+const CF_BEACON = JSON.stringify({
+  token: "3d6f2825b27c449d9483fd7e568aedac",
+});
 ---
+
+<!-- アクセス解析（Cloudflare Web Analytics）。本番用のビルドのときだけ読み込む -->{
+  import.meta.env.PROD && (
+    <script
+      is:inline
+      type="module"
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon={CF_BEACON}
+    />
+  )
+}
