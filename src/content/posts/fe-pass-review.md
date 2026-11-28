@@ -4,7 +4,6 @@ description: "基本情報技術者試験に2回目で合格した体験記で�
 pubDatetime: 2026-11-28T21:00:00+09:00
 tags: ["基本情報技術者", "資格"]
 ogImage: "../../assets/posts/eyecatch-fe-pass-review.png"
-draft: true
 ---
 
 > [!NOTE]
@@ -170,6 +169,14 @@ draft: true
 
 基本情報は、IT業界を目指している人や、IT業界に入ったばかりの人におすすめです。転職したい人にもおすすめします。私がIT業界に転職した経緯は、[東京都デジタル人材育成支援事業の体験記](/tokyo-digital-jinzai-review/)に書いています。
 
-<!-- AD: 転職エージェント（筆者が使ったものかは PR で確認） -->
+<div style="border:1px solid #dfdfd9;border-radius:10px;padding:22px;background:#fafaf7;margin:32px 0;">
+<p style="margin:0 0 6px;font-size:0.78em;letter-spacing:.08em;color:#2056c7;font-weight:700;">未経験からIT業界を目指すなら</p>
+<p style="margin:0 0 12px;font-weight:700;font-size:1.08em;line-height:1.6;">ウズウズIT</p>
+<p style="margin:0 0 16px;font-size:0.95em;line-height:1.9;">IT未経験者向けの就職支援サービスです。就職サポートに加えて、IT学習のサポートも無料で使えます。基本情報の勉強と並行して、未経験可の求人にどんなものがあるのかを知っておきたい人に向いています。</p>
+<p style="margin:0 0 14px;">
+<a href="https://px.a8.net/svt/ejp?a8mat=45EBHK+5B45YQ+33T0+1BP19U" rel="sponsored nofollow" style="display:inline-block;background:#2056c7;color:#fff;padding:13px 26px;border-radius:6px;text-decoration:none;font-weight:700;line-height:1.4;">ウズウズITの公式サイトを見る</a><img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat=45EBHK+5B45YQ+33T0+1BP19U" alt="">
+</p>
+<p style="margin:0;font-size:0.82em;line-height:1.8;color:#777;">※対象は18〜29歳（高卒以上）で、勤務地は関東・関西・東海が中心です。30代の方や、それ以外の地域で就職したい方は対象外になります。利用は無料です。</p>
+</div>
 
 科目Bは、個人的には相応に難しい試験だと思います。これから受ける方は、ぜひ頑張ってください。
