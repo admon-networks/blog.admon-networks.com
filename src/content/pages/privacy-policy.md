@@ -1,5 +1,6 @@
 ---
 title: "プライバシーポリシー"
+description: "あどもんネットワークのプライバシーポリシーです。アクセス解析（Google Analytics）、広告配信（Google AdSense）、アフィリエイト、Cookieの取り扱いについて記載しています。"
 ---
 
 ## 基本方針
@@ -15,19 +16,20 @@ title: "プライバシーポリシー"
 - ブラウザの設定からCookieを無効化することで、収集を拒否できます
 
 > [!NOTE]
-> 詳細は [Googleのプライバシーポリシー](https://policies.google.com/privacy) をご確認ください。
+> 詳細は <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Googleのプライバシーポリシー</a>をご確認ください。Google Analyticsによる収集を無効にしたい場合は、<a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">Google アナリティクス オプトアウト アドオン</a>も利用できます。
 
 ## Webフォントについて
 
-当サイトでは、文字の表示にGoogle LLCが提供する「Google Fonts」を使用しています。フォントを読み込む際に、閲覧者のIPアドレスなどがGoogleのサーバーに送信されます。詳細は [Googleのプライバシーポリシー](https://policies.google.com/privacy) をご確認ください。
+当サイトでは、文字の表示にGoogle LLCが提供する「Google Fonts」を使用しています。フォントを読み込む際に、閲覧者のIPアドレスなどがGoogleのサーバーに送信されます。詳細は <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Googleのプライバシーポリシー</a>をご確認ください。
 
 ## 広告について（Google AdSense）
 
-当サイトはGoogle AdSenseを利用しており、Googleおよびそのパートナーが訪問者の過去の閲覧履歴に基づいて広告を表示する場合があります。
+当サイトは、第三者配信の広告サービス「Google AdSense」を利用しています。Googleなどの第三者配信事業者は、Cookieを使用して、訪問者が当サイトや他のサイトに過去にアクセスした際の情報に基づいて広告を配信します。
 
-- 広告配信にはCookieが使用されます
-- Google広告設定ページから、パーソナライズ広告を無効化できます
-- 第三者配信事業者の使用するCookieに関しては、[こちら](https://policies.google.com/technologies/ads)をご確認ください
+- Googleが広告Cookieを使用することにより、Googleやそのパートナーは、当サイトや他のサイトへのアクセス情報に基づいて、適切な広告を表示できます
+- 訪問者は、<a href="https://adssettings.google.com/" target="_blank" rel="noopener noreferrer">Googleの広告設定</a>で、パーソナライズ広告を無効にできます
+- 第三者配信事業者のCookieを無効にしたい場合は、<a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer">www.aboutads.info</a>でも無効にできます
+- Googleによる広告でのCookieの使い方は、<a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer">広告におけるCookieの使用（Google）</a>をご確認ください
 
 ## アフィリエイトについて
 
@@ -42,9 +44,7 @@ title: "プライバシーポリシー"
 
 ## お問い合わせについて
 
-当サイトへのお問い合わせは、下記のお問い合わせフォームよりお送りください。お問い合わせの際に入力いただいた情報は、返信目的のみに使用し、第三者への提供は行いません。
-
-お問い合わせフォームは[こちら](/contact/)
+当サイトへのお問い合わせは、[お問い合わせページ](/contact/)に記載の方法でお送りください。お問い合わせの際にいただいた情報は、返信のためだけに使用し、法令に基づく場合を除き、第三者へ提供しません。
 
 ## 免責事項
 
