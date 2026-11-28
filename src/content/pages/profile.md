@@ -1,6 +1,22 @@
 ---
 title: "プロフィール"
+description: "あどもんネットワークの運営者 admon のプロフィールです。ブログの目的、経歴、保有資格を紹介しています。"
 ---
+
+## 運営者情報
+
+| 項目         | 内容                             |
+| ------------ | -------------------------------- |
+| ブログ名     | あどもんネットワーク             |
+| URL          | https://blog.admon-networks.com/ |
+| 運営者       | admon                            |
+| お問い合わせ | [お問い合わせページ](/contact/)  |
+
+## このブログについて
+
+ネットワークを軸に、サーバーやクラウドまで実際に手を動かして検証し、「動いた」の先の「なぜ」まで書く技術ブログです。業務や自宅ラボでの検証、トラブルシュートの記録、資格試験の受験記などを書いています。
+
+読者として、新人〜中堅のエンジニアと、技術が好きな方を想定しています。記事の誤りに気づいた場合は、お問い合わせページからご指摘いただけると助かります。
 
 ## 経歴
 
@@ -12,12 +28,12 @@ CCNP ENCOR勉強中。
 
 - CCNA
 - 基本情報技術者
-- AWS Solution Architect Asociate
-- AWS Solution Architect Professional
+- AWS Certified Solutions Architect – Associate
+- AWS Certified Solutions Architect – Professional
 
 ## 写真
 
-![](../../assets/wp/2025/09/profile-01.jpg)
+![車の中から撮った、海岸沿いの道路とオホーツク海に沈む夕日](../../assets/wp/2025/09/profile-01.jpg)
 
 2025年 5月 北海道旅行
 
@@ -27,4 +43,4 @@ CCNP ENCOR勉強中。
 
 ステンドガラス博物館
 
-![](../../assets/wp/2025/09/profile-02.jpg)
+![アーチ型の窓にはめ込まれた3枚の縦長のステンドグラス](../../assets/wp/2025/09/profile-02.jpg)
