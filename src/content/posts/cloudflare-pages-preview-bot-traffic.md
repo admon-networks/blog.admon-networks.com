@@ -2,7 +2,7 @@
 title: "Cloudflare Pagesに海外から大量アクセス｜大半はボットか"
 description: "Cloudflareのアカウント分析で米国を中心に海外アクセスが突出。原因は本番ではなくCloudflare Pagesのプレビュー環境（pages.dev）でした。4xxやHTTP/1.1の比率からボットと見た根拠と、課金への影響をまとめました。"
 pubDatetime: 2026-11-30T21:00:00+09:00
-draft: true
+draft: false
 tags: ["Cloudflare", "Web", "クラウド", "トラブルシュート"]
 ogImage: "../../assets/posts/eyecatch-cloudflare-pages-preview-bot-traffic.png"
 ---
@@ -39,7 +39,7 @@ Cloudflareのアカウント分析で、過去7日間の国別のリクエスト
 | China          | 371        |
 | Germany        | 348        |
 
-<!-- TODO: 画像（ファイル名案：src/assets/posts/cloudflare-pages-preview-bot-traffic/country-requests-top8.png／アカウント分析の国別リクエスト。地図と上位8か国が写った画面。アカウント名・アカウントIDを塗りつぶす） -->
+![Cloudflareのアカウント分析の国別リクエスト。世界地図と上位8か国の一覧で、United Statesが4.68k、Franceが659、Netherlandsが474、Polandが456、United Kingdomが454、Japanが438、Chinaが371、Germanyが348](../../assets/posts/cloudflare-pages-preview-bot-traffic/country-requests-top8.png)
 
 このブログは、再開してからのPVが300ほどで、アクセスは日本からが中心です（1年目のアクセスの記録は[【2025年振り返り】技術ブログ開始1年の変化｜月300PVの記録](/2025-tech-lab-1year-review/)にまとめています）。それにしてはリクエストが多すぎるうえに、ほとんどが米国からだったので、最初は攻撃を受けているのかと思いました。
 
