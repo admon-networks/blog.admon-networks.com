@@ -53,7 +53,7 @@ Cloudflareのアカウント分析で、過去7日間の国別のリクエスト
 
 国やASN（Autonomous System Number：インターネット上のネットワークごとに割り当てられた番号）、パス、User-Agentで絞り込んで見る機能は、ドメイン（ゾーン）ごとの分析画面にあります（<a href="https://developers.cloudflare.com/support/analytics/essentials/understanding-cloudflare-site-analytics/" target="_blank" rel="noopener noreferrer">Cloudflare Docs：Understanding Cloudflare site analytics</a>）。どこから何を取りに来ているのかを見ようと、ドメインごとの分析を開こうとしたところ、Cloudflareにはドメインが1件も登録されていませんでした。
 
-<!-- TODO: 画像（ファイル名案：src/assets/posts/cloudflare-pages-preview-bot-traffic/domains-list-empty.png／Cloudflareのドメイン一覧が0件（データなし）の画面。アカウント名・アカウントIDを塗りつぶす） -->
+![Cloudflareのドメインの一覧。「データなし」と表示され、ドメインが1件も登録されていない画面](../../assets/posts/cloudflare-pages-preview-bot-traffic/domains-list-empty.png)
 
 本番のブログはS3＋CloudFrontで配信していて、Cloudflareを通っていません。旧ドメインからの転送もCloudFrontで動かしていて、その構成は[CloudFrontで旧ドメインを新ドメインへ301リダイレクト](/cloudfront-functions-legacy-domain-redirect/)に書きました。
 
@@ -63,7 +63,7 @@ Cloudflareのアカウント分析で、過去7日間の国別のリクエスト
 
 Pagesのプロジェクトの画面にもメトリクスがありますが、こちらは0件でした。このメトリクスは、Pages Functions（Pagesでサーバー側の処理を動かす機能）の実行を数えるものです（<a href="https://developers.cloudflare.com/pages/functions/metrics/" target="_blank" rel="noopener noreferrer">Cloudflare Docs：Pages Functions metrics</a>）。このブログはFunctionsを使っていない静的サイトなので、アクセスがあっても0のままです。
 
-<!-- TODO: 画像（ファイル名案：src/assets/posts/cloudflare-pages-preview-bot-traffic/pages-metrics-zero.png／Pagesのプロジェクトのメトリクスが0件の画面。アカウント名・アカウントID・Pagesのプロジェクト名とURLを塗りつぶす） -->
+![Cloudflare Pagesのプロジェクトのメトリクス。最後の7日間のリクエストが成功0・エラー0の画面](../../assets/posts/cloudflare-pages-preview-bot-traffic/pages-metrics-zero.png)
 
 ### 大半はボットと見ている（推測）
 
@@ -79,11 +79,11 @@ Pagesのプロジェクトの画面にもメトリクスがありますが、こ
 | 暗号化したリクエスト | 3.19k（92.30%）                          |
 | 暗号化した帯域       | 39.57MB（99.12%）                        |
 
-<!-- TODO: 画像（ファイル名案：src/assets/posts/cloudflare-pages-preview-bot-traffic/errors-and-http-versions.png／アカウント分析のエラー（4xx・5xx）と、ネットワークのHTTPバージョンの画面。アカウント名・アカウントIDを塗りつぶす） -->
+![Cloudflareのアカウント分析のエラーとHTTPバージョン。4xxエラーが1.46k（42.10%）、5xxエラーが0、HTTP/1.1が1.73k、HTTP/2が1.43k、HTTP/3が297](../../assets/posts/cloudflare-pages-preview-bot-traffic/errors-and-http-versions.png)
 
-<!-- TODO: 画像（ファイル名案：src/assets/posts/cloudflare-pages-preview-bot-traffic/tls-versions-and-content-types.png／アカウント分析のネットワークのTLSバージョンとコンテンツタイプの画面。アカウント名・アカウントIDを塗りつぶす） -->
+![Cloudflareのアカウント分析のTLSバージョンとコンテンツタイプ。TLSv1.3が3.11k、noneが266、TLSv1.2が83、htmlが2.28k、webpが671、cssが117、jsが98](../../assets/posts/cloudflare-pages-preview-bot-traffic/tls-versions-and-content-types.png)
 
-<!-- TODO: 画像（ファイル名案：src/assets/posts/cloudflare-pages-preview-bot-traffic/security-encrypted-requests.png／アカウント分析のセキュリティ（暗号化したリクエスト・暗号化した帯域）の画面。アカウント名・アカウントIDを塗りつぶす） -->
+![Cloudflareのアカウント分析のセキュリティ。暗号化したリクエストが3.19k（92.30%）、暗号化した帯域幅が39.57MB（99.12%）](../../assets/posts/cloudflare-pages-preview-bot-traffic/security-encrypted-requests.png)
 
 この数字から、大半は人ではなくボットのアクセスだと見ています。根拠は4つあります。
 
