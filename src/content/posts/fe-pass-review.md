@@ -7,7 +7,8 @@ ogImage: "../../assets/posts/eyecatch-fe-pass-review.png"
 draft: true
 ---
 
-<!-- TODO: 確認（アフィリエイトのリンクを差し込んだら、ここに広告の表記「> [!NOTE] この記事には広告（アフィリエイトリンク）を含みます。」を入れる） -->
+> [!NOTE]
+> この記事には広告（アフィリエイトリンク）を含みます。
 
 基本情報技術者試験（基本情報）に、2回目で合格しました。スコアは科目A 700点、科目B 600点です。科目Bは、合格基準ちょうどの600点でした。
 
@@ -33,23 +34,20 @@ draft: true
 
 基本情報技術者試験は、IPA（情報処理推進機構）が実施する国家試験です。試験はCBT方式で、会場のパソコンで解答します。2023年4月からは、科目Aと科目Bの2つに分かれています。
 
-<!-- TODO: 確認（試験時間・問題数・合格基準を書く場合は、IPAの基本情報技術者試験の公式ページで確認して、公式ページへのリンクと一緒に1〜2文で足す。作業環境からIPAのサイトに接続できず、未確認） -->
+試験時間と問題数は、科目Aが90分・60問、科目Bが100分・20問です。合格基準は、科目Aと科目Bのそれぞれで、1,000点満点中600点以上です（[IPA 基本情報技術者試験](https://www.ipa.go.jp/shiken/kubun/fe.html)）。
 
-<!-- TODO: 確認（試験の見直し（シラバス案）について、IPAの公式発表で改訂の予定が確かなら、ここに一文だけ注記する。作業環境からIPAのサイトに接続できず、未確認） -->
+> [!NOTE]
+> IPAは2027年度から新しい試験制度を始める予定で、基本情報技術者試験のシラバス案も公開しています（[新試験制度のシラバス案について](https://www.ipa.go.jp/shiken/syllabus/henkou/2026/20260630.html)）。この記事は、現行の形式で受験したときの記録です。
 
 ## 使った教材
 
-| 種類          | 教材                                                | 使い方                                      |
-| ------------- | --------------------------------------------------- | ------------------------------------------- |
-| 参考書        | 『キタミ式イラストIT塾 基本情報技術者』             | 途中まで読んで、あとは辞書がわり            |
-| 科目B専用の本 | 『出るとこだけ！基本情報技術者［科目B］』（翔泳社） | 2回目から。本のやり方で、紙に書いてトレース |
-| Web演習       | 過去問道場                                          | 平日の通勤中に、科目Aをランダム出題で解いた |
+| 種類          | 教材                                                                       | 使い方                                      |
+| ------------- | -------------------------------------------------------------------------- | ------------------------------------------- |
+| 参考書        | 『キタミ式イラストIT塾 基本情報技術者』                                    | 途中まで読んで、あとは辞書がわり            |
+| 科目B専用の本 | 『情報処理教科書 出るとこだけ！基本情報技術者［科目B］テキスト』（翔泳社） | 2回目から。本のやり方で、紙に書いてトレース |
+| Web演習       | 過去問道場                                                                 | 平日の通勤中に、科目Aをランダム出題で解いた |
 
 一番効いたのは、過去問道場と、科目Bの対策本です。
-
-<!-- TODO: 確認（『キタミ式イラストIT塾 基本情報技術者』の何年度版か） -->
-
-<!-- TODO: 確認（『出るとこだけ！基本情報技術者［科目B］』は第3版か） -->
 
 ## 科目Aの勉強法
 
@@ -57,7 +55,12 @@ draft: true
 
 『キタミ式イラストIT塾 基本情報技術者』は、最初から最後まで読み通してはいません。途中まで読んで、そのあとは、過去問道場でわからない言葉や仕組みが出てきたときに引く辞書として使いました。
 
-<!-- AD: 『キタミ式イラストIT塾 基本情報技術者』（楽天） -->
+<div style="border:1px solid #dfdfd9;border-radius:10px;padding:22px;background:#fafaf7;margin:32px 0;">
+<p style="margin:0 0 6px;font-size:0.78em;letter-spacing:.08em;color:#2056c7;font-weight:700;">辞書がわりに手元に置くなら</p>
+<p style="margin:0 0 12px;font-weight:700;font-size:1.08em;line-height:1.6;">キタミ式イラストIT塾 基本情報技術者 令和07年</p>
+<p style="margin:0 0 16px;font-size:0.95em;line-height:1.9;">私は途中まで読んで、そのあとは過去問道場でわからない言葉や仕組みが出てきたときに引く辞書がわりに使いました。過去問道場の演習を中心に進めるときも、手元にあると調べ物に使えます。</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td><div style="border:1px solid #95a5a6;border-radius:.75rem;background-color:#FFFFFF;width:280px;margin:0px;padding:5px;text-align:center;overflow:hidden;"><table><tr><td style="width:128px"><a href="https://hb.afl.rakuten.co.jp/ichiba/59e14a95.c9d9180b.59e14a96.28511920/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbook%2F18025508%2F&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIxMjh4MTI4IiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D" target="_blank" rel="nofollow sponsored noopener" style="word-wrap:break-word;"><img src="https://hbb.afl.rakuten.co.jp/hgb/59e14a95.c9d9180b.59e14a96.28511920/?me_id=1213310&item_id=21409741&pc=https%3A%2F%2Fthumbnail.image.rakuten.co.jp%2F%400_mall%2Fbook%2Fcabinet%2F4722%2F9784297144722_1_30.jpg%3F_ex%3D128x128&s=128x128&t=picttext" border="0" style="margin:2px" alt="『キタミ式イラストIT塾 基本情報技術者 令和07年』の表紙" title="[商品価格に関しましては、リンクが作成された時点と現時点で情報が変更されている場合がございます。]"></a></td><td style="vertical-align:top;width:136px;display: block;"><p style="font-size:12px;line-height:1.4em;text-align:left;margin:0px;padding:2px 6px;word-wrap:break-word"><a href="https://hb.afl.rakuten.co.jp/ichiba/59e14a95.c9d9180b.59e14a96.28511920/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbook%2F18025508%2F&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIxMjh4MTI4IiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D" target="_blank" rel="nofollow sponsored noopener" style="word-wrap:break-word;">キタミ式イラストIT塾 基本情報技術者 令和07年 [ きたみりゅうじ ]</a><br><span >価格：2,420円（税込、送料無料)</span> <span style="color:#BBB">(2026/11/28時点)</span></p></td></tr></table></div><br><p style="color:#000000;font-size:12px;line-height:1.4em;margin:5px;word-wrap:break-word"></p></td></tr></table>
+</div>
 
 ### 過去問道場を、通勤中にランダム出題で解いた
 
@@ -112,11 +115,16 @@ draft: true
 
 ### 科目B専用の本のやり方で、紙に書いてトレースした
 
-2回目から、『出るとこだけ！基本情報技術者［科目B］』（翔泳社）を教材に足しました。1回目との一番の違いは、この本に書いてあるやり方のとおりに、紙に書いてトレースする練習をしたことです。
+2回目から、『情報処理教科書 出るとこだけ！基本情報技術者［科目B］テキスト』（翔泳社）を教材に足しました。1回目との一番の違いは、この本に書いてあるやり方のとおりに、紙に書いてトレースする練習をしたことです。
 
 1回目はトレースの練習をしないまま本番を迎えて、擬似言語に慣れないまま落ちました。2回目は、紙に書いてトレースする練習を重ねました。
 
-<!-- AD: 『出るとこだけ！基本情報技術者［科目B］』（楽天） -->
+<div style="border:1px solid #dfdfd9;border-radius:10px;padding:22px;background:#fafaf7;margin:32px 0;">
+<p style="margin:0 0 6px;font-size:0.78em;letter-spacing:.08em;color:#2056c7;font-weight:700;">科目Bで落ちた人に</p>
+<p style="margin:0 0 12px;font-weight:700;font-size:1.08em;line-height:1.6;">情報処理教科書 出るとこだけ！基本情報技術者［科目B］テキスト 第5版</p>
+<p style="margin:0 0 16px;font-size:0.95em;line-height:1.9;">私が2回目に足した、科目B専用の本です。この本に書いてあるやり方のとおりに、紙に書いてトレースする練習をして合格しました。擬似言語に慣れていない人や、プログラミング経験があるからと科目Bの対策を後回しにしている人が、トレースの練習を始めるための1冊として使えます。</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td><div style="border:1px solid #95a5a6;border-radius:.75rem;background-color:#FFFFFF;width:280px;margin:0px;padding:5px;text-align:center;overflow:hidden;"><table><tr><td style="width:128px"><a href="https://hb.afl.rakuten.co.jp/ichiba/59e14a95.c9d9180b.59e14a96.28511920/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbook%2F18721313%2F&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIxMjh4MTI4IiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D" target="_blank" rel="nofollow sponsored noopener" style="word-wrap:break-word;"><img src="https://hbb.afl.rakuten.co.jp/hgb/59e14a95.c9d9180b.59e14a96.28511920/?me_id=1213310&item_id=22030924&pc=https%3A%2F%2Fthumbnail.image.rakuten.co.jp%2F%400_mall%2Fbook%2Fcabinet%2F5681%2F9784798195681_1_141.jpg%3F_ex%3D128x128&s=128x128&t=picttext" border="0" style="margin:2px" alt="『情報処理教科書 出るとこだけ！基本情報技術者［科目B］テキスト 第5版』の表紙" title="[商品価格に関しましては、リンクが作成された時点と現時点で情報が変更されている場合がございます。]"></a></td><td style="vertical-align:top;width:136px;display: block;"><p style="font-size:12px;line-height:1.4em;text-align:left;margin:0px;padding:2px 6px;word-wrap:break-word"><a href="https://hb.afl.rakuten.co.jp/ichiba/59e14a95.c9d9180b.59e14a96.28511920/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbook%2F18721313%2F&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIxMjh4MTI4IiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D" target="_blank" rel="nofollow sponsored noopener" style="word-wrap:break-word;">情報処理教科書 出るとこだけ！基本情報技術者［科目B］テキスト 第5版 （EXAMPRESS） [ 橋本 祐史 ]</a><br><span >価格：2,178円（税込、送料無料)</span> <span style="color:#BBB">(2026/11/28時点)</span></p></td></tr></table></div><br><p style="color:#000000;font-size:12px;line-height:1.4em;margin:5px;word-wrap:break-word"></p></td></tr></table>
+</div>
 
 ## 2回目の受験当日と結果を振り返る
 
