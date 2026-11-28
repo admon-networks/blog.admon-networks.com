@@ -51,7 +51,7 @@ CCNA（Cisco Certified Network Associate）に、ネットワークの知識が�
 <!-- TODO: 確認（白本で使った版。商品リンクは第2版。2024年秋の受験で使った版と違う場合は、本文で使った版を書くか、紹介文を直す） -->
 <!-- TODO: 確認（スクールや会社の研修を使わない独学だったか。そうなら「独学」と書くと、検索される言葉「CCNA 独学 何ヶ月」に合う） -->
 
-このほかに、動画も少し見ました。Packet Tracerは、Ciscoが提供しているネットワークのシミュレーターです。パソコンの上にルーターやスイッチを並べて、コマンドで設定できます。
+このほかに、『1週間でCCNAの基礎が学べる本』も使い、動画も少し見ました。Packet Tracerは、Ciscoが提供しているネットワークのシミュレーターです。パソコンの上にルーターやスイッチを並べて、コマンドで設定できます。
 
 白本（『シスコ技術者認定教科書 CCNA 完全合格テキスト＆問題集』）は、最初から最後まで読み通したわけではありません。知識がまっさらな時期に途中まで読んで、そのあとはPing-tで出てきた言葉や仕組みを引く辞書として使いました。
 
@@ -146,4 +146,15 @@ STPについては、関わった案件がL3中心のものが多く、あえて
 
 ## これからCCNAを受ける人へ
 
-CCNAは、ネットワークを体系的に理解する手段として有効でした。私はネットワークの知識がほぼゼロの状態から、1〜2か月で合格まで届きました。取る意義はあるので、ぜひ頑張ってみてください。
+CCNAは、ネットワークを体系的に理解する手段として有効でした。私はネットワークの知識がほぼゼロの状態から、1〜2か月で合格まで届きました。
+
+<!-- TODO: 確認（『1週間でCCNAの基礎が学べる本』を、いつ・どう使ったか。わかれば「使った教材」と下の枠の紹介文に書く。使った版も） -->
+
+<div style="border:1px solid #dfdfd9;border-radius:10px;padding:22px;background:#fafaf7;margin:32px 0;">
+<p style="margin:0 0 6px;font-size:0.78em;letter-spacing:.08em;color:#2056c7;font-weight:700;">CCNAの勉強で使った本</p>
+<p style="margin:0 0 12px;font-weight:700;font-size:1.08em;line-height:1.6;">1週間でCCNAの基礎が学べる本 第3版</p>
+<p style="margin:0 0 16px;font-size:0.95em;line-height:1.9;">私がCCNAの勉強で使った本のひとつです。</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td><div style="border:1px solid #95a5a6;border-radius:.75rem;background-color:#FFFFFF;width:280px;margin:0px;padding:5px;text-align:center;overflow:hidden;"><table><tr><td style="width:128px"><a href="https://hb.afl.rakuten.co.jp/ichiba/5a127c35.477c9ea7.5a127c36.2eddcb19/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fvaboo%2Fva0731501429u20%2F&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIxMjh4MTI4IiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D" target="_blank" rel="nofollow sponsored noopener" style="word-wrap:break-word;"><img src="https://hbb.afl.rakuten.co.jp/hgb/5a127c35.477c9ea7.5a127c36.2eddcb19/?me_id=1273418&item_id=18396373&pc=https%3A%2F%2Fthumbnail.image.rakuten.co.jp%2F%400_mall%2Fvaboo%2Fcabinet%2Fitems%2Fbk0125%2Fim250303581278.jpg%3F_ex%3D128x128&s=128x128&t=picttext" border="0" style="margin:2px" alt="『1週間でCCNAの基礎が学べる本 第3版』の表紙" title="[商品価格に関しましては、リンクが作成された時点と現時点で情報が変更されている場合がございます。]"></a></td><td style="vertical-align:top;width:136px;display: block;"><p style="font-size:12px;line-height:1.4em;text-align:left;margin:0px;padding:2px 6px;word-wrap:break-word"><a href="https://hb.afl.rakuten.co.jp/ichiba/5a127c35.477c9ea7.5a127c36.2eddcb19/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fvaboo%2Fva0731501429u20%2F&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIxMjh4MTI4IiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D" target="_blank" rel="nofollow sponsored noopener" style="word-wrap:break-word;">【中古】1週間でCCNAの基礎が学べる本 第3版/インプレス/宮田かおり（単行本（ソフトカバー））</a><br><span >価格：2,205円（税込、送料無料)</span> <span style="color:#BBB">(2026/11/28時点)</span></p></td></tr></table></div><br><p style="color:#000000;font-size:12px;line-height:1.4em;margin:5px;word-wrap:break-word"></p></td></tr></table>
+</div>
+
+取る意義はあるので、ぜひ頑張ってみてください。
