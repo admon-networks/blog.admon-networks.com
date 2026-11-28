@@ -7,7 +7,8 @@ ogImage: "../../assets/posts/eyecatch-ccna-pass-review.png"
 draft: true
 ---
 
-<!-- TODO: 確認（白本のアフィリエイトリンクを差し込んだら、最初の見出しより前に広告の表記「> [!NOTE] この記事には広告（アフィリエイトリンク）を含みます。」を入れる） -->
+> [!NOTE]
+> この記事には広告（アフィリエイトリンク）を含みます。
 
 CCNA（Cisco Certified Network Associate）に、ネットワークの知識がほぼゼロの状態から一発で合格しました。勉強期間は1〜2か月、勉強時間は合計で50〜100時間くらいです。受験したのは2024年の秋なので、合格から約2年たちました。
 
@@ -34,7 +35,7 @@ CCNA（Cisco Certified Network Associate）に、ネットワークの知識が�
 
 入社した時点で、ネットワークの知識はほぼありませんでした。未経験なので、まず基礎を固めたい。CCNAを受けたのは、それが理由です。
 
-試験の範囲は、Ciscoの[CCNA公式ページ](https://www.cisco.com/site/us/en/learn/training-certifications/certifications/enterprise/ccna/index.html)で確認できます。
+試験の範囲は、Ciscoの<a href="https://www.cisco.com/site/us/en/learn/training-certifications/certifications/enterprise/ccna/index.html" target="_blank" rel="noopener noreferrer">CCNA公式ページ</a>で確認できます。
 
 <!-- TODO: 確認（cisco.com に作業環境から接続できず、CCNA公式ページのURLが正しく開くか確かめられていない。日本語のページがあれば差し替える） -->
 
@@ -47,14 +48,19 @@ CCNA（Cisco Certified Network Associate）に、ネットワークの知識が�
 | 問題集               | 黒本             | 重くて、あまり使わなかった                 |
 | ネットワーク実習環境 | Packet Tracer    | 直前の2週間くらいで、設定の練習に使った    |
 
-<!-- TODO: 確認（白本の正式な書名と版。黒本も、書名を出すなら正式な書名） -->
+<!-- TODO: 確認（白本で使った版。商品リンクは第2版。2024年秋の受験で使った版と違う場合は、本文で使った版を書くか、紹介文を直す） -->
 <!-- TODO: 確認（スクールや会社の研修を使わない独学だったか。そうなら「独学」と書くと、検索される言葉「CCNA 独学 何ヶ月」に合う） -->
 
 このほかに、動画も少し見ました。Packet Tracerは、Ciscoが提供しているネットワークのシミュレーターです。パソコンの上にルーターやスイッチを並べて、コマンドで設定できます。
 
-白本は、最初から最後まで読み通したわけではありません。知識がまっさらな時期に途中まで読んで、そのあとはPing-tで出てきた言葉や仕組みを引く辞書として使いました。
+白本（『シスコ技術者認定教科書 CCNA 完全合格テキスト＆問題集』）は、最初から最後まで読み通したわけではありません。知識がまっさらな時期に途中まで読んで、そのあとはPing-tで出てきた言葉や仕組みを引く辞書として使いました。
 
-<!-- AD: 白本（Amazon。テキストリンク。「辞書がわりに使えた」という使い方で紹介） -->
+<div style="border:1px solid #dfdfd9;border-radius:10px;padding:22px;background:#fafaf7;margin:32px 0;">
+<p style="margin:0 0 6px;font-size:0.78em;letter-spacing:.08em;color:#2056c7;font-weight:700;">辞書がわりに手元に置くなら</p>
+<p style="margin:0 0 12px;font-weight:700;font-size:1.08em;line-height:1.6;">シスコ技術者認定教科書 CCNA 完全合格テキスト＆問題集 第2版（白本）</p>
+<p style="margin:0 0 16px;font-size:0.95em;line-height:1.9;">私は知識がまっさらな時期に途中まで読み、Ping-tの演習に移ってからは、問題で出てきた言葉や仕組みを引く辞書がわりに使いました。問題演習を中心に進めるときも、手元に置いておくと調べ物に使えます。</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td><div style="border:1px solid #95a5a6;border-radius:.75rem;background-color:#FFFFFF;width:280px;margin:0px;padding:5px;text-align:center;overflow:hidden;"><table><tr><td style="width:128px"><a href="https://hb.afl.rakuten.co.jp/ichiba/59e14a95.c9d9180b.59e14a96.28511920/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbook%2F18222286%2F&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIxMjh4MTI4IiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D" target="_blank" rel="nofollow sponsored noopener" style="word-wrap:break-word;"><img src="https://hbb.afl.rakuten.co.jp/hgb/59e14a95.c9d9180b.59e14a96.28511920/?me_id=1213310&item_id=21599532&pc=https%3A%2F%2Fthumbnail.image.rakuten.co.jp%2F%400_mall%2Fbook%2Fcabinet%2F1034%2F9784798191034_1_135.jpg%3F_ex%3D128x128&s=128x128&t=picttext" border="0" style="margin:2px" alt="『シスコ技術者認定教科書 CCNA 完全合格テキスト＆問題集 第2版』の表紙" title="[商品価格に関しましては、リンクが作成された時点と現時点で情報が変更されている場合がございます。]"></a></td><td style="vertical-align:top;width:136px;display: block;"><p style="font-size:12px;line-height:1.4em;text-align:left;margin:0px;padding:2px 6px;word-wrap:break-word"><a href="https://hb.afl.rakuten.co.jp/ichiba/59e14a95.c9d9180b.59e14a96.28511920/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbook%2F18222286%2F&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIxMjh4MTI4IiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D" target="_blank" rel="nofollow sponsored noopener" style="word-wrap:break-word;">シスコ技術者認定教科書 CCNA 完全合格テキスト＆問題集［対応試験］200-301 第2版 （EXAMPRESS） [ SAK University 東京イノベーションキャンパス 林口 裕志 ]</a><br><span >価格：4,620円（税込、送料無料)</span> <span style="color:#BBB">(2026/11/28時点)</span></p></td></tr></table></div><br><p style="color:#000000;font-size:12px;line-height:1.4em;margin:5px;word-wrap:break-word"></p></td></tr></table>
+</div>
 
 黒本も持っていましたが、正直なところ、重くてあまり使いませんでした。
 
@@ -94,9 +100,9 @@ Ping-tが一番効いた理由は、2つあります。ひとつは、問題を�
 
 ## 受験当日と結果
 
-当日は緊張しました。
+試験当日はかなり緊張しました。。。
 
-問題文では、いわゆる「Cisco語」がわかりにくかったです。英語の原文を訳した、独特な日本語のことです。
+問題文では、いわゆる「Cisco語」がわかりにくかったです。英語の原文を訳した、独特な日本語のことです。記憶で書いているので実際の表記とは違うかもしれませんが、たとえばVLANを「仮想LAN」とするような、変に訳された用語が出てきました。
 
 時間は20分くらい余りました。シミュレーション問題は、思っていたより基礎的で驚きました。試験の内容に関わるので、何を問われたかは書きません。
 
@@ -112,9 +118,9 @@ Ping-tが一番効いた理由は、2つあります。ひとつは、問題を�
 
 実務では、VLAN（Virtual LAN）とルーティングの基礎知識に助けられることが多かったです。
 
-### STPとHSRPは、しばらく使わなかった
+### STPやHSRPは、しばらく使わなかった
 
-反対に、STPとHSRP（Hot Standby Router Protocol）は、実務でしばらく使いませんでした。
+反対に、STPやHSRP（Hot Standby Router Protocol）は、実務でしばらく使いませんでした。
 
 STPについては、関わった案件がL3中心のものが多く、あえてSTPを使わずに済む設計の案件が多かったからです。
 
@@ -140,6 +146,4 @@ STPについては、関わった案件がL3中心のものが多く、あえて
 
 ## これからCCNAを受ける人へ
 
-CCNAは、ネットワークを体系的に理解する手段として有効でした。私はネットワークの知識がほぼゼロの状態から、1〜2か月で合格まで届きました。
-
-頑張って取ってほしいです。
+CCNAは、ネットワークを体系的に理解する手段として有効でした。私はネットワークの知識がほぼゼロの状態から、1〜2か月で合格まで届きました。取る意義はあるので、ぜひ頑張ってみてください。
