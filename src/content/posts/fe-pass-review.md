@@ -33,10 +33,10 @@ ogImage: "../../assets/posts/eyecatch-fe-pass-review.png"
 
 基本情報技術者試験は、IPA（情報処理推進機構）が実施する国家試験です。試験はCBT方式で、会場のパソコンで解答します。2023年4月からは、科目Aと科目Bの2つに分かれています。
 
-試験時間と問題数は、科目Aが90分・60問、科目Bが100分・20問です。合格基準は、科目Aと科目Bのそれぞれで、1,000点満点中600点以上です（[IPA 基本情報技術者試験](https://www.ipa.go.jp/shiken/kubun/fe.html)）。
+試験時間と問題数は、科目Aが90分・60問、科目Bが100分・20問です。合格基準は、科目Aと科目Bのそれぞれで、1,000点満点中600点以上です（<a href="https://www.ipa.go.jp/shiken/kubun/fe.html" target="_blank" rel="noopener noreferrer">IPA 基本情報技術者試験</a>）。
 
 > [!NOTE]
-> IPAは2027年度から新しい試験制度を始める予定で、基本情報技術者試験のシラバス案も公開しています（[新試験制度のシラバス案について](https://www.ipa.go.jp/shiken/syllabus/henkou/2026/20260630.html)）。この記事は、現行の形式で受験したときの記録です。
+> IPAは2027年度から新しい試験制度を始める予定で、基本情報技術者試験のシラバス案も公開しています（<a href="https://www.ipa.go.jp/shiken/syllabus/henkou/2026/20260630.html" target="_blank" rel="noopener noreferrer">新試験制度のシラバス案について</a>）。この記事は、現行の形式で受験したときの記録です。
 
 ## 使った教材
 
@@ -63,7 +63,7 @@ ogImage: "../../assets/posts/eyecatch-fe-pass-review.png"
 
 ### 過去問道場を、通勤中にランダム出題で解いた
 
-科目Aの演習は、[基本情報技術者試験ドットコム](https://www.fe-siken.com/)の過去問道場です。平日の通勤中に、ランダム出題で解いていました。本番前には、7割くらい解けるようになっていました。
+科目Aの演習は、<a href="https://www.fe-siken.com/" target="_blank" rel="noopener noreferrer">基本情報技術者試験ドットコム</a>の過去問道場です。平日の通勤中に、ランダム出題で解いていました。本番前には、7割くらい解けるようになっていました。
 
 ### 苦手だった分野と、その対策
 
@@ -165,7 +165,7 @@ ogImage: "../../assets/posts/eyecatch-fe-pass-review.png"
 
 **プログラミング経験があっても、科目Bを甘く見ないでください。** 私は1回目、プログラミングを少し学んだことがあるからと油断して、科目Bで落ちました。
 
-科目Bは、愚直に参考書のとおりに対策したほうがいいと思います。私も2回目は、科目B専用の本に書いてあるやり方のとおりに、紙に書いてトレースする練習を続けて、ようやく合格できました。科目Bがどんな問題なのかは、IPAの[公開問題のページ](https://www.ipa.go.jp/shiken/mondai-kaiotu/index.html)で確認できます。
+科目Bは、愚直に参考書のとおりに対策したほうがいいと思います。私も2回目は、科目B専用の本に書いてあるやり方のとおりに、紙に書いてトレースする練習を続けて、ようやく合格できました。科目Bがどんな問題なのかは、IPAの<a href="https://www.ipa.go.jp/shiken/mondai-kaiotu/index.html" target="_blank" rel="noopener noreferrer">公開問題のページ</a>で確認できます。
 
 基本情報は、IT業界を目指している人や、IT業界に入ったばかりの人におすすめです。転職したい人にもおすすめします。私がIT業界に転職した経緯は、[東京都デジタル人材育成支援事業の体験記](/tokyo-digital-jinzai-review/)に書いています。
 
@@ -174,7 +174,7 @@ ogImage: "../../assets/posts/eyecatch-fe-pass-review.png"
 <p style="margin:0 0 12px;font-weight:700;font-size:1.08em;line-height:1.6;">ウズウズIT</p>
 <p style="margin:0 0 16px;font-size:0.95em;line-height:1.9;">IT未経験者向けの就職支援サービスです。就職サポートに加えて、IT学習のサポートも無料で使えます。基本情報の勉強と並行して、未経験可の求人にどんなものがあるのかを知っておきたい人に向いています。</p>
 <p style="margin:0 0 14px;">
-<a href="https://px.a8.net/svt/ejp?a8mat=45EBHK+5B45YQ+33T0+1BP19U" rel="sponsored nofollow" style="display:inline-block;background:#2056c7;color:#fff;padding:13px 26px;border-radius:6px;text-decoration:none;font-weight:700;line-height:1.4;">ウズウズITの公式サイトを見る</a><img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat=45EBHK+5B45YQ+33T0+1BP19U" alt="">
+<a href="https://px.a8.net/svt/ejp?a8mat=45EBHK+5B45YQ+33T0+1BP19U" target="_blank" rel="sponsored nofollow noopener" style="display:inline-block;background:#2056c7;color:#fff;padding:13px 26px;border-radius:6px;text-decoration:none;font-weight:700;line-height:1.4;">ウズウズITの公式サイトを見る</a><img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat=45EBHK+5B45YQ+33T0+1BP19U" alt="">
 </p>
 <p style="margin:0;font-size:0.82em;line-height:1.8;color:#777;">※対象は18〜29歳（高卒以上）で、勤務地は関東・関西・東海が中心です。30代の方や、それ以外の地域で就職したい方は対象外になります。利用は無料です。</p>
 </div>
