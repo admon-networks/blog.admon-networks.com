@@ -1,7 +1,7 @@
 ---
 title: "Cloudflare Pagesに海外から大量アクセス｜大半はボットか"
 description: "Cloudflareのアカウント分析で米国を中心に海外アクセスが突出。原因は本番ではなくCloudflare Pagesのプレビュー環境（pages.dev）でした。4xxやHTTP/1.1の比率からボットと見た根拠と、課金への影響をまとめました。"
-pubDatetime: 2026-11-30T21:00:00+09:00
+pubDatetime: 2026-11-28T23:30:00+09:00
 draft: false
 tags: ["Cloudflare", "Web", "クラウド", "トラブルシュート"]
 ogImage: "../../assets/posts/eyecatch-cloudflare-pages-preview-bot-traffic.png"
