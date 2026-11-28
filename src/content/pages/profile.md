@@ -22,18 +22,21 @@ description: "あどもんネットワークの運営者 admon のプロフィ�
 
 ネットワークエンジニアです。  
 おもにJuniper、FortiGate、Cisco、Allied Telesisの製品などに触れる機会が多いです。  
-CCNP ENCOR勉強中。
+CCNP ENCOR 合格（2025年3月）。現在は ENARSI に向けて勉強中。
 
 ## 保有資格
 
 - CCNA
+- CCNP ENCOR
 - 基本情報技術者
+- 情報セキュリティマネジメント
+- ITパスポート
 - AWS Certified Solutions Architect – Associate
 - AWS Certified Solutions Architect – Professional
 
 ## 写真
 
-![車の中から撮った、海岸沿いの道路とオホーツク海に沈む夕日](../../assets/wp/2025/09/profile-01.jpg)
+![車の中から撮った、海岸沿いの道路と夕日](../../assets/wp/2025/09/profile-01.jpg)
 
 2025年 5月 北海道旅行
 
